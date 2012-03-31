@@ -12,13 +12,7 @@ make_schema_at(
     'FindmJob::Schema',
     {   debug => 1,
         dump_directory => "$Bin/../lib",
+        use_moose => 1,
     },
-    [   @$dbi_config[0 .. 2],
-        {
-            loader_options => {
-                use_mosse => 1,
-                naming => 'current',
-            },
-        }
-    ]
+    [   @$dbi_config    ]
 );

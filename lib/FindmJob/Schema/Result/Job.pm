@@ -13,7 +13,10 @@ FindmJob::Schema::Result::Job
 use strict;
 use warnings;
 
-use base 'DBIx::Class::Core';
+use Moose;
+use MooseX::NonMoose;
+use MooseX::MarkAsMethods autoclean => 1;
+extends 'DBIx::Class::Core';
 
 =head1 TABLE: C<job>
 
@@ -116,9 +119,10 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-03-31 22:36:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ub2kMdoRJUCRC/cXvYcOAg
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-03-31 23:20:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2/ACNOXVcjMWww9KzBTQPQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+__PACKAGE__->meta->make_immutable;
 1;
