@@ -22,17 +22,16 @@ sub _build_config {
     return $config;
 }
 
-use DBI; use Carp;
-use DBIx::Connector;
-has 'conn' => ( is => 'ro', lazy_build => 1 );
-sub _build_conn {
+use FindmJob::Schema;
+has 'schema' => ( is => 'ro', lazy_build => 1 );
+sub _build_schema {
     my $self = shift;
-    return DBIx::Connector->new( @{ $self->config->{DBI} } );
+    return FindmJob::Schema->connect( @{ $self->config->{DBI} } );
 }
 has 'dbh' => (is => 'ro', lazy_build => 1);
 sub _build_dbh {
     my $self = shift;
-    my $dbh = $self->conn->dbh or croak $DBI::errstr;
+    my $dbh = $self->schema->storage->dbh or croak $DBI::errstr;
     $dbh->{mysql_enable_utf8} = 1; $dbh->do("set names 'utf8';");
     return $dbh;
 }

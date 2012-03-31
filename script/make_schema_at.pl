@@ -16,3 +16,5 @@ make_schema_at(
     },
     [   @$dbi_config    ]
 );
+
+1;
