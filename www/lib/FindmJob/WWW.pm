@@ -24,7 +24,7 @@ hook before_template_render => sub {
 
 get '/' => sub {
     my $schema = FindmJob::Basic->schema;
-    my $p = params->{p};
+    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'posted_at DESC',
         rows => 12,
