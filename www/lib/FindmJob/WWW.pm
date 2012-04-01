@@ -1,4 +1,5 @@
 package FindmJob::WWW;
+
 use Dancer ':syntax';
 
 our $VERSION = '0.1';
@@ -22,7 +23,23 @@ hook before_template_render => sub {
 };
 
 get '/' => sub {
+    my $schema = FindmJob::Basic->schema;
+    my @jobs = $schema->resultset('Job')->search( undef, {
+        order_by => 'inserted_at DESC',
+        rows => 15
+    })->all;
+    var jobs => \@jobs;
+
     template 'index.tt2';
+};
+
+get '/job/:jobid' => sub {
+    my $jobid = params->{jobid};
+    my $schema = FindmJob::Basic->schema;
+    my $job = $schema->resultset('Job')->find($jobid);
+    var job => $job;
+
+    template 'job.tt2';
 };
 
 true;

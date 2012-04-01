@@ -1,1 +1,7 @@
-Hello Kitty
+<h1>Recent Jobs</h1>
+
+<ol>
+[% FOREACH job IN jobs %]
+<li><a href='/job/[% job.id %]'>[% job.title %]</a></li>
+[% END %]
+</ol>

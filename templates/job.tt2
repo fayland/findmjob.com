@@ -1,0 +1,12 @@
+[% title = job.title %]
+
+<h1>[% title %]</h1>
+
+<p>Posted on [% job.posted_at %]</p>
+<p>Company: [% job.company.name %]</p>
+<p>Location: [% job.location %]</p>
+<p>[% job.description | html_line_break %]</p>
+
+<p>Contact: [% job.company.contact %]</p>
+
+<p>Source URL: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>

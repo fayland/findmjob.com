@@ -133,5 +133,12 @@ __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+__PACKAGE__->belongs_to(
+    company =>
+    'Company',
+    { 'foreign.id' => 'self.company_id' }
+);
+
 __PACKAGE__->meta->make_immutable;
 1;
