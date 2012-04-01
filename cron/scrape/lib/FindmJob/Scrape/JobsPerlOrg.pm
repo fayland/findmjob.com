@@ -7,6 +7,7 @@ with 'FindmJob::Scrape::Role::TextFormatter';
 use XML::Simple 'XMLin';
 use HTML::TreeBuilder;
 use Try::Tiny;
+use JSON::XS 'encode_json';
 
 sub run {
     my ($self) = @_;
@@ -50,7 +51,6 @@ sub on_single_page {
 
         $data->{website} = 'http://' . $data->{website} unless $data->{website} and $data->{website} =~ /^http\:/;
 
-        use Data::Dumper;
         delete $data->{posted_on};
         my $row = {
             source_url => $link,
@@ -65,7 +65,7 @@ sub on_single_page {
             description => delete $data->{description},
             location => delete $data->{location},
             type  => delete $data->{hours},
-            extra => Dumper(\$data),
+            extra => encode_json($data),
         };
         $self->schema->resultset('Job')->create_job($row);
 #    } catch {

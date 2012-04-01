@@ -18,4 +18,5 @@
 
 <p>Source URL: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
 
+<h3>Comments</h3>
 [% INCLUDE include/fbcomment.tt2 %]
