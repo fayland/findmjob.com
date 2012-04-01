@@ -15,11 +15,21 @@
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
-    <p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p>
-    <p><b>Poster represents</b>: [% job.extra_data.represents %]</p>
-    <p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p>
-    <p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p>
-    <p><b>Onsite</b>: [% job.extra_data.onsite %]</p>
+        [% IF job.extra_data.pay_rate %]
+        <p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p>
+        [% END %]
+        [% IF job.extra_data.represents %]
+        <p><b>Poster represents</b>: [% job.extra_data.represents %]</p>
+        [% END %]
+        [% IF job.extra_data.employment_terms %]
+        <p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p>
+        [% END %]
+        [% IF job.extra_data.employment_length %]
+        <p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p>
+        [% END %]
+        [% IF job.extra_data.onsite %]
+        <p><b>Onsite</b>: [% job.extra_data.onsite %]</p>
+        [% END %]
     [% END %]
 [% END %]
 
@@ -27,8 +37,12 @@
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
-    <p class="well"><b>Required Skill:</b><br />[% job.extra_data.skills_required | html_line_break %]</p>
-    <p class="well"><b>Desired  Skill:</b><br />[% job.extra_data.skills_desired | html_line_break %]</p>
+        [% IF job.extra_data.skills_required %]
+        <p class="well"><b>Required Skill:</b><br />[% job.extra_data.skills_required | html_line_break %]</p>
+        [% END %]
+        [% IF job.extra_data.skills_desired %]
+        <p class="well"><b>Desired  Skill:</b><br />[% job.extra_data.skills_desired | html_line_break %]</p>
+        [% END %]
     [% END %]
 [% END %]
 

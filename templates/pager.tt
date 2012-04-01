@@ -1,6 +1,6 @@
-[% IF pager.last_page > 1 %]
+[% IF pager AND pager.last_page > 1 %]
 [% base_url = request.uri.replace('\?p=(\d+)', '') %]
-<div class="pagination">
+<div class="pagination pull-right">
   <ul>
     [% IF pager.previous_page %]
     <li><a href="[% base_url %]?p=[% pager.previous_page %]">Prev</a></li>

@@ -51,11 +51,14 @@ get '/company/:companyid' => sub {
     my $schema = FindmJob::Basic->schema;
     my $company = $schema->resultset('Company')->find($companyid);
     var company => $company;
+
+    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
     my @jobs    = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {
         order_by => 'posted_at DESC',
-        rows => 12
+        rows => 12,
+        page => $p
     })->all;
     var jobs => \@jobs;
 
