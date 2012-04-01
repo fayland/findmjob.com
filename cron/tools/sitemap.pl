@@ -29,11 +29,13 @@ while (my ($id, $tbl) = $sth->fetchrow_array) {
     if ($tbl eq 'job') {
         $map->add(
             loc => $url,
-            lastmod  => $posted_at,
-            priority => 0.5,
+            priority => 0.7,
         );
     } else {
-        $map->add($url);
+        $map->add(
+            loc => $url,
+            priority => 0.5,
+        );
     }
 }
 
