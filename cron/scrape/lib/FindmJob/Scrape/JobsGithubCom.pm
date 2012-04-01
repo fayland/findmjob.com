@@ -44,7 +44,7 @@ sub on_single_page {
         my $contact  = $siderbar->look_down(_tag => 'div', class => qr'module highlighted')->as_trimmed_text;
         $contact =~ s/\s*How to apply\s*//;
         my $company  = $siderbar->look_down(_tag => 'div', class => qr'module logo')->as_trimmed_text;
-        $company =~ s/\s*\d+other jobs\s*//;
+        $company =~ s/\s*(\d+)\s+other\s+jobs\s*//;
 
         my $row = {
             source_url => $link,
