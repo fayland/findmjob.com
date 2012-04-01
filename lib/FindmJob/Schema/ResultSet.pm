@@ -23,7 +23,8 @@ around 'create' => sub {
     if (grep { $_ eq $table } @uuid_tables) {
         $self->result_source->schema->resultset('Object')->create( {
             id => $row->id,
-            tbl => $table
+            tbl => $table,
+            time => time(),
         } );
     }
 
