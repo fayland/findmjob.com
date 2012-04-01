@@ -38,11 +38,6 @@ __PACKAGE__->table("company");
   is_nullable: 0
   size: 128
 
-=head2 contact
-
-  data_type: 'text'
-  is_nullable: 0
-
 =head2 website
 
   data_type: 'varchar'
@@ -56,8 +51,6 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 22 },
   "name",
   { data_type => "varchar", is_nullable => 0, size => 128 },
-  "contact",
-  { data_type => "text", is_nullable => 0 },
   "website",
   { data_type => "varchar", is_nullable => 0, size => 128 },
 );
@@ -75,8 +68,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 11:30:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:AZ9iVg+X/6uauikiJMVJvg
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 16:20:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LtzfsDl2ILTukQ1SVCoTvQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
