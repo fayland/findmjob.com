@@ -3,19 +3,19 @@
 [% USE String %]
 
 <h1>[% title %]</h1>
-<p class='pull-right'>
-<!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style ">
-<a class="addthis_button_preferred_1"></a>
-<a class="addthis_button_preferred_2"></a>
-<a class="addthis_button_preferred_3"></a>
-<a class="addthis_button_preferred_4"></a>
-<a class="addthis_button_compact"></a>
-<a class="addthis_counter addthis_bubble_style"></a>
+<div class="span3 offset9">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style ">
+    <a class="addthis_button_preferred_1"></a>
+    <a class="addthis_button_preferred_2"></a>
+    <a class="addthis_button_preferred_3"></a>
+    <a class="addthis_button_preferred_4"></a>
+    <a class="addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f7818b37cce11fd"></script>
+    <!-- AddThis Button END -->
 </div>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f7818b37cce11fd"></script>
-<!-- AddThis Button END -->
-</p>
 [% IF company.website %]<p><a href='[% company.website %]'>[% company.website %]</a></p>[% END %]
 <hr class="soften">
 
