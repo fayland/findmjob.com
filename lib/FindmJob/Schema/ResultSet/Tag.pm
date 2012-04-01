@@ -2,7 +2,7 @@ package FindmJob::Schema::ResultSet::Tag;
 
 use Moose;
 use namespace::autoclean;
-extends 'DBIx::Class::ResultSet';
+extends 'FindmJob::Schema::ResultSet';
 
 use FindmJob::Utils 'uuid';
 
@@ -11,8 +11,7 @@ sub get_id_by_text {
 
     my $row = $self->search( { text => $text } )->first;
     return $row->id if $row;
-    my $id = uuid();
-    $row = $self->create( { id => $id, text => $text } );
+    $row = $self->create( { text => $text } );
     return $row->id;
 }
 
