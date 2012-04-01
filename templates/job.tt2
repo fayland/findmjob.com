@@ -9,14 +9,32 @@
 <hr class="soften">
 
 <p>Posted on [% job.posted_at %]</p>
-<p>Company: <a href='/company/[% job.company_id %]'>[% job.company.name %]</a></p>
-<p>Location: [% job.location %]</p>
-<p>Hours: [% job.type %]</p>
-<p class="well">[% job.description | html_line_break %]</p>
+<p><b>Company</b>: <a href='/company/[% job.company_id %]'>[% job.company.name %]</a></p>
+<p><b>Location</b>: [% job.location %]</p>
+<p><b>Hours</b>: [% job.type %]</p>
 
-<p>Contact: [% job.contact %]</p>
+[% IF job.extra_data %]
+    [% IF job.source_url.search('jobs.perl.org') %]
+    <p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p>
+    <p><b>Poster represents</b>: [% job.extra_data.represents %]</p>
+    <p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p>
+    <p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p>
+    <p><b>Onsite</b>: [% job.extra_data.onsite %]</p>
+    [% END %]
+[% END %]
 
-<p>Source URL: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
+<p class="well"><b>Description:</b><br />[% job.description | html_line_break %]</p>
+
+[% IF job.extra_data %]
+    [% IF job.source_url.search('jobs.perl.org') %]
+    <p class="well"><b>Required Skill:</b><br />[% job.extra_data.skills_required | html_line_break %]</p>
+    <p class="well"><b>Desired  Skill:</b><br />[% job.extra_data.skills_desired | html_line_break %]</p>
+    [% END %]
+[% END %]
+
+<p><b>Contact</b>: [% job.contact %]</p>
+
+<p><b>Source URL</b>: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
 
 <h3>Comments</h3>
 [% INCLUDE include/fbcomment.tt2 %]

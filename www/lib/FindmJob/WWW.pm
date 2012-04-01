@@ -37,6 +37,7 @@ get '/job/:jobid' => sub {
     my $jobid = params->{jobid};
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Job')->find($jobid);
+    $job->{extra_data} = from_json( $job->extra ) if $job->extra =~ /^\{/;
     var job => $job;
 
     template 'job.tt2';
