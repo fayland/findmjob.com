@@ -42,4 +42,20 @@ get '/job/:jobid' => sub {
     template 'job.tt2';
 };
 
+get '/company/:companyid' => sub {
+    my $companyid = params->{companyid};
+    my $schema = FindmJob::Basic->schema;
+    my $company = $schema->resultset('Company')->find($companyid);
+    var company => $company;
+    my @jobs    = $schema->resultset('Job')->search( {
+        company_id => $companyid
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12
+    })->all;
+    var jobs => \@jobs;
+
+    template 'company.tt2';
+};
+
 true;

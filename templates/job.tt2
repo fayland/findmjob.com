@@ -3,7 +3,7 @@
 <h1>[% title %]</h1>
 
 <p>Posted on [% job.posted_at %]</p>
-<p>Company: [% job.company.name %]</p>
+<p>Company: <a href='/company/[% job.company_id %]'>[% job.company.name %]</a></p>
 <p>Location: [% job.location %]</p>
 <p class="well">[% job.description | html_line_break %]</p>
 
