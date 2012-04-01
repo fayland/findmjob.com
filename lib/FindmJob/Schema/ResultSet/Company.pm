@@ -12,6 +12,7 @@ sub get {
         return $r if $r;
     }
     $row->{name} //= $row->{website}; #/
+    $row->{name} =~ s#http://(www\.)?##;
     $row->{website} //= ''; #/
     return 'NA' unless length $row->{name};
     my $r = $self->get_by_name( $row->{name} );
