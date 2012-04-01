@@ -38,6 +38,8 @@ sub on_single_page {
         my $desc = $tree->look_down(_tag => 'div', class => qr'column main');
         $desc = $self->formatter->format($desc);
         $desc =~ s/^\s+|\s+$//g;
+        $desc =~ s/\[IMAGE\]/\n/g;
+        $desc =~ s/\n{3,}/\n\n/g;
         $desc =~ s/\xA0/ /g;
 
         my $siderbar = $tree->look_down(_tag => 'div', class => qr'column sidebar');
