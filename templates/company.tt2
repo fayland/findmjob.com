@@ -23,4 +23,6 @@
 [%# to close tag %]
 [% IF jobs.size MOD 2 == 1 %]</div>[% END %]
 
+[% INCLUDE pager.tt %]
+
 [% INCLUDE include/fbcomment.tt2 %]

@@ -24,11 +24,14 @@ hook before_template_render => sub {
 
 get '/' => sub {
     my $schema = FindmJob::Basic->schema;
-    my @jobs = $schema->resultset('Job')->search( undef, {
+    my $p = params->{p};
+    my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'posted_at DESC',
-        rows => 12
-    })->all;
-    var jobs => \@jobs;
+        rows => 12,
+        page => $p
+    });
+    var pager => $job_rs->pager;
+    var jobs  => [ $job_rs->all ];
 
     template 'index.tt2';
 };

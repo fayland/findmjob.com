@@ -16,3 +16,5 @@
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]
 [% END %]
+
+[% INCLUDE pager.tt %]
