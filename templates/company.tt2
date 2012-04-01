@@ -3,7 +3,7 @@
 [% USE String %]
 
 <h1>[% title %]</h1>
-<div class="span3 offset9">
+<div class="span4 offset8">
     [% INCLUDE include/addthis.tt %]
 </div>
 [% IF company.website %]<p><a href='[% company.website %]'>[% company.website %]</a></p>[% END %]

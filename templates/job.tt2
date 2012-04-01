@@ -3,7 +3,7 @@
 [% description = String.new(job.description).truncate(255, '...') %]
 
 <h1>[% title %]</h1>
-<div class="span3 offset9">
+<div class="span4 offset8">
     [% INCLUDE include/addthis.tt %]
 </div>
 <hr class="soften">
