@@ -5,7 +5,7 @@
 <p>Posted on [% job.posted_at %]</p>
 <p>Company: [% job.company.name %]</p>
 <p>Location: [% job.location %]</p>
-<p>[% job.description | html_line_break %]</p>
+<p class="well">[% job.description | html_line_break %]</p>
 
 <p>Contact: [% job.company.contact %]</p>
 

@@ -1,9 +1,5 @@
-# Your application's name
 appname: "FindmJob.com"
 
-# when the charset is set to UTF-8 Dancer will handle for you
-# all the magic of encoding and decoding. You should not care
-# about unicode within your app when this setting is set (recommended).
 charset: "UTF-8"
 
 template: "template_toolkit"

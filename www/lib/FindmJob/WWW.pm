@@ -26,7 +26,7 @@ get '/' => sub {
     my $schema = FindmJob::Basic->schema;
     my @jobs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
-        rows => 15
+        rows => 12
     })->all;
     var jobs => \@jobs;
 
