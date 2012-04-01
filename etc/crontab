@@ -1,0 +1,2 @@
+10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsPerlOrg
+20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsGithubCom

@@ -25,7 +25,7 @@ hook before_template_render => sub {
 get '/' => sub {
     my $schema = FindmJob::Basic->schema;
     my @jobs = $schema->resultset('Job')->search( undef, {
-        order_by => 'inserted_at DESC',
+        order_by => 'posted_at DESC',
         rows => 12
     })->all;
     var jobs => \@jobs;
@@ -50,7 +50,7 @@ get '/company/:companyid' => sub {
     my @jobs    = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {
-        order_by => 'inserted_at DESC',
+        order_by => 'posted_at DESC',
         rows => 12
     })->all;
     var jobs => \@jobs;

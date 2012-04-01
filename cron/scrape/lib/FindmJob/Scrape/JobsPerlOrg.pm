@@ -64,6 +64,7 @@ sub on_single_page {
             posted_at => $item->{'dc:date'},
             description => delete $data->{description},
             location => delete $data->{location},
+            type  => delete $data->{hours},
             extra => Dumper(\$data),
         };
         $self->schema->resultset('Job')->create_job($row);
