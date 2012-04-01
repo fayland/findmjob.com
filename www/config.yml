@@ -12,4 +12,5 @@ engines:
     encoding:  'utf8'
     start_tag: '[%'
     end_tag:   '%]'
+    WRAPPER: 'wrapper.tt2'
 
