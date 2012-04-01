@@ -1,0 +1,30 @@
+[% IF pager.last_page > 1 %]
+[% base_url = request.uri.replace('\?p=(\d+)', '') %]
+<div class="pagination">
+  <ul>
+    [% IF pager.previous_page %]
+    <li><a href="[% base_url %]?p=[% pager.previous_page %]">Prev</a></li>
+    [% END %]
+
+    [% IF pager.current_page - 4 > 0 %]
+	    [% start_page = pager.current_page - 4 %]
+	[% ELSE %]
+	    [% start_page = 1 %]
+    [% END %]
+
+	[% IF pager.last_page > pager.current_page + 4 %]
+        [% end_page = pager.current_page + 4 %]
+	[% ELSE %]
+	    [% end_page = pager.last_page %]
+    [% END %]
+
+    [% FOREACH page = [ start_page .. end_page ] %]
+        <li[% IF page == pager.current_page %] class="active"[% END %]>
+        <a href='[% base_url %]?p=[% page %]'>[% page %]</a>
+    [% END %]
+    [% IF pager.next_page %]
+    <li><a href="[% base_url %]?p=[% pager.next_page %]">Next</a></li>
+    [% END %]
+  </ul>
+</div>
+[% END %]
