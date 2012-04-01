@@ -4,7 +4,7 @@
 
 <h1>[% title %]</h1>
 <div class="span4 offset8">
-    [% INCLUDE include/addthis.tt %]
+    [% INCLUDE include/addthis.tt2 %]
 </div>
 [% IF company.website %]<p><a href='[% company.website %]'>[% company.website %]</a></p>[% END %]
 <hr class="soften">
@@ -22,3 +22,5 @@
 [% END %]
 [%# to close tag %]
 [% IF jobs.size MOD 2 == 1 %]</div>[% END %]
+
+[% INCLUDE include/fbcomment.tt2 %]

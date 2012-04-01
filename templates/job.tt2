@@ -4,7 +4,7 @@
 
 <h1>[% title %]</h1>
 <div class="span4 offset8">
-    [% INCLUDE include/addthis.tt %]
+    [% INCLUDE include/addthis.tt2 %]
 </div>
 <hr class="soften">
 
@@ -17,3 +17,5 @@
 <p>Contact: [% job.contact %]</p>
 
 <p>Source URL: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
+
+[% INCLUDE include/fbcomment.tt2 %]
