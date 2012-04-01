@@ -15,7 +15,7 @@ sub create_job {
 
     my $schema = $self->result_source->schema;
     my $company = $schema->resultset('Company')->get(delete $row->{company});
-    $row->{company_id} = $company->{id};
+    $row->{company_id} = $company->id;
     $row->{inserted_at} = time();
     $self->create($row);
 }

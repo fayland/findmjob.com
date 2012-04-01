@@ -44,6 +44,7 @@ sub on_single_page {
         # insert
 
         use Data::Dumper;
+        delete $data->{posted_on};
         my $row = {
             source_url => $link,
             title => $title,
@@ -52,6 +53,7 @@ sub on_single_page {
                 website => delete $data->{website},
                 contact => delete $data->{contact},
             },
+            posted_at => $item->{'dc:date'},
             description => delete $data->{description},
             location => delete $data->{location},
             extra => Dumper(\$data),
@@ -61,8 +63,6 @@ sub on_single_page {
 #        $self->log_fatal($_);
 #    }
     $tree = $tree->delete;
-
-    exit;
 }
 
 1;
