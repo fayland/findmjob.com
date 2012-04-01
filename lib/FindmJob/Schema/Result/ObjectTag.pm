@@ -30,13 +30,13 @@ __PACKAGE__->table("object_tag");
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 32
+  size: 22
 
 =head2 tag
 
-  data_type: 'integer'
-  extra: {unsigned => 1}
+  data_type: 'varchar'
   is_nullable: 0
+  size: 22
 
 =head2 time
 
@@ -48,9 +48,9 @@ __PACKAGE__->table("object_tag");
 
 __PACKAGE__->add_columns(
   "object",
-  { data_type => "varchar", is_nullable => 0, size => 32 },
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "tag",
-  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "time",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
 );
@@ -70,8 +70,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("object", "tag");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-03-31 23:20:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IO4IeuLlyMjcnbLf4iR5oQ
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 11:30:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2C0fNRvkzP6Zw9Qpv7ECfw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

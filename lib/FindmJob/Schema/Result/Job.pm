@@ -30,7 +30,7 @@ __PACKAGE__->table("job");
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 32
+  size: 22
 
 =head2 source_url
 
@@ -48,7 +48,7 @@ __PACKAGE__->table("job");
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 32
+  size: 22
 
 =head2 description
 
@@ -57,8 +57,9 @@ __PACKAGE__->table("job");
 
 =head2 location
 
-  data_type: 'integer'
+  data_type: 'varchar'
   is_nullable: 0
+  size: 64
 
 =head2 inserted_at
 
@@ -75,17 +76,17 @@ __PACKAGE__->table("job");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "varchar", is_nullable => 0, size => 32 },
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "source_url",
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "title",
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "company_id",
-  { data_type => "varchar", is_nullable => 0, size => 32 },
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "description",
   { data_type => "text", is_nullable => 0 },
   "location",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "varchar", is_nullable => 0, size => 64 },
   "inserted_at",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
   "extra",
@@ -119,8 +120,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-03-31 23:20:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2/ACNOXVcjMWww9KzBTQPQ
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 11:30:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HHH9jMktmVUAx/ILN2BBBw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

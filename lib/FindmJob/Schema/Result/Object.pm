@@ -30,7 +30,7 @@ __PACKAGE__->table("object");
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 32
+  size: 22
 
 =head2 tbl
 
@@ -42,7 +42,7 @@ __PACKAGE__->table("object");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "varchar", is_nullable => 0, size => 32 },
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "tbl",
   { data_type => "varchar", is_nullable => 0, size => 12 },
 );
@@ -60,8 +60,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-03-31 23:20:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lnw1bmu6II3hWmEK1feFVQ
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 11:30:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3ciSgISCOpWDmUp+vmJZRQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
