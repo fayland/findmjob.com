@@ -11,8 +11,8 @@ sub get {
         my $r = $self->get_by_website( $row->{website} );
         return $r if $r;
     }
-    $row->{name} //= $row->{website};
-    $row->{website} //= '';
+    $row->{name} //= $row->{website}; #/
+    $row->{website} //= ''; #/
     return 'NA' unless length $row->{name};
     my $r = $self->get_by_name( $row->{name} );
     return $r if $r;
