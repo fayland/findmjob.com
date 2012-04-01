@@ -19,8 +19,13 @@ sub run {
     foreach my $item ( @{$data->{item}} ) {
         my $link = $item->{link};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
-        next if $is_inserted;
-        $self->on_single_page($item);
+        next if $is_inserted and not $self->opt_update;
+        my $row = $self->on_single_page($item);
+        if ( $is_inserted and $self->opt_update ) {
+            $self->schema->resultset('Job')->update_job($row);
+        } else {
+            $self->schema->resultset('Job')->create_job($row);
+        }
     }
 }
 
@@ -67,11 +72,13 @@ sub on_single_page {
             type  => delete $data->{hours},
             extra => encode_json($data),
         };
-        $self->schema->resultset('Job')->create_job($row);
+
 #    } catch {
 #        $self->log_fatal($_);
 #    }
     $tree = $tree->delete;
+
+    return $row;
 }
 
 1;

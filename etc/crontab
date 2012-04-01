@@ -1,2 +1,3 @@
+0 */12 * * * perl /findmjob.com/cron/tools/sitemap.pl
 10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsPerlOrg
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsGithubCom
