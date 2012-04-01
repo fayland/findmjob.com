@@ -1,10 +1,13 @@
+[% USE String %]
 [% title = job.title %]
+[% description = String.new(job.description).truncate(255, '...') %]
 
 <h1>[% title %]</h1>
 
 <p>Posted on [% job.posted_at %]</p>
 <p>Company: <a href='/company/[% job.company_id %]'>[% job.company.name %]</a></p>
 <p>Location: [% job.location %]</p>
+<p>Hours: [% job.type %]</p>
 <p class="well">[% job.description | html_line_break %]</p>
 
 <p>Contact: [% job.contact %]</p>
