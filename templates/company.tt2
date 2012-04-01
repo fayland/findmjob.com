@@ -3,6 +3,7 @@
 [% USE String %]
 
 <h1>[% title %]</h1>
+[% IF company.website %]<p><a href='[% company.website %]'>[% company.website %]</a></p>[% END %]
 <hr class="soften">
 
 [% FOREACH job IN jobs %]

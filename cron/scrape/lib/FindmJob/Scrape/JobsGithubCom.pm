@@ -43,14 +43,18 @@ sub on_single_page {
         my $siderbar = $tree->look_down(_tag => 'div', class => qr'column sidebar');
         my $contact  = $siderbar->look_down(_tag => 'div', class => qr'module highlighted')->as_trimmed_text;
         $contact =~ s/\s*How to apply\s*//;
-        my $company  = $siderbar->look_down(_tag => 'div', class => qr'module logo')->as_trimmed_text;
+        my $logo_div = $siderbar->look_down(_tag => 'div', class => qr'module logo');
+        my $company  = $logo_div->look_down(_tag => 'h2')->as_trimmed_text;
         $company =~ s/\s*(\d+)\s+other\s+jobs\s*//;
+        my $website  = $logo_div->look_down(_tag => 'p', class => 'url');
+        $website = $website->look_down(_tag => 'a')->attr('href') if $website;
 
         my $row = {
             source_url => $link,
             title => $title,
             company => {
-                name => $company
+                name => $company,
+                website => $website,
             },
             contact   => $contact,
             posted_at => substr($item->{'updated'}, 0, 10),

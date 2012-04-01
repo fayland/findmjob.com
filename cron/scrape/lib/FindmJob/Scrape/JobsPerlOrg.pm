@@ -48,7 +48,7 @@ sub on_single_page {
             $data->{$k} = $v;
         }
 
-        # insert
+        $data->{website} = 'http://' . $data->{website} unless $data->{website} and $data->{website} =~ /^http\:/;
 
         use Data::Dumper;
         delete $data->{posted_on};
