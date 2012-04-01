@@ -2,6 +2,7 @@ package FindmJob::Scrape::JobsPerlOrg;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
+with 'FindmJob::Scrape::Role::TextFormatter';
 
 use XML::Simple 'XMLin';
 use HTML::TreeBuilder;
@@ -35,8 +36,14 @@ sub on_single_page {
         foreach my $tr (@trs) {
             my @tds = $tr->look_down(_tag => 'td');
             next if @tds > 2;
-            my $k   = $tr->look_down(_tag => 'a')->attr('name');
-            my $v   = $tds[1]->as_trimmed_text;
+            my $k = $tr->look_down(_tag => 'a')->attr('name');
+            my $v;
+            if ( grep { $k eq $_ } ('description', 'skills_desired', 'skills_required') ) {
+                $v = $self->formatter->format($tds[1]);
+                $v =~ s/^\s+|\s+$//g;
+            } else {
+                $v = $tds[1]->as_trimmed_text;
+            }
             $v =~ s/\xA0/ /g;
             $data->{$k} = $v;
         }
@@ -51,8 +58,9 @@ sub on_single_page {
             company => {
                 name => delete $data->{company_name},
                 website => delete $data->{website},
-                contact => delete $data->{contact},
+                contact => $data->{contact},
             },
+            contact   => delete $data->{contact},
             posted_at => $item->{'dc:date'},
             description => delete $data->{description},
             location => delete $data->{location},

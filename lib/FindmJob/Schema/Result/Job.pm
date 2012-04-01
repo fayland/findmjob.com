@@ -67,6 +67,11 @@ __PACKAGE__->table("job");
   is_nullable: 0
   size: 64
 
+=head2 contact
+
+  data_type: 'text'
+  is_nullable: 0
+
 =head2 inserted_at
 
   data_type: 'integer'
@@ -95,6 +100,8 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "location",
   { data_type => "varchar", is_nullable => 0, size => 64 },
+  "contact",
+  { data_type => "text", is_nullable => 0 },
   "inserted_at",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
   "extra",
@@ -128,8 +135,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 11:33:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/6P/C0h2LKhWWobeP14ljA
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 14:29:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ixztndd4OvkxYTULbHet9A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

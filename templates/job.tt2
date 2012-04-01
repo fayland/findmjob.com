@@ -7,6 +7,6 @@
 <p>Location: [% job.location %]</p>
 <p class="well">[% job.description | html_line_break %]</p>
 
-<p>Contact: [% job.company.contact %]</p>
+<p>Contact: [% job.contact %]</p>
 
 <p>Source URL: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
