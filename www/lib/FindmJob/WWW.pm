@@ -27,8 +27,8 @@ hook before_template_render => sub {
 get qr'.*?/p\.(\d+).*?' => sub {
     my $uri = request->uri;
     $uri =~ s'/p.([^\/]+)'';
-    $uri =~ s/\/$//;
     var page => $1;
+    $uri =~ s/\/$//;
     forward $uri;
 };
 
