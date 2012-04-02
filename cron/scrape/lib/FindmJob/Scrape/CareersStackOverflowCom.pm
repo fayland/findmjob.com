@@ -47,6 +47,7 @@ sub on_single_page {
         my $company = $byline->look_down(_tag => 'a', target => '_blank');
 
         my @tags = $hed->look_down(_tag => 'a', class => 'post-tag');
+        @tags = map { $_->as_trimmed_text } @tags;
 
         my $apply = $jobdetail->look_down(_tag => 'div', class => qr'apply')->as_trimmed_text;
         $apply =~ s/\s*How to apply\s*//;
@@ -84,6 +85,7 @@ sub on_single_page {
             location => $location,
             type     => '',
             extra    => '',
+            tags     => \@tags,
         };
 
 #    } catch {
