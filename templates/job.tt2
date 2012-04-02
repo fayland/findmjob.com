@@ -46,7 +46,9 @@
     [% END %]
 [% END %]
 
+[% IF job.contact %]
 <p><b>Contact</b>: [% job.contact %]</p>
+[% END %]
 
 <p><b>Source URL</b>: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
 
