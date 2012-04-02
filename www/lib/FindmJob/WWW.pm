@@ -6,7 +6,7 @@ our $VERSION = '0.1';
 
 use FindmJob::Basic;
 use Encode;
-use JSON::XS;
+use JSON::XS ();
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -24,9 +24,16 @@ hook before_template_render => sub {
     $tokens->{config} = FindmJob::Basic->config;
 };
 
+get qr'.*?/p\.(\d+).*?' => sub {
+    my $uri = request->uri;
+    $uri =~ s'/p.([^\/]+)'';
+    var page => $1;
+    forward $uri;
+};
+
 get '/' => sub {
     my $schema = FindmJob::Basic->schema;
-    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'posted_at DESC',
         rows => 12,
@@ -59,7 +66,7 @@ get '/company/:companyid' => sub {
     my $company = $schema->resultset('Company')->find($companyid);
     var company => $company;
 
-    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {
@@ -87,7 +94,7 @@ get '/tag/:tagid' => sub {
     }
     var tag => $tag;
 
-    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $rs = $schema->resultset('ObjectTag')->search( {
         tag => $tagid
     }, {

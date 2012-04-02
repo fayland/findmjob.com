@@ -1,9 +1,10 @@
 [% IF pager AND pager.last_page > 1 %]
-[% base_url = request.uri.replace('\?p=(\d+)', '') %]
+[% base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '') %]
 <div class="pagination pull-right">
   <ul>
     [% IF pager.previous_page %]
-    <li><a href="[% base_url %]?p=[% pager.previous_page %]">Prev</a></li>
+    <li><a href="[% base_url %]/">First</a></li>
+    <li><a href="[% base_url %]/p.[% pager.previous_page %]/">Prev</a></li>
     [% END %]
 
     [% IF pager.current_page - 4 > 0 %]
@@ -20,10 +21,11 @@
 
     [% FOREACH page = [ start_page .. end_page ] %]
         <li[% IF page == pager.current_page %] class="active"[% END %]>
-        <a href='[% base_url %]?p=[% page %]'>[% page %]</a>
+        <a href='[% base_url %]/p.[% page %]/'>[% page %]</a>
     [% END %]
     [% IF pager.next_page %]
-    <li><a href="[% base_url %]?p=[% pager.next_page %]">Next</a></li>
+    <li><a href="[% base_url %]/p.[% pager.next_page %]/">Next</a></li>
+    <li><a href="[% base_url %]/p.[% pager.last_page %]/">Last</a></li>
     [% END %]
   </ul>
 </div>
