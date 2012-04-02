@@ -54,16 +54,50 @@ get '/company/:companyid' => sub {
     var company => $company;
 
     my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
-    my @jobs    = $schema->resultset('Job')->search( {
+    my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {
         order_by => 'posted_at DESC',
         rows => 12,
         page => $p
-    })->all;
-    var jobs => \@jobs;
+    });
+    var pager => $job_rs->pager;
+    var jobs  => [ $job_rs->all ];
 
     template 'company.tt2';
+};
+
+get '/tag/:tagid' => sub {
+    my $tagid = params->{tagid};
+    my $schema = FindmJob::Basic->schema;
+    my $tag = $schema->resultset('Tag')->find($tagid);
+    var tag => $tag;
+
+    my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $rs = $schema->resultset('ObjectTag')->search( {
+        tag => $tagid
+    }, {
+        order_by => 'me.time DESC',
+        prefetch => ['object'],
+        '+select' => ['object.tbl', 'object.id'],
+        '+as'     => ['tbl', 'object_id'],
+        rows => 12,
+        page => $p
+    });
+
+    my @obj;
+    while (my $row = $rs->next) {
+        my $tbl = $row->get_column('tbl');
+        my $id  = $row->get_column('object_id');
+        my $obj = $schema->resultset(ucfirst $tbl)->find($id);
+        $obj->{tbl} = $tbl;
+        push @obj, $obj;
+    }
+
+    var pager => $rs->pager;
+    var objects => \@obj;
+
+    template 'tag.tt2';
 };
 
 true;

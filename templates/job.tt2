@@ -13,7 +13,7 @@
 [% IF job.tags.size %]
 <p><b>Tags</b>:
 [% FOREACH tag IN job.tags %]
-[% tag %][% UNLESS loop.last %], [%+ END %]
+<a href='/tag/[% tag.id %]'>[% tag.text %]</a>[% UNLESS loop.last %], [%+ END %]
 [% END %]
 </p>
 [% END %]

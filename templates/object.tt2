@@ -1,0 +1,5 @@
+[% IF obj.tbl == 'job' %]
+<a href='/job/[% obj.id %]'>[% obj.title %]</a>
+[% ELSIF obj.tbl == 'company' %]
+<a href='/company/[% obj.id %]'>[% obj.name %]</a>
+[% END %]

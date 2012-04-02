@@ -1,0 +1,16 @@
+[% title = tag.text %]
+
+[% USE String %]
+
+<h1>[% title %]</h1>
+<div class="span4 offset8">
+    [% INCLUDE include/addthis.tt2 %]
+</div>
+<hr class="soften">
+
+<ul>
+[% FOREACH obj IN objects %]
+<li>[% INCLUDE object.tt2 %]</li>
+[% END %]
+
+[% INCLUDE pager.tt %]

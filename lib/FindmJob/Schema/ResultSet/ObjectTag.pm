@@ -11,11 +11,14 @@ sub get_tags_by_object {
         object => $object
     }, {
         join      => 'tag',
-        'select' => ['tag.text'],
-        'as'     => ['text'],
+        'select' => ['tag.id', 'tag.text'],
+        'as'     => ['id', 'text'],
         order_by => 'time',
     })->all;
-    my @tags = map { $_->get_column('text') } @all;
+    my @tags = map { {
+        id   => $_->get_column('id'),
+        text => $_->get_column('text')
+    } } @all;
     return wantarray ? @tags : \@tags;
 }
 
