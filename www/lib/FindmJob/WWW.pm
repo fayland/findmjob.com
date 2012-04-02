@@ -158,7 +158,7 @@ sub _render_feed {
             $author = $obj->company->name;
             $content = $obj->description;
             if ($obj->source_url !~ /jobs.github.com/) {
-                $content =~ s/\n/\<br\/>/sg;
+                $content =~ s/\n/\<br \/>/sg;
             }
         } elsif ($obj->{tbl} eq 'company') {
             $link = $config->{sites}->{main} . "/company/" . $obj->id;
