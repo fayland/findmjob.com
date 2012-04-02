@@ -70,7 +70,7 @@ sub on_single_page {
         $desc =~ s/\n{3,}/\n\n/g;
         $desc =~ s/\xA0/ /g;
         $desc =~ s/\s*apply\s*$//is;
-        $desc =~ s/^\s*Job Description\s*\-+\s*//sg;
+        $desc =~ s/^\s*Job Description\s*\-+\s*//isg;
 
         my $row = {
             source_url => $link,
