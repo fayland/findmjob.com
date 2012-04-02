@@ -1,4 +1,5 @@
 [% title = tag.text %]
+[% has_feed = 1 %]
 
 [% USE String %]
 
