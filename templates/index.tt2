@@ -16,5 +16,7 @@
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]
 [% END %]
+[%# to close tag %]
+[% IF jobs.size MOD 2 == 1 %]</div>[% END %]
 
 [% INCLUDE pager.tt %]
