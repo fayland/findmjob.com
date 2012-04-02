@@ -41,6 +41,7 @@ get '/job/:jobid' => sub {
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Job')->find($jobid);
     $job->{extra_data} = from_json( $job->extra ) if $job->extra =~ /^\{/;
+    $job->{tags} = [ $schema->resultset('ObjectTag')->get_tags_by_object($job->id) ];
     var job => $job;
 
     template 'job.tt2';

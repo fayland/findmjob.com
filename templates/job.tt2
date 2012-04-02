@@ -9,6 +9,15 @@
 <hr class="soften">
 
 <p>Posted on [% job.posted_at %]</p>
+
+[% IF job.tags.size %]
+<p><b>Tags</b>:
+[% FOREACH tag IN job.tags %]
+[% tag %][% UNLESS loop.last %], [%+ END %]
+[% END %]
+</p>
+[% END %]
+
 <p><b>Company</b>: <a href='/company/[% job.company_id %]'>[% job.company.name %]</a></p>
 <p><b>Location</b>: [% job.location %]</p>
 <p><b>Hours</b>: [% job.type %]</p>
