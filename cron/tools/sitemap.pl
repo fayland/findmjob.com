@@ -22,7 +22,7 @@ $map->add(
     priority => 1.0,
 );
 
-my $sth = $dbh->prepare("SELECT id, tbl FROM object ORDER BY time DESC LIMIT 150");
+my $sth = $dbh->prepare("SELECT id, tbl FROM object ORDER BY time DESC LIMIT 500");
 $sth->execute();
 while (my ($id, $tbl) = $sth->fetchrow_array) {
     my $url = 'http://findmjob.com/' . $tbl . '/' . $id;
