@@ -63,7 +63,6 @@ sub on_single_page {
             company => {
                 name => delete $data->{company_name},
                 website => delete $data->{website},
-                contact => $data->{contact},
             },
             contact   => delete $data->{contact},
             posted_at => $item->{'dc:date'},
