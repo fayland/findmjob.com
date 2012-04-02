@@ -136,7 +136,7 @@ get '/tag/:tagid' => sub {
     var objects => \@obj;
 
     if (vars->{feed_format}) {
-        var title => "$tag Jobs - FindmJob.com";
+        var title => $tag->text . " Jobs - FindmJob.com";
         return _render_feed(@obj);
     }
 
