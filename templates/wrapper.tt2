@@ -17,6 +17,7 @@
 <meta property="og:description" content="[% description.squote %]" />
 [% END %]
 
+<link rel="shortcut icon" href="[% config.sites.static %]/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 
