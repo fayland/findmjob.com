@@ -58,8 +58,6 @@ sub run {
         } else {
             $self->schema->resultset('Job')->create_job($row);
         }
-
-        last;
     }
 }
 
