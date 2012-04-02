@@ -37,6 +37,7 @@ sub run {
             extra    => encode_json({
                 company_logo => $item->{company_logo},
             }),
+            tags     => ['github'],
         };
         if ( $is_inserted and $self->opt_update ) {
             $self->schema->resultset('Job')->update_job($row);
