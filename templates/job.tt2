@@ -42,7 +42,15 @@
     [% END %]
 [% END %]
 
-<p class="well"><b>Description:</b><br />[% job.description | html_line_break %]</p>
+<div class="well">
+[% IF job.source_url.search('jobs.github.com') %]
+[% job.description %]
+[% ELSE %]
+<b>Description:</b><br />
+[% job.description | html_line_break %]
+[% END %]
+
+</div>
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]

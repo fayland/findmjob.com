@@ -4,72 +4,46 @@ use Moose;
 with 'FindmJob::Scrape::Role';
 with 'FindmJob::Scrape::Role::TextFormatter';
 
-use XML::Simple 'XMLin';
-use HTML::TreeBuilder;
 use Try::Tiny;
 use Data::Dumper;
+use JSON::XS qw/encode_json decode_json/;
+use FindmJob::DateUtils 'human_to_db_date';
 
 sub run {
     my ($self) = @_;
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
-    my $resp = $self->get('https://jobs.github.com/positions.atom');
-    my $data = XMLin($resp->decoded_content, KeyAttr => []);
-    foreach my $item ( @{$data->{entry}} ) {
-        my $link = $item->{link}->{href};
+
+    my $resp = $self->get('https://jobs.github.com/positions.json');
+    my $data = decode_json($resp->decoded_content);
+    foreach my $item (@$data) {
+        my $link = $item->{url};
+
         my $is_inserted = $job_rs->is_inserted_by_url($link);
-        next if $is_inserted;
-        $self->on_single_page($item);
-    }
-}
-
-sub on_single_page {
-    my ($self, $item) = @_;
-
-    my $link = $item->{link}->{href};
-    my $resp = $self->get($link);
-    my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
- #   try {
-        my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
-        my $supertitle = $tree->look_down(_tag => 'p', class => 'supertitle')->as_trimmed_text;
-        my ($type, $location) = split(/\s*\/\s*/, $supertitle, 2);
-
-        my $desc = $tree->look_down(_tag => 'div', class => qr'column main');
-        $desc = $self->formatter->format($desc);
-        $desc =~ s/^\s+|\s+$//g;
-        $desc =~ s/\[IMAGE\]/\n/g;
-        $desc =~ s/\n{3,}/\n\n/g;
-        $desc =~ s/\xA0/ /g;
-
-        my $siderbar = $tree->look_down(_tag => 'div', class => qr'column sidebar');
-        my $contact  = $siderbar->look_down(_tag => 'div', class => qr'module highlighted')->as_trimmed_text;
-        $contact =~ s/\s*How to apply\s*//;
-        my $logo_div = $siderbar->look_down(_tag => 'div', class => qr'module logo');
-        my $company  = $logo_div->look_down(_tag => 'h2')->as_trimmed_text;
-        $company =~ s/\s*(\d+)\s+other\s+jobs\s*//;
-        my $website  = $logo_div->look_down(_tag => 'p', class => 'url');
-        $website = $website->look_down(_tag => 'a')->attr('href') if $website;
-
+        next if $is_inserted and not $self->opt_update;
         my $row = {
             source_url => $link,
-            title => $title,
+            title => $item->{title},
             company => {
-                name => $company,
-                website => $website,
+                name => $item->{company},
+                website => $item->{company_url},
             },
-            contact   => $contact,
-            posted_at => substr($item->{'updated'}, 0, 10),
-            description => $desc,
-            location => $location,
-            type     => $type,
-            extra    => '',
+            contact   => $item->{how_to_apply},
+            posted_at => human_to_db_date($item->{created_at}),
+            description => $item->{description},
+            location => $item->{location},
+            type     => $item->{type},
+            extra    => encode_json({
+                company_logo => $item->{company_logo},
+            }),
         };
-        $self->schema->resultset('Job')->create_job($row);
-#    } catch {
-#        $self->log_fatal($_);
-#    }
-    $tree = $tree->delete;
+        if ( $is_inserted and $self->opt_update ) {
+            $self->schema->resultset('Job')->update_job($row);
+        } else {
+            $self->schema->resultset('Job')->create_job($row);
+        }
+    }
 }
 
 1;
