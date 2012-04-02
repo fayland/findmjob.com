@@ -71,6 +71,7 @@ sub on_single_page {
             location => delete $data->{location},
             type  => delete $data->{hours},
             extra => encode_json($data),
+            tags  => ['perl']
         };
 
 #    } catch {
