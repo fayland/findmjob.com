@@ -5,6 +5,7 @@ use Dancer ':syntax';
 our $VERSION = '0.1';
 
 use FindmJob::Basic;
+use Encode;
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -40,6 +41,10 @@ get '/job/:jobid' => sub {
     my $jobid = params->{jobid};
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Job')->find($jobid);
+    if ($job->source_url =~ 'jobs.github.com') {
+        $job->title( decode_utf8($job->title) );
+        $job->description( decode_utf8($job->description) );
+    }
     $job->{extra_data} = from_json( $job->extra ) if $job->extra =~ /^\{/;
     $job->{tags} = [ $schema->resultset('ObjectTag')->get_tags_by_object($job->id) ];
     var job => $job;

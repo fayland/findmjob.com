@@ -8,15 +8,17 @@ use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/encode_json decode_json/;
 use FindmJob::DateUtils 'human_to_db_date';
+use Encode;
 
 sub run {
     my ($self) = @_;
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
+    my $json = JSON::XS->new->utf8;
 
     my $resp = $self->get('https://jobs.github.com/positions.json');
-    my $data = decode_json($resp->decoded_content);
+    my $data = $json->decode( decode('utf8', $resp->content) );
     foreach my $item (@$data) {
         my $link = $item->{url};
 
@@ -34,7 +36,7 @@ sub run {
             description => $item->{description},
             location => $item->{location},
             type     => $item->{type},
-            extra    => encode_json({
+            extra    => $json->encode({
                 company_logo => $item->{company_logo},
             }),
             tags     => ['github'],

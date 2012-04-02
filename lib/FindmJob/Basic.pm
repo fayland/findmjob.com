@@ -26,14 +26,15 @@ use FindmJob::Schema;
 has 'schema' => ( is => 'ro', lazy_build => 1 );
 sub _build_schema {
     my $self = shift;
-    return FindmJob::Schema->connect( @{ $self->config->{DBI} } );
+    my $schema = FindmJob::Schema->connect( @{ $self->config->{DBI} } );
+    $schema->storage->dbh->{mysql_enable_utf8} = 1;
+    $schema->storage->dbh->do("SET names utf8");
+    return $schema;
 }
 has 'dbh' => (is => 'ro', lazy_build => 1);
 sub _build_dbh {
     my $self = shift;
-    my $dbh = $self->schema->storage->dbh or croak $DBI::errstr;
-    $dbh->{mysql_enable_utf8} = 1; $dbh->do("set names 'utf8';");
-    return $dbh;
+    return $self->schema->storage->dbh;
 }
 
 1;
