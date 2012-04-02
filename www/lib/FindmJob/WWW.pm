@@ -6,6 +6,7 @@ our $VERSION = '0.1';
 
 use FindmJob::Basic;
 use Encode;
+use JSON::XS;
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -45,7 +46,7 @@ get '/job/:jobid' => sub {
         $job->title( decode_utf8($job->title) );
         $job->description( decode_utf8($job->description) );
     }
-    $job->{extra_data} = from_json( $job->extra ) if $job->extra =~ /^\{/;
+    $job->{extra_data} = JSON::XS->new->utf8->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
     $job->{tags} = [ $schema->resultset('ObjectTag')->get_tags_by_object($job->id) ];
     var job => $job;
 

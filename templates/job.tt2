@@ -39,14 +39,18 @@
         [% IF job.extra_data.onsite %]
         <p><b>Onsite</b>: [% job.extra_data.onsite %]</p>
         [% END %]
+    [% ELSIF job.source_url.search('www.odesk.com') %]
+        <p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p>
+        <p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p>
+        <p><b>Expiry Date:</b>: [% job.extra_data.op_job_expiration %]</p>
     [% END %]
 [% END %]
 
+<p><b>Description</b>:</p>
 <div class="well">
 [% IF job.source_url.search('jobs.github.com') %]
 [% job.description %]
 [% ELSE %]
-<b>Description:</b><br />
 [% job.description | html_line_break %]
 [% END %]
 
@@ -55,11 +59,19 @@
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
         [% IF job.extra_data.skills_required %]
-        <p class="well"><b>Required Skill:</b><br />[% job.extra_data.skills_required | html_line_break %]</p>
+        <p><b>Required Skill</b>:</p>
+        <div class="well">[% job.extra_data.skills_required | html_line_break %]</div>
         [% END %]
         [% IF job.extra_data.skills_desired %]
-        <p class="well"><b>Desired  Skill:</b><br />[% job.extra_data.skills_desired | html_line_break %]</p>
+        <p><b>Desired  Skill</b>:</p>
+        <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
         [% END %]
+    [% ELSIF job.source_url.search('www.odesk.com') %]
+        [% IF job.extra_data.buyer.op_cny_description %]
+        <p><b>Buyer</b>:</p>
+        <div class="well">[% job.extra_data.buyer.op_cny_description %]</div>
+        [% END %]
+        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
 
