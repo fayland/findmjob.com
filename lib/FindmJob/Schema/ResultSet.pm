@@ -33,10 +33,10 @@ around 'create' => sub {
     if ((grep { $_ eq $table } @tags_tables) and defined $tags) {
         my $schema = $self->result_source->schema;
         foreach my $tag (@$tags) {
-            my $tag_id = $schema->resultset('Tag')->get_id_by_text($tag);
+            my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
             $schema->resultset('ObjectTag')->create( {
                 object => $row->id,
-                tag    => $tag_id,
+                tag    => $tag_row->id,
                 time   => time(),
             } );
         }
@@ -60,10 +60,10 @@ around 'update' => sub {
         while (my $row = $self->next) {
             $schema->resultset('ObjectTag')->search( { object => $row->id } )->delete;
             foreach my $tag (@$tags) {
-                my $tag_id = $schema->resultset('Tag')->get_id_by_text($tag);
+                my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
                 $schema->resultset('ObjectTag')->create( {
                     object => $row->id,
-                    tag    => $tag_id,
+                    tag    => $tag_row->id,
                     time   => time(),
                 } );
             }

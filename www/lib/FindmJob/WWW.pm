@@ -75,8 +75,16 @@ get '/company/:companyid' => sub {
 
 get '/tag/:tagid' => sub {
     my $tagid = params->{tagid};
+
     my $schema = FindmJob::Basic->schema;
-    my $tag = $schema->resultset('Tag')->find($tagid);
+    my $tag;
+    if ( length($tagid) == 22) {
+        $tag = $schema->resultset('Tag')->find($tagid);
+    }
+    unless ($tag) {
+        $tag = $schema->resultset('Tag')->get_row_by_text($tagid);
+        $tagid = $tag->id if $tag;
+    }
     var tag => $tag;
 
     my $p = params->{p} || 1; $p = 1 unless $p =~ /^\d+$/;
