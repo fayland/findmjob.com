@@ -12,5 +12,6 @@
 [% FOREACH obj IN objects %]
 <li>[% INCLUDE object.tt2 %]</li>
 [% END %]
+</ul>
 
 [% INCLUDE pager.tt %]
