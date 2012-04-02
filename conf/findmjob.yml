@@ -8,4 +8,5 @@ DBI:
     RaiseError: 1
 
 sites:
+  main: 'http://findmjob.com'
   static: 'http://static.findmjob.com'
