@@ -22,15 +22,17 @@ sub get_or_create {
 
 sub get_by_website {
     my ($self, $website) = @_;
-
     return $self->search( { website => $website } )->first;
 }
 
 sub get_by_name {
     my ($self, $name) = @_;
-
     return $self->search( { name => $name } )->first;
 }
 
+sub get_by_ref {
+    my ($self, $ref) = @_;
+    return $self->search( { ref => $ref } )->first;
+}
 
 1;
