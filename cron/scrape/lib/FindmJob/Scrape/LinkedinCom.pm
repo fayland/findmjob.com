@@ -75,7 +75,7 @@ sub run {
                 } else {
                     $company = $schema->resultset('Company')->create( {
                         name => delete $cmpy->{name},
-                        website => delete $cmpy->{'websiteUrl'},
+                        website => delete $cmpy->{'websiteUrl'} || '',
                         ref  => "linkedin-$li_cid",
                         extra => $json->encode($cmpy),
                     } );
