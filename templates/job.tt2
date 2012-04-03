@@ -8,76 +8,91 @@
 </div>
 <hr class="soften">
 
-<p>Posted on <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</p>
+<ul class="unstyled">
+<li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</p></li>
 
 [% IF job.tags.size %]
-<p><b>Tags</b>:
+<li><p><b>Tags</b>:
 [% tags_text = [] %]
 [% FOREACH tag IN job.tags %]
 <a href='/tag/[% IF tag.text.match('^[\w\-\+]+$'); tag.text; ELSE; tag.id; END; %]'>[% tag.text %]</a>[% UNLESS loop.last %], [%+ END %]
 [% tags_text.push(tag.text) %]
 [% END %]
 [% meta_keywords = tags_text.join(', ') %]
-</p>
+</p></li>
 [% END %]
 
-<p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a></p>
-<p><b>Location</b>: [% job.location %]</p>
-<p><b>Hours</b>: [% job.type %]</p>
+<li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a></p></li>
+<li><p><b>Location</b>: [% job.location %]</p></li>
+[% IF job.type %]
+<li><p><b>Hours</b>: [% job.type %]</p></li>
+[% END %]
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
         [% IF job.extra_data.pay_rate %]
-        <p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p>
+        <li><p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p></li>
         [% END %]
         [% IF job.extra_data.represents %]
-        <p><b>Poster represents</b>: [% job.extra_data.represents %]</p>
+        <li><p><b>Poster represents</b>: [% job.extra_data.represents %]</p></li>
         [% END %]
         [% IF job.extra_data.employment_terms %]
-        <p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p>
+        <li><p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p></li>
         [% END %]
         [% IF job.extra_data.employment_length %]
-        <p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p>
+        <li><p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p></li>
         [% END %]
         [% IF job.extra_data.onsite %]
-        <p><b>Onsite</b>: [% job.extra_data.onsite %]</p>
+        <li><p><b>Onsite</b>: [% job.extra_data.onsite %]</p></li>
         [% END %]
     [% ELSIF job.source_url.search('www.odesk.com') %]
-        <p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p>
-        <p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p>
-        <p><b>Expiry Date:</b>: [% job.extra_data.op_job_expiration %]</p>
+        <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
+        <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
+        <li><p><b>Expiry Date:</b>: [% job.extra_data.op_job_expiration %]</p></li>
+    [% ELSIF job.source_url.search('/www.linkedin.com/') %]
+        <li><p><b>Expiry Date:</b>: [% job.extra_data.expirationDate.year %]-[% job.extra_data.expirationDate.month %]-[% job.extra_data.expirationDate.day %]</p></li>
+        <li><p><b>job Poster:</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
     [% END %]
 [% END %]
 
-<p><b>Description</b>:</p>
+<li><p><b>Description</b>:</p>
 <div class="well">
 [% job.description | html_line_break %]
 </div>
+</li>
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
         [% IF job.extra_data.skills_required %]
-        <p><b>Required Skill</b>:</p>
-        <div class="well">[% job.extra_data.skills_required | html_line_break %]</div>
+        <li><p><b>Required Skill</b>:</p>
+            <div class="well">[% job.extra_data.skills_required | html_line_break %]</div>
+        </li>
         [% END %]
         [% IF job.extra_data.skills_desired %]
-        <p><b>Desired  Skill</b>:</p>
-        <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
+        <li><p><b>Desired  Skill</b>:</p>
+            <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
+        </li>
         [% END %]
     [% ELSIF job.source_url.search('www.odesk.com') %]
         [% IF job.extra_data.buyer.op_cny_description %]
-        <p><b>Buyer</b>:</p>
-        <div class="well">[% job.extra_data.buyer.op_cny_description %]</div>
+        <li><p><b>Buyer</b>:</p>
+            <div class="well">[% job.extra_data.buyer.op_cny_description %]</div>
+        </li>
         [% END %]
+        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+    [% ELSIF job.source_url.search('/www.linkedin.com/') %]
+        [% description = job.extra_data.descriptionSnippet %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
 
 [% IF job.contact %]
-<p><b>Contact</b>: [% job.contact %]</p>
+<li><p><b>Contact</b>: [% job.contact %]</p></li>
 [% END %]
 
-<p><b>Source URL</b>: <a href='[% job.source_url %]'>[% job.source_url %]</a></p>
+<li><p><b>Source URL</b>: <a href='[% job.source_url %]'>[% job.source_url %]</a></p></li>
+
+</ul>
 
 <h3>Comments</h3>
 [% INCLUDE include/fbcomment.tt2 %]

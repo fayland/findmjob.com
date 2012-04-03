@@ -55,6 +55,8 @@ sub on_single_page {
         }
 
         $data->{website} = 'http://' . $data->{website} unless $data->{website} and $data->{website} =~ /^http\:/;
+        my @tags = ('perl');
+        push @tags, 'telecommute' if $data->{onsite} eq 'no';
 
         delete $data->{posted_on};
         my $row = {
@@ -70,7 +72,7 @@ sub on_single_page {
             location => delete $data->{location},
             type  => delete $data->{hours},
             extra => encode_json($data),
-            tags  => ['perl']
+            tags  => \@tags
         };
 
 #    } catch {
