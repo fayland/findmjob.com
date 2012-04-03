@@ -54,5 +54,12 @@
 
 </div>
 
+<script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.timeago').timeago();
+    });
+</script>
+
 </body>
 </html>

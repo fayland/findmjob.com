@@ -1,4 +1,4 @@
-[% USE String %]
+[% USE String %][% USE date %]
 [% title = job.title %]
 [% description = String.new(job.description).truncate(255, '...') %]
 
@@ -8,7 +8,7 @@
 </div>
 <hr class="soften">
 
-<p>Posted on [% job.posted_at %]</p>
+<p>Posted on <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</p>
 
 [% IF job.tags.size %]
 <p><b>Tags</b>:
