@@ -71,6 +71,17 @@ __PACKAGE__->set_primary_key("id");
 # Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 16:20:24
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LtzfsDl2ILTukQ1SVCoTvQ
 
+use FindmJob::Utils 'seo_title';
+has 'url' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+sub _build_url {
+    my ($self) = @_;
+
+    return "/company/" . $self->id . "/" . seo_title($self->name) . ".html";
+}
+
+# alias title as name
+has 'title' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+sub _build_title { (shift)->name }
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
