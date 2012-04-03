@@ -10,3 +10,8 @@ DBI:
 sites:
   main: 'http://findmjob.com'
   static: 'http://static.findmjob.com'
+
+api:
+  linkedin:
+    key: 'e8dsod78mkwg'
+    secret: ''
