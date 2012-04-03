@@ -43,9 +43,9 @@ get qr'.*?/feed\.(rss|atom).*?' => sub {
     forward $uri;
 };
 # 3. seo
-get qr'.*?/([\w\-]+).html' => sub {
+get qr'.*?/([^\/]+).html' => sub {
     my $uri = request->uri;
-    $uri =~ s'/([\w\-]+).html'';
+    $uri =~ s'/([^\/]+).html'';
     forward $uri;
 };
 
