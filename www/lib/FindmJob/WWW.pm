@@ -49,6 +49,13 @@ get qr'.*?/([\w\-]+).html' => sub {
     forward $uri;
 };
 
+# temp fix
+get qr'.*?/$' => sub {
+    my $uri = request->uri;
+    $uri =~ s'/$'';
+    forward $uri;
+};
+
 get '/' => sub {
     my $schema = FindmJob::Basic->schema;
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
