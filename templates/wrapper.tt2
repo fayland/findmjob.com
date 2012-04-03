@@ -45,9 +45,9 @@
 <footer class="footer">
     [% IF has_feed %]
     [% base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '') %]
-    <p class="pull-right"><a href='[% base.url %]/feed.rss'>RSS</a> | <a href='[% base.url %]/feed.atom'>Atom</a></p>
-    <link rel="alternate" type="application/rss+xml" href="[% base.url %]/feed.rss" title="RSS 2.0">
-    <link rel="alternate" type="application/atom+xml" href="[% base.url %]/feed.atom" title="Atom 1.0">
+    <p class="pull-right"><a href='[% base_url %]/feed.rss'>RSS</a> | <a href='[% base_url %]/feed.atom'>Atom</a></p>
+    <link rel="alternate" type="application/rss+xml" href="[% base_url %]/feed.rss" title="RSS 2.0">
+    <link rel="alternate" type="application/atom+xml" href="[% base_url %]/feed.atom" title="Atom 1.0">
     [% END %]
     <p>&copy; FindmJob.com</p>
 </footer>
