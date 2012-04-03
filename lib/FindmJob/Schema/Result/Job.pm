@@ -52,7 +52,7 @@ __PACKAGE__->table("job");
 
 =head2 posted_at
 
-  data_type: 'date'
+  data_type: 'datetime'
   datetime_undef_if_invalid: 1
   is_nullable: 0
 
@@ -101,7 +101,11 @@ __PACKAGE__->add_columns(
   "company_id",
   { data_type => "varchar", is_nullable => 0, size => 22 },
   "posted_at",
-  { data_type => "date", datetime_undef_if_invalid => 1, is_nullable => 0 },
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
   "description",
   { data_type => "text", is_nullable => 0 },
   "location",
@@ -143,8 +147,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 15:14:14
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8py6gbX6vjFPtUOKhaTz+g
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-03 08:50:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5WhxqFRTCPnXq2KU50N5gg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
