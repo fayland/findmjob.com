@@ -54,7 +54,7 @@ get '/' => sub {
     var jobs  => \@jobs;
 
     if (vars->{feed_format}) {
-        var title => "Recent Jobs - FindmJob.com";
+        var title => "Recent";
         map { $_->{tbl} = 'job' } @jobs;
         return _render_feed(@jobs);
     }
@@ -136,7 +136,7 @@ get '/tag/:tagid' => sub {
     var objects => \@obj;
 
     if (vars->{feed_format}) {
-        var title => $tag->text . " Jobs - FindmJob.com";
+        var title => $tag->text;
         return _render_feed(@obj);
     }
 
@@ -158,7 +158,7 @@ sub _render_feed {
             $author = $obj->company->name;
             $content = $obj->description;
             if ($obj->source_url !~ /jobs.github.com/) {
-                $content =~ s/\n/\<br \/>/sg;
+                $content =~ s/\n/\<br \/>\n/sg;
             }
         } elsif ($obj->{tbl} eq 'company') {
             $link = $config->{sites}->{main} . "/company/" . $obj->id;
@@ -170,13 +170,16 @@ sub _render_feed {
             link => $link,
             title => $title,
             $author ? (author => $author) : (),
-            $content ? (content => $content) : (),
+            $content ? (content => XML::Feed::Content->new({
+                type => 'text/html',
+                body => $content
+            })) : (),
         };
     }
 
     my $feed = create_feed(
         format  => vars->{feed_format},
-        title   => vars->{title},
+        title   => vars->{title} . " Jobs - FindmJob.com",
         entries => \@entries,
     );
     return $feed;
