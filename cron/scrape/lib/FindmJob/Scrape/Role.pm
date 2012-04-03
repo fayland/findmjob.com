@@ -15,7 +15,7 @@ has 'basic' => (
     default => sub {
         FindmJob::Basic->instance;
     },
-    handles => ['schema', 'config']
+    handles => ['schema', 'config', 'root']
 );
 
 1;

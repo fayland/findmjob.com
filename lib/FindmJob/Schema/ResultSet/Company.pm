@@ -4,7 +4,7 @@ use Moose;
 use namespace::autoclean;
 extends 'FindmJob::Schema::ResultSet';
 
-sub get {
+sub get_or_create {
     my ($self, $row) = @_;
 
     if ($row->{website}) {

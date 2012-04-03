@@ -44,6 +44,17 @@ __PACKAGE__->table("company");
   is_nullable: 0
   size: 128
 
+=head2 ref
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 32
+
+=head2 extra
+
+  data_type: 'text'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -53,6 +64,10 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "website",
   { data_type => "varchar", is_nullable => 0, size => 128 },
+  "ref",
+  { data_type => "varchar", is_nullable => 0, size => 32 },
+  "extra",
+  { data_type => "text", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -68,8 +83,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-01 16:20:24
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LtzfsDl2ILTukQ1SVCoTvQ
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-03 19:44:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GNKpnwme/7lx85Dc7narNw
 
 use FindmJob::Utils 'seo_title';
 has 'url' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
