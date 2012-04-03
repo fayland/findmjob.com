@@ -5,6 +5,7 @@ use warnings;
 use FindBin qw/$Bin/;
 use lib "$Bin/../../lib";
 use FindmJob::Basic;
+use HTML::TreeBuilder;
 use FindmJob::HTML::FormatText;
 
 my $formatter = FindmJob::HTML::FormatText->new(leftmargin => 0, rightmargin => 999);
