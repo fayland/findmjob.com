@@ -8,6 +8,7 @@ use XML::Simple 'XMLin';
 use HTML::TreeBuilder;
 use Try::Tiny;
 use JSON::XS 'encode_json';
+use FindmJob::DateUtils 'human_to_db_datetime';
 
 sub run {
     my ($self) = @_;
@@ -65,7 +66,7 @@ sub on_single_page {
                 website => delete $data->{website},
             },
             contact   => delete $data->{contact},
-            posted_at => $item->{'dc:date'},
+            posted_at => human_to_db_datetime($item->{'dc:date'}),
             description => delete $data->{description},
             location => delete $data->{location},
             type  => delete $data->{hours},

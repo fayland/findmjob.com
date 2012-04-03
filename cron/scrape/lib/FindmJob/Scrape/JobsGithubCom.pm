@@ -7,7 +7,7 @@ with 'FindmJob::Scrape::Role::TextFormatter';
 use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/encode_json decode_json/;
-use FindmJob::DateUtils 'human_to_db_date';
+use FindmJob::DateUtils 'human_to_db_datetime';
 use Encode;
 
 sub run {
@@ -32,7 +32,7 @@ sub run {
                 website => $item->{company_url},
             },
             contact   => $item->{how_to_apply},
-            posted_at => human_to_db_date($item->{created_at}),
+            posted_at => human_to_db_datetime($item->{created_at}),
             description => $item->{description},
             location => $item->{location},
             type     => $item->{type},

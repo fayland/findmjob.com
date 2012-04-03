@@ -8,6 +8,7 @@ use XML::Simple 'XMLin';
 use HTML::TreeBuilder;
 use Try::Tiny;
 use JSON::XS 'encode_json';
+use FindmJob::DateUtils 'human_to_db_datetime';
 
 sub run {
     my ($self) = @_;
@@ -80,7 +81,7 @@ sub on_single_page {
                 website => $company->attr('href'),
             },
             contact   => $apply,
-            posted_at => substr($item->{'a10:updated'}, 0, 10),
+            posted_at => human_to_db_datetime($item->{'a10:updated'}),
             description => $desc,
             location => $location,
             type     => '',

@@ -7,7 +7,7 @@ with 'FindmJob::Scrape::Role::TextFormatter';
 use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/encode_json decode_json/;
-use FindmJob::DateUtils 'human_to_db_date';
+use FindmJob::DateUtils 'human_to_db_datetime';
 use Encode;
 
 sub run {
@@ -46,7 +46,7 @@ sub run {
                 name => "oDesk $item->{job_category_level_one}",
             },
             contact   => '',
-            posted_at => human_to_db_date($item->{date_posted}),
+            posted_at => human_to_db_datetime($item->{date_posted}),
             description => delete $item->{op_description},
             location => delete $item->{op_country},
             type     => delete$item->{op_engagement},
