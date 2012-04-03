@@ -50,7 +50,7 @@ get qr'.*?/([\w\-]+).html' => sub {
 };
 
 # temp fix
-get qr'.*?/$' => sub {
+get qr'.+/$' => sub {
     my $uri = request->uri;
     $uri =~ s'/$'';
     forward $uri;
