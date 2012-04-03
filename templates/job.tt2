@@ -1,6 +1,6 @@
 [% USE String %][% USE date %]
 [% title = job.title %]
-[% description = String.new(job.description).truncate(255, '...') %]
+[% description = String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]
 
 <h1>[% title %]</h1>
 <div class="span4 offset8">
