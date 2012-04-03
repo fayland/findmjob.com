@@ -161,7 +161,7 @@ sub _render_feed {
         my ($title, $content, $link, $author);
         # refer templates/object.tt2
         if ($obj->{tbl} eq 'job') {
-            $link = $config->{sites}->{main} . "/job/" . $obj->id;
+            $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->title;
             $author = $obj->company->name;
             $content = $obj->description;
