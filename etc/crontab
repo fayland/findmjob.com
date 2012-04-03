@@ -3,3 +3,4 @@
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsGithubCom
 30 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareersStackOverflowCom
 40 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m oDeskCom
+50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m LinkedinCom

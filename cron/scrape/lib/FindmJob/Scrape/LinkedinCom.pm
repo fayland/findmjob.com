@@ -84,7 +84,8 @@ sub run {
             } );
         }
 
-        my @tags = map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
+        my @tags =  map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
+        push @tags, map { $_->{name} } @{$r->{position}->{industries}->{values}};
         my $pd = $r->{postingDate};
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
 
