@@ -12,9 +12,12 @@
 
 [% IF job.tags.size %]
 <p><b>Tags</b>:
+[% tags_text = [] %]
 [% FOREACH tag IN job.tags %]
 <a href='/tag/[% IF tag.text.match('^[\w\-\+]+$'); tag.text; ELSE; tag.id; END; %]'>[% tag.text %]</a>[% UNLESS loop.last %], [%+ END %]
+[% tags_text.push(tag.text) %]
 [% END %]
+[% meta_keywords = tags_text.join(', ') %]
 </p>
 [% END %]
 
