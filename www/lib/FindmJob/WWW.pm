@@ -25,6 +25,8 @@ hook before_template_render => sub {
     $tokens->{config} = FindmJob::Basic->config;
 };
 
+# abuse the pattern
+# 1. pager
 get qr'.*?/p\.(\d+).*?' => sub {
     my $uri = request->uri;
     $uri =~ s'/p\.(\d+)'';
@@ -32,12 +34,18 @@ get qr'.*?/p\.(\d+).*?' => sub {
     $uri =~ s/\/$//;
     forward $uri;
 };
-
+# 2. rss/atom feed
 get qr'.*?/feed\.(rss|atom).*?' => sub {
     my $uri = request->uri;
     $uri =~ s'/feed\.(rss|atom)'';
     var feed_format => $1;
     $uri =~ s/\/$//;
+    forward $uri;
+};
+# 3. seo
+get qr'.*?/([\w\-]+).html' => sub {
+    my $uri = request->uri;
+    $uri =~ s'/([\w\-]+).html'';
     forward $uri;
 };
 

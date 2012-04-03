@@ -158,5 +158,13 @@ __PACKAGE__->belongs_to(
     { 'foreign.id' => 'self.company_id' }
 );
 
+use FindmJob::Utils 'seo_title';
+has 'url' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
+sub _build_url {
+    my ($self) = @_;
+
+    return "/job/" . $self->id . "/" . seo_title($self->title) . ".html";
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
