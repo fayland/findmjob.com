@@ -7,15 +7,15 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
 
-[% IF title %]
+[%- IF title %]
 <meta property="og:title" content="[% title.squote %]" />
 <meta property="og:site_name" content="FindmJob.com" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="[% request.uri_base %][% request.uri %]" />
 [% END %]
-[% IF description %]
-<meta property="og:description" content="[% description.squote %]" />
-[% END %]
+[% IF description -%]
+<meta property="og:description" content="[% description.replace("\n", ' ').replace('"', '\\\"') %]" />
+[% END -%]
 
 <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.ico" type="image/x-icon" />
 </head>
