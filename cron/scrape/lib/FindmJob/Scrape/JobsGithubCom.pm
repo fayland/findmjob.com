@@ -24,6 +24,8 @@ sub run {
 
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
+
+        my $desc = $self->formatter->format_text($item->{description});
         my $row = {
             source_url => $link,
             title => $item->{title},
@@ -33,7 +35,7 @@ sub run {
             },
             contact   => $item->{how_to_apply},
             posted_at => human_to_db_datetime($item->{created_at}),
-            description => $item->{description},
+            description => $desc,
             location => $item->{location},
             type     => $item->{type},
             extra    => $json->encode({

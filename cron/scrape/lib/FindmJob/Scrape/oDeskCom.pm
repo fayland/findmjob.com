@@ -37,6 +37,8 @@ sub run {
 
         my @tags = split(/,\s*/, delete $item->{op_required_skills});
 
+        my $desc = $self->formatter->format_text(delete $item->{op_description});
+
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
         my $row = {
@@ -47,7 +49,7 @@ sub run {
             },
             contact   => '',
             posted_at => human_to_db_date($item->{date_posted}) . ' ' . $item->{op_time_posted},
-            description => delete $item->{op_description},
+            description => $desc,
             location => delete $item->{op_country},
             type     => delete$item->{op_engagement},
             extra    => $json->encode($item),

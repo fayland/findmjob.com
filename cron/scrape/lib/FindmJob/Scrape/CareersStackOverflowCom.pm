@@ -65,11 +65,7 @@ sub on_single_page {
             }
         }
 
-        my $desc = $self->formatter->format($jobdetail);
-        $desc =~ s/^\s+|\s+$//g;
-        $desc =~ s/\[IMAGE\]/\n/g;
-        $desc =~ s/\n{3,}/\n\n/g;
-        $desc =~ s/\xA0/ /g;
+        my $desc = $self->formatter->format_tree_text($jobdetail);
         $desc =~ s/\s*apply\s*$//is;
         $desc =~ s/^\s*Job Description\s*\-+\s*//isg;
 
