@@ -81,7 +81,7 @@ sub on_single_page {
                 website => $company->attr('href'),
             },
             contact   => $apply,
-            posted_at => human_to_db_datetime($item->{'a10:updated'}),
+            posted_at => human_to_db_datetime($item->{'pubDate'}),
             description => $desc,
             location => $location,
             type     => '',
