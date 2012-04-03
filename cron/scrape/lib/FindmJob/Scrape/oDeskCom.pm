@@ -46,7 +46,7 @@ sub run {
                 name => "oDesk $item->{job_category_level_one}",
             },
             contact   => '',
-            posted_at => human_to_db_datetime($item->{date_posted}),
+            posted_at => human_to_db_datetime($item->{date_posted}) . ' ' . $item->{op_time_posted},
             description => delete $item->{op_description},
             location => delete $item->{op_country},
             type     => delete$item->{op_engagement},
