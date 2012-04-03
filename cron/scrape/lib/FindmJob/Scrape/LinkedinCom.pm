@@ -71,12 +71,24 @@ sub run {
                 );
                 sleep 5;
                 my $cmpy = $json->decode( $job_json );
-                $company = $schema->resultset('Company')->create( {
-                    name => delete $cmpy->{name},
-                    website => delete $cmpy->{'websiteUrl'},
-                    ref  => "linkedin-$li_cid",
-                    extra => $json->encode($cmpy),
-                } );
+                # get or create
+                $company = $schema->resultset('Company')->get_by_website($cmpy->{'websiteUrl'})
+                    if $cmpy->{'websiteUrl'};
+                if ($company) {
+                    delete $cmpy->{'websiteUrl'};
+                    $company->update( {
+                        name => delete $cmpy->{name},
+                        ref  => "linkedin-$li_cid",
+                        extra => $json->encode($cmpy),
+                    } );
+                } else {
+                    $company = $schema->resultset('Company')->create( {
+                        name => delete $cmpy->{name},
+                        website => delete $cmpy->{'websiteUrl'},
+                        ref  => "linkedin-$li_cid",
+                        extra => $json->encode($cmpy),
+                    } );
+                }
             }
         } else {
             $company = $schema->resultset('Company')->get_or_create( {
