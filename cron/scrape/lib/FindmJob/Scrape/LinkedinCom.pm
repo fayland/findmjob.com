@@ -34,27 +34,18 @@ sub run {
         consumer_secret => $api->{secret},
     );
     my $job_json = $li->request(
-        request_url         => 'http://api.linkedin.com/v1/job-search?format=json&count=20',
+        request_url         => 'http://api.linkedin.com/v1/job-search:(jobs:(id,customer-job-code,active,posting-date,expiration-date,posting-timestamp,expiration-timestamp,company:(id,name),position:(title,location,job-functions,industries,job-type,experience-level),skills-and-experience,description-snippet,description,salary,job-poster:(id,first-name,last-name,headline),referral-bonus,site-job-url,location-description))?format=json&count=20&sort=DD',
         access_token        => $token,
         access_token_secret => $secret,
     );
-    sleep 5;
 
     my $data = $json->decode( $job_json );
-    foreach my $item (@{$data->{jobs}->{values}}) {
-        my $id   = $item->{id};
+    foreach my $r (@{$data->{jobs}->{values}}) {
+        my $id   = $r->{id};
 
         my $link = 'http://www.linkedin.com/jobs?viewJob=&jobId=' . $id;
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
-
-        $job_json = $li->request(
-            request_url         => 'http://api.linkedin.com/v1/jobs/' . $id . ':(id,customer-job-code,active,posting-date,expiration-date,posting-timestamp,company:(id,name),position:(title,location,job-functions,industries,job-type,experience-level),skills-and-experience,description,salary,job-poster:(id,first-name,last-name,headline),referral-bonus,site-job-url,location-description)?format=json',
-            access_token        => $token,
-            access_token_secret => $secret,
-        );
-        sleep 5;
-        my $r = $json->decode( $job_json );
 
         my $desc = $self->format_text(delete $r->{description});
 
