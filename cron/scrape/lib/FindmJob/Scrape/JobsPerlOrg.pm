@@ -46,7 +46,7 @@ sub on_single_page {
             my $k = $tr->look_down(_tag => 'a')->attr('name');
             my $v;
             if ( grep { $k eq $_ } ('description', 'skills_desired', 'skills_required') ) {
-                $v = $self->formatter->format_tree_text($tds[1]);
+                $v = $self->format_tree_text($tds[1]);
             } else {
                 $v = $tds[1]->as_trimmed_text;
             }

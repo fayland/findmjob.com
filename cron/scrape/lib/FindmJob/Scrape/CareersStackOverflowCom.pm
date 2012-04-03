@@ -50,7 +50,7 @@ sub on_single_page {
         my @tags = $hed->look_down(_tag => 'a', class => 'post-tag');
         @tags = map { $_->as_trimmed_text } @tags;
 
-        my $apply = $jobdetail->look_down(_tag => 'div', class => qr'apply')->as_trimmed_text;
+        my $apply = $self->format_tree_text( $jobdetail->look_down(_tag => 'div', class => qr'apply') );
         $apply =~ s/\s*How to apply\s*//;
 
         foreach my $item_r ($jobdetail->content_refs_list) {
@@ -65,7 +65,7 @@ sub on_single_page {
             }
         }
 
-        my $desc = $self->formatter->format_tree_text($jobdetail);
+        my $desc = $self->format_tree_text($jobdetail);
         $desc =~ s/\s*apply\s*$//is;
         $desc =~ s/^\s*Job Description\s*\-+\s*//isg;
 

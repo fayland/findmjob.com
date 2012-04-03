@@ -25,7 +25,7 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
-        my $desc = $self->formatter->format_text($item->{description});
+        my $desc = $self->format_text($item->{description});
         my $row = {
             source_url => $link,
             title => $item->{title},
