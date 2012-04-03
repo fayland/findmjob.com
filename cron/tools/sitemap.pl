@@ -28,6 +28,7 @@ my $sth = $dbh->prepare("SELECT id, tbl FROM object ORDER BY time DESC LIMIT 500
 $sth->execute();
 while (my ($id, $tbl) = $sth->fetchrow_array) {
     my $obj = $schema->resultset(ucfirst $tbl)->find($id);
+    next unless $obj; # it should be warned
     my $url = $config->{sites}->{main} . '/' . $tbl . '/' . $id;
     $url = $config->{sites}->{main} . $obj->url if $obj->can('url');
     if ($tbl eq 'job') {
