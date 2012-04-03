@@ -21,6 +21,13 @@ sub run {
         my $link = $item->{link};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
+
+        my $link2 = $link; # joelonsoftware is the same as stackoverflow
+        $link2 =~ s/joelonsoftware/stackoverflow/ if $link2 =~ /joelonsoftware/;
+        $link2 =~ s/stackoverflow/joelonsoftware/ if $link2 =~ /stackoverflow/;
+        $is_inserted = $job_rs->is_inserted_by_url($link2);
+        next if $is_inserted and not $self->opt_update;
+
         my $row = $self->on_single_page($item);
         if ( $is_inserted and $self->opt_update ) {
             $self->schema->resultset('Job')->update_job($row);
