@@ -52,6 +52,9 @@
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
         <li><p><b>Expiry Date:</b>: [% job.extra_data.expirationDate.year %]-[% job.extra_data.expirationDate.month %]-[% job.extra_data.expirationDate.day %]</p></li>
         <li><p><b>job Poster:</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
+    [% ELSIF job.source_url.search('/www.elance.com/') %]
+        <li><p><b>Expiry Date:</b>: [% date.format(job.extra_data.endDate, '%Y-%m-%d %H:%M:%S') %]</p></li>
+        <li><p><b>job Poster:</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% END %]
 [% END %]
 
@@ -82,6 +85,8 @@
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
         [% description = job.extra_data.descriptionSnippet %]
+        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+    [% ELSIF job.source_url.search('/www.elance.com/') %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
