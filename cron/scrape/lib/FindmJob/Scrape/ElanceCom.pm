@@ -52,6 +52,7 @@ sub run {
     my $resp = $self->ua->get($url);
     my $data = $json->decode( $resp->decoded_content );
     foreach my $item (values %{$data->{data}->{pageResults}}) {
+        next unless ref $item eq 'HASH';
         my $link = $item->{jobURL};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
