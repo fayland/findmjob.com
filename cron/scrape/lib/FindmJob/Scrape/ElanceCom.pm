@@ -74,7 +74,7 @@ sub run {
             source_url => $link,
             title => delete $r->{name},
             company => {
-                name => "oDesk $r->{category}",
+                name => "Elance $r->{category}",
             },
             contact   => '',
             posted_at => human_to_db_datetime(delete $r->{postedDate}),
