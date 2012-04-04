@@ -60,7 +60,7 @@ get '/' => sub {
     my $schema = FindmJob::Basic->schema;
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( undef, {
-        order_by => 'posted_at DESC',
+        order_by => 'inserted_at DESC',
         rows => 12,
         page => $p
     });
