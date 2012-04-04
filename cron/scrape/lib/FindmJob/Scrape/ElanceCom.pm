@@ -51,7 +51,8 @@ sub run {
     my $url = "http://api.elance.com/api2/jobs?access_token=$access_token&sortCol=startDate&sortOrder=desc";
     my $resp = $self->ua->get($url);
     my $data = $json->decode( $resp->decoded_content );
-    foreach my $item (values %{$data->{data}->{pageResults}}) {
+    foreach my $i (1 .. 25) {
+        my $item = $data->{data}->{pageResults}->{$i};
         next unless ref $item eq 'HASH';
         my $link = $item->{jobURL};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
