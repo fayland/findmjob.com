@@ -15,3 +15,6 @@ api:
   linkedin:
     key: 'e8dsod78mkwg'
     secret: ''
+  elance:
+    key: '4f7b865e3240a0c134000024'
+    secret: ''
