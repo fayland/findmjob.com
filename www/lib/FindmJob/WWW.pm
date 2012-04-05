@@ -182,10 +182,7 @@ sub _render_feed {
             link => $link,
             title => $title,
             $author ? (author => $author) : (),
-            $content ? (content => XML::Feed::Content->new({
-                type => 'text/html',
-                body => $content
-            })) : (),
+            $content ? (content => $content) : (),
         };
     }
 
