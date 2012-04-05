@@ -5,6 +5,7 @@ use MooseX::NonMoose;
 use namespace::autoclean;
 extends qw/DBIx::Class::ResultSet/;
 
+use List::MoreUtils 'uniq';
 use FindmJob::Utils 'uuid';
 my @uuid_tables = ('job', 'tag', 'company');
 my @tags_tables = ('job', 'company');
@@ -32,7 +33,8 @@ around 'create' => sub {
     }
     if ((grep { $_ eq $table } @tags_tables) and defined $tags) {
         my $schema = $self->result_source->schema;
-        foreach my $tag (@$tags) {
+        my @tags = @$tags; @tags = uniq @tags;
+        foreach my $tag (@tags) {
             my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
             $schema->resultset('ObjectTag')->create( {
                 object => $row->id,
@@ -59,7 +61,8 @@ around 'update' => sub {
         # loop on each matched rows
         while (my $row = $self->next) {
             $schema->resultset('ObjectTag')->search( { object => $row->id } )->delete;
-            foreach my $tag (@$tags) {
+            my @tags = @$tags; @tags = uniq @tags;
+            foreach my $tag (@tags) {
                 my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
                 $schema->resultset('ObjectTag')->create( {
                     object => $row->id,
