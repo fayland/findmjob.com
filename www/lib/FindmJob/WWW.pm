@@ -172,7 +172,6 @@ sub _render_feed {
             $title = $obj->title;
             $author = $obj->company->name;
             $content = $obj->description;
-            $content =~ s/\n/\<br \/>\n/sg;
         } elsif ($obj->{tbl} eq 'company') {
             $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->name;
