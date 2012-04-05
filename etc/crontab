@@ -5,3 +5,4 @@
 40 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m oDeskCom
 50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m LinkedinCom
 10 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m ElanceCom
+20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilderCom

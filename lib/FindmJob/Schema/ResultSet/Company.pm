@@ -11,6 +11,10 @@ sub get_or_create {
         my $r = $self->get_by_website( $row->{website} );
         return $r if $r;
     }
+    if ($row->{ref}) {
+        my $r = $self->get_by_ref( $row->{ref} );
+        return $r if $r;
+    }
     $row->{name} //= $row->{website}; #/
     $row->{name} =~ s#http://(www\.)?##;
     $row->{website} //= ''; #/

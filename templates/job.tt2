@@ -55,6 +55,9 @@
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <li><p><b>Expiry Date:</b>: [% date.format(job.extra_data.endDate, '%Y-%m-%d %H:%M:%S') %]</p></li>
         <li><p><b>job Poster:</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
+    [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
+        <li><p><b>Expiry Date:</b>: [% job.extra_data.EndDate %]</p></li>
+        <li><p><b>job Poster:</b>: [% job.extra_data.ContactInfoName %]</p></li>
     [% END %]
 [% END %]
 
@@ -87,6 +90,12 @@
         [% description = job.extra_data.descriptionSnippet %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.elance.com/') %]
+        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+    [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
+        [% job.source_url = job.extra_data.PrinterFriendlyURL %]
+        <li><p><b>Requirements</b>:</p>
+            <div class="well">[% job.extra_data.JobRequirements | html_line_break %]</div>
+        </li>
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
