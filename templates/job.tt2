@@ -87,6 +87,7 @@
         [% END %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
+        [% job.source_url = job.extra_data.siteJobUrl %]
         [% description = job.extra_data.descriptionSnippet %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.elance.com/') %]
