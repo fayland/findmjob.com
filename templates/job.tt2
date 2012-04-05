@@ -105,7 +105,7 @@
 <li><p><b>Contact</b>: [% job.contact %]</p></li>
 [% END %]
 
-<li><p><b>Source URL</b>: <a href='[% job.source_url %]'>[% job.source_url %]</a></p></li>
+<li><p><b>Source URL</b>: <a href='[% job.source_url %]' target="_blank">[% job.source_url %]</a></p></li>
 
 </ul>
 
