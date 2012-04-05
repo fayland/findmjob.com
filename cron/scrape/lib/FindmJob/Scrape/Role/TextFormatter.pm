@@ -17,6 +17,9 @@ sub format_tree_text {
     my ($self, $ele) = @_;
 
     my $txt = $self->formatter->format($ele);
+
+    my $x100 = '-' x 100;
+    $txt =~ s/\-{80,}/$x100/sg;
     $txt =~ s/^\s+|\s+$//g;
     $txt =~ s/\n{3,}/\n\n/g;
     $txt =~ s/\xA0/ /g;
