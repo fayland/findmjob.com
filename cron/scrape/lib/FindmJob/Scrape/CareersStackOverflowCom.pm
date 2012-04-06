@@ -91,7 +91,7 @@ sub on_single_page {
             location => $location,
             type     => '',
             extra    => '',
-            tags     => \@tags,
+            tags     => ['joelonsoftware', @tags],
         };
 
 #    } catch {
