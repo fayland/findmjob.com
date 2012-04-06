@@ -52,7 +52,9 @@ sub on_single_page {
         my $title = $hed->look_down(_tag => 'h1')->as_trimmed_text;
         my $location = $hed->look_down(_tag => 'span', class => 'location')->as_trimmed_text;
         my $byline = $hed->look_down(_tag => 'p', id => 'byline');
-        my $company = $byline->look_down(_tag => 'a', target => '_blank');
+        my $company;
+        $company = $byline->look_down(_tag => 'a', target => '_blank') if $byline;
+        $company ||= $hed->look_down(_tag => 'a', class => 'employer');
 
         my @tags = $hed->look_down(_tag => 'a', class => 'post-tag');
         @tags = map { $_->as_trimmed_text } @tags;
