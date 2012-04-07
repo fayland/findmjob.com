@@ -1,3 +1,5 @@
 *_local.yml
 */tmp/*
 script/oneoff/*.token.txt
+log/*
+sphinxdata/*

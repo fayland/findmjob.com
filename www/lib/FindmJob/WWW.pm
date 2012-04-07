@@ -94,7 +94,33 @@ get '/job/:jobid' => sub {
 };
 
 get qr'/search.*?' => sub {
-    my $sphinx = Sphinx::Search->new;
+    my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $row = 12;
+
+    my $q = params->{'q'};
+
+    my $sph = Sphinx::Search->new;
+    $sph->SetServer('localhost', 9312);
+    $sph->SetLimits(($p - 1) * $row, $row, 800);
+    $sph->SetMatchMode(SPH_MATCH_EXTENDED2);
+    $sph->SetSortMode(SPH_SORT_RELEVANCE);
+    my @k = split(/\s+/, $q);
+    my @k = map { $sph->EscapeString($_) } @k;
+    @k = map { '"' . $_ . '"' } @k;
+    my $k = '(' . join(' & ', @k) . ')';
+    my $ret = $sph->Query('@* ' . $k);
+    if ($ret->{total}) {
+        my @jobids = map { $_->{id} } @{$ret->{matches}};
+        my $schema = FindmJob::Basic->schema;
+        my @jobs   = $schema->resultset('Job')->search( {
+            id => { 'IN', \@jobids }
+        } )->all;
+        my %jobs = map { $_->id => $_ } @jobs;
+        @jobs = map { $jobs{$_} } @jobids;
+        var jobs => \@jobs;
+    }
+
+    template 'search.tt2';
 };
 
 get '/company/:companyid' => sub {
