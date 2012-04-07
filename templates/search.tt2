@@ -2,6 +2,11 @@
 
 [% USE String %]
 
+<form action='/search' class="well form-search">
+  <input type="text" class="input-medium search-query" name="q" placeholder="Search...">
+  <button type="submit" class="btn">Search</button>
+</form>
+<hr class="soften" />
 
 [% FOREACH job IN jobs %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
