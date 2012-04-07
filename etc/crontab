@@ -1,4 +1,5 @@
 0 */12 * * * perl /findmjob.com/cron/tools/sitemap.pl
+0 */3 * * *  indexer --all --config /findmjob.com/etc/sphinx.conf --rotate
 10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Perl
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Github
 30 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m StackOverflow
