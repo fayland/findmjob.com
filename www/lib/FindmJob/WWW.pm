@@ -9,6 +9,7 @@ use Encode;
 use JSON::XS ();
 use Dancer::Plugin::Feed;
 use Sphinx::Search;
+use Data::Page;
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -96,14 +97,14 @@ get '/job/:jobid' => sub {
 
 get qr'/search.*?' => sub {
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
-    my $row = 12;
+    my $rows = 12;
 
     my $q = vars->{html_filename} || params->{'q'};
-    print STDERR "QQQQQQQ: $q\n";
+    var 'q' => $q;
 
     my $sph = Sphinx::Search->new;
     $sph->SetServer('localhost', 9312);
-    $sph->SetLimits(($p - 1) * $row, $row, 800);
+    $sph->SetLimits(($p - 1) * $rows, $rows, 800);
     $sph->SetMatchMode(SPH_MATCH_EXTENDED2);
     $sph->SetSortMode(SPH_SORT_RELEVANCE);
     my @k = split(/\s+/, $q);
@@ -120,6 +121,13 @@ get qr'/search.*?' => sub {
         my %jobs = map { $_->id => $_ } @jobs;
         @jobs = map { $jobs{$_} } @jobids;
         var jobs => \@jobs;
+
+        # pager
+        my $pager = Data::Page->new();
+        $pager->total_entries($ret->{total});
+        $pager->entries_per_page($rows);
+        $pager->current_page($$p);
+        var pager => $pager;
     }
 
     template 'search.tt2';

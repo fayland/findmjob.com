@@ -3,17 +3,7 @@
 
 [% USE String %]
 
-<div class="row">
-<div class="span4">
 <h1>[% title %] (Total: [% pager.total_entries %])</h1>
-</div>
-<div class="span8">
-<form action='/search' class="well form-search pull-right" id="search">
-  <input type="text" class="input-medium search-query" name="q" placeholder="Search...">
-  <button type="submit" class="btn">Search</button>
-</form>
-</div>
-</div>
 <hr class="soften">
 
 [% FOREACH job IN jobs %]

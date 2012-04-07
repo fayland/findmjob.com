@@ -1,13 +1,12 @@
-
+[% title = q %]
+[% meta_keywords = q %]
 
 [% USE String %]
 
-<form action='/search' class="well form-search" id="search">
-  <input type="text" class="input-medium search-query" name="q" placeholder="Search...">
-  <button type="submit" class="btn">Search</button>
-</form>
-<hr class="soften" />
+<h1>[% title %] (Total: [% pager.total_entries %])</h1>
+<hr class="soften">
 
+[% IF jobs.size %]
 [% FOREACH job IN jobs %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
     <div class="span6">
@@ -22,4 +21,11 @@
 [%# to close tag %]
 [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
-[%# INCLUDE pager.tt %]
+[% INCLUDE pager.tt %]
+
+[% ELSE %]
+    <div class="alert">
+      <a class="close" data-dismiss="alert">×</a>
+      Nothing here, please redefined your search terms.
+    </div>
+[% END %]
