@@ -47,6 +47,7 @@ get qr'.*?/feed\.(rss|atom).*?' => sub {
 get qr'.*?/([^\/]+).html' => sub {
     my $uri = request->uri;
     $uri =~ s'/([^\/]+).html'';
+    var html_filename => $1;
     forward $uri;
 };
 
@@ -97,7 +98,8 @@ get qr'/search.*?' => sub {
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $row = 12;
 
-    my $q = params->{'q'};
+    my $q = vars->{html_filename} || params->{'q'};
+    print STDERR "QQQQQQQ: $q\n";
 
     my $sph = Sphinx::Search->new;
     $sph->SetServer('localhost', 9312);
@@ -105,7 +107,7 @@ get qr'/search.*?' => sub {
     $sph->SetMatchMode(SPH_MATCH_EXTENDED2);
     $sph->SetSortMode(SPH_SORT_RELEVANCE);
     my @k = split(/\s+/, $q);
-    my @k = map { $sph->EscapeString($_) } @k;
+    @k = map { $sph->EscapeString($_) } @k;
     @k = map { '"' . $_ . '"' } @k;
     my $k = '(' . join(' & ', @k) . ')';
     my $ret = $sph->Query('@* ' . $k);

@@ -72,11 +72,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </div>
 
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.timeago').timeago();
-    });
-</script>
+<script type="text/javascript" src="[% config.sites.static %]/js/findmjob.js"></script>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];

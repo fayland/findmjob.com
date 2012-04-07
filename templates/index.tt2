@@ -8,7 +8,7 @@
 <h1>[% title %] (Total: [% pager.total_entries %])</h1>
 </div>
 <div class="span8">
-<form action='/search' class="well form-search pull-right">
+<form action='/search' class="well form-search pull-right" id="search">
   <input type="text" class="input-medium search-query" name="q" placeholder="Search...">
   <button type="submit" class="btn">Search</button>
 </form>
@@ -28,6 +28,6 @@
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]
 [% END %]
 [%# to close tag %]
-[% IF jobs.size MOD 2 == 1 %]</div>[% END %]
+[% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
 [% INCLUDE pager.tt %]
