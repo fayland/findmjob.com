@@ -58,6 +58,7 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
+        print Dumper(\$item);
         next unless $item->{budgetMin} and $item->{budgetMin} >= 500; # only scrape those more than 500$
 
         # we need more stuff so we dig into it

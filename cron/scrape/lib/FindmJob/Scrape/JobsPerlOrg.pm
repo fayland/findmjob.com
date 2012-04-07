@@ -70,7 +70,7 @@ sub on_single_page {
             posted_at => human_to_db_datetime($item->{'dc:date'}),
             description => delete $data->{description},
             location => delete $data->{location},
-            type  => delete $data->{hours},
+            type  => delete $data->{hours} || '',
             extra => encode_json($data),
             tags  => \@tags
         };
