@@ -1,4 +1,4 @@
-package FindmJob::Scrape::CareersStackOverflowCom;
+package FindmJob::Scrape::StackOverflow;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
@@ -91,7 +91,7 @@ sub on_single_page {
             location => $location,
             type     => '',
             extra    => '',
-            tags     => ['joelonsoftware', @tags],
+            tags     => ['joelonsoftware', 'stackoverflow', @tags],
         };
 
 #    } catch {

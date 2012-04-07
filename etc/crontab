@@ -1,8 +1,8 @@
 0 */12 * * * perl /findmjob.com/cron/tools/sitemap.pl
-10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsPerlOrg
-20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m JobsGithubCom
-30 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareersStackOverflowCom
-40 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m oDeskCom
-50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m LinkedinCom
-10 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m ElanceCom
-20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilderCom
+10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Perl
+20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Github
+30 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m StackOverflow
+40 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
+50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
+10 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
+20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder

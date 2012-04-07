@@ -1,4 +1,4 @@
-package FindmJob::Scrape::oDeskCom;
+package FindmJob::Scrape::oDesk;
 
 use Moose;
 with 'FindmJob::Scrape::Role';

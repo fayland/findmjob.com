@@ -1,4 +1,4 @@
-package FindmJob::Scrape::JobsGithubCom;
+package FindmJob::Scrape::Github;
 
 use Moose;
 with 'FindmJob::Scrape::Role';

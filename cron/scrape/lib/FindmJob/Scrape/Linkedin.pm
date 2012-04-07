@@ -1,4 +1,4 @@
-package FindmJob::Scrape::LinkedinCom;
+package FindmJob::Scrape::Linkedin;
 
 use Moose;
 with 'FindmJob::Scrape::Role';

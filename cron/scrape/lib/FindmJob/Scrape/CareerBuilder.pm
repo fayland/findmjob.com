@@ -1,4 +1,4 @@
-package FindmJob::Scrape::CareerBuilderCom;
+package FindmJob::Scrape::CareerBuilder;
 
 use Moose;
 with 'FindmJob::Scrape::Role';

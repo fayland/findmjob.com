@@ -1,4 +1,4 @@
-package FindmJob::Scrape::JobsPerlOrg;
+package FindmJob::Scrape::Perl;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
@@ -55,7 +55,7 @@ sub on_single_page {
         }
 
         $data->{website} = 'http://' . $data->{website} unless $data->{website} and $data->{website} =~ /^http\:/;
-        my @tags = ('perl');
+        my @tags = ('perl', 'jobs.perl.org');
         push @tags, 'telecommute' if $data->{onsite} eq 'no' or $data->{onsite} eq 'some';
 
         delete $data->{posted_on};

@@ -1,4 +1,4 @@
-package FindmJob::Scrape::ElanceCom;
+package FindmJob::Scrape::Elance;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
