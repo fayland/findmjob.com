@@ -126,7 +126,7 @@ get qr'/search.*?' => sub {
         my $pager = Data::Page->new();
         $pager->total_entries($ret->{total});
         $pager->entries_per_page($rows);
-        $pager->current_page($$p);
+        $pager->current_page($p);
         var pager => $pager;
     }
 
