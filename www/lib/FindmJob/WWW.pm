@@ -8,6 +8,7 @@ use FindmJob::Basic;
 use Encode;
 use JSON::XS ();
 use Dancer::Plugin::Feed;
+use Sphinx::Search;
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -90,6 +91,10 @@ get '/job/:jobid' => sub {
     var job => $job;
 
     template 'job.tt2';
+};
+
+get qr'/search.*?' => sub {
+    my $sphinx = Sphinx::Search->new;
 };
 
 get '/company/:companyid' => sub {
