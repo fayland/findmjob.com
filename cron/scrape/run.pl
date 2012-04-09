@@ -13,7 +13,7 @@ my $m;
 my %options;
 GetOptions(
     "m|module=s" => \$m,
-    "update"     => \$options{opt_update},
+    "u|update"   => \$options{opt_update},
 ) or die "error parsing opt";
 
 unless ($m) {
@@ -21,7 +21,7 @@ unless ($m) {
 perl $0 [options]
     options:
         -m, --module        running module, eg: JobsPerlOrg
-        --update            in updating module
+        --update            in updating mode
 USAGE
 }
 
