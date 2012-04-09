@@ -2,6 +2,7 @@ package FindmJob::ShareBot;
 
 use Moose;
 use Module::Pluggable::Object;
+with 'FindmJob::ShareBot::Role';
 
 sub run {
     my ($self) = @_;
