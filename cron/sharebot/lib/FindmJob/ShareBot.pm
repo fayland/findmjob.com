@@ -31,7 +31,7 @@ sub run {
             my $pkg = ref $plugin; $pkg =~ s{FindmJob::ShareBot::}{};
 
             # test usage
-            next if $pkg eq 'Twitter';
+            # next if $pkg eq 'Twitter';
 
             # check if we did it
             $is_inserted_sth->execute($job->id, $pkg);
