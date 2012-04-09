@@ -25,3 +25,8 @@ share:
   Delicious:
     u: 'findmjob'
     p: 'secret'
+  Twitter:
+    consumer_key: 'DKTye4d0L92jBwgCLqgA'
+    consumer_secret: 'secret'
+    access_token: 'secret'
+    access_token_secret: 'secret'
