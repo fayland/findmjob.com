@@ -14,9 +14,14 @@ sites:
 api:
   linkedin:
     key: 'e8dsod78mkwg'
-    secret: ''
+    secret: 'secret'
   elance:
     key: '4f7b865e3240a0c134000024'
-    secret: ''
+    secret: 'secret'
   CareerBuilder:
-    key: ''
+    key: 'secret'
+
+share:
+  Delicious:
+    u: 'findmjob'
+    p: 'secret'

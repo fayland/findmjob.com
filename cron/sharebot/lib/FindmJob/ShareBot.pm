@@ -12,9 +12,18 @@ sub run {
         except => ['FindmJob::ShareBot::Role'],
     )->plugins;
 
-    # get random job?
-    foreach my $plugin ( @plugins ) {
-        $plugin->share({ id => 'x' });
+    # get latest 10 jobs? or better what?
+    my $job_rs = $self->schema->resultset('Job')->search( undef, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => 1
+    });
+    while (my $job = $job_rs->next) {
+        foreach my $plugin ( @plugins ) {
+            $plugin->share($job);
+            sleep 2;
+        }
+        sleep 10;
     }
 }
 

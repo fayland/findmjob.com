@@ -89,7 +89,6 @@ get '/job/:jobid' => sub {
         $job->description( decode_utf8($job->description) );
     }
     $job->{extra_data} = JSON::XS->new->utf8->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
-    $job->{tags} = [ $schema->resultset('ObjectTag')->get_tags_by_object($job->id) ];
     var job => $job;
 
     template 'job.tt2';

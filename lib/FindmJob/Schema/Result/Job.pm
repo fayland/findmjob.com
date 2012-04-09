@@ -166,5 +166,13 @@ sub _build_url {
     return "/job/" . $self->id . "/" . seo_title($self->title) . ".html";
 }
 
+has 'tags' => ( is => 'ro', isa => 'ArrayRef', lazy_build => 1 );
+sub _build_tags {
+    my ($self) = @_;
+
+    my $schema = $self->result_source->schema;
+    return [ $schema->resultset('ObjectTag')->get_tags_by_object($self->id) ];
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
