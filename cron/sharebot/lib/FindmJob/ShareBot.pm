@@ -28,8 +28,12 @@ sub run {
 
     while (my $job = $job_rs->next) {
         foreach my $plugin ( @plugins ) {
-            # check if we did it
             my $pkg = ref $plugin; $pkg =~ s{FindmJob::ShareBot::}{};
+
+            # test usage
+            next unless $pkg eq 'Twitter';
+
+            # check if we did it
             $is_inserted_sth->execute($job->id, $pkg);
             my ($is_inserted) = $is_inserted_sth->fetchrow_array;
             next if $is_inserted;

@@ -22,6 +22,9 @@ api:
     key: 'secret'
 
 share:
+  bitly:
+    uid: 'findmjob'
+    key: 'secret'
   Delicious:
     u: 'findmjob'
     p: 'secret'
