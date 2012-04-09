@@ -1,4 +1,4 @@
-package FindmJob::Scrape::Role::UA;
+package FindmJob::Role::UA;
 
 use Moose::Role;
 use Class::Load 'load_class';

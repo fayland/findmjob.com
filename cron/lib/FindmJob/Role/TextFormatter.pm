@@ -1,4 +1,4 @@
-package FindmJob::Scrape::Role::TextFormatter;
+package FindmJob::Role::TextFormatter;
 
 use Moose::Role;
 use FindmJob::HTML::FormatText;
