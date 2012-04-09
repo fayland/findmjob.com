@@ -34,8 +34,8 @@ sub run {
             my ($is_inserted) = $is_inserted_sth->fetchrow_array;
             next if $is_inserted;
 
-            print "working on " . $job->id . "\n";
-            # $plugin->share($job);
+            $self->log_debug("# on " . $job->id . " with $pkg");
+            $plugin->share($job);
 
             $insert_sth->execute($job->id, $pkg, time());
 
