@@ -27,23 +27,31 @@ sub share {
 
     my @tags = @{ $job->tags };
     @tags = map { $_->{text} } @tags;
-    return unless @tags;
-
-    push @tags, 'findmjob', 'job';
+    @tags = $self->remove_useless_tags(@tags);
+    @tags = sort { length($a) <=> length($b) } @tags;
+    @tags = splice(@tags, 0, 2);
+    push @tags, 'jobs', 'hiring', 'careers';
+    @tags = map { '#' . $_ } @tags;
+    my $tags = join(' ', @tags);
 
     my $config = $self->config;
     my $url = $config->{sites}->{main} . $job->url;
     my $shorten_url = $self->shorten($url);
-    print $shorten_url;
-    exit;
 
-    my $st = $self->twitter->add_post( {
-        url => $config->{sites}->{main} . $job->url,
-        title => $job->title,
-        description => substr($job->description, 0, 255) . '...',
-        tags  => join(', ', @tags)
-    } );
-    $self->log_debug("# added " . $job->url . " $st");
+    my $left_len = 140 - (length($tags) + length($shorten_url) + 2);
+    my $title = $job->title;
+    $title = substr($title, 0, $left_len - 3) . '...' if length($title) > $left_len;
+
+    my $update = "$title $shorten_url $tags";
+    $self->log_debug("# tweet $update");
+
+    my $st;
+    try {
+        $st = $self->twitter->update($update);
+    } catch {
+        $st = 0;
+        $self->log_fatal( "Error posting tweet: $_" );
+    };
 
     return $st;
 }

@@ -18,8 +18,7 @@ sub share {
 
     my @tags = @{ $job->tags };
     @tags = map { $_->{text} } @tags;
-    return unless @tags;
-
+    @tags = $self->remove_useless_tags(@tags);
     push @tags, 'findmjob', 'job';
 
     my $config = $self->config;
