@@ -30,6 +30,7 @@ sub share {
     @tags = $self->remove_useless_tags(@tags);
     @tags = sort { length($a) <=> length($b) } @tags;
     @tags = splice(@tags, 0, 2);
+    @tags = map { s/\s+//g; $_ } @tags;
     push @tags, 'jobs', 'hiring', 'careers';
     @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
