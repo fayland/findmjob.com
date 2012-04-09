@@ -15,7 +15,7 @@ sub run {
 
     # random so that every job have the chance
     my $job_rs = $self->schema->resultset('Job')->search( {
-        inserted_at => { '>', time() - 7 * 86440 }, # today
+        inserted_at => { '>', time() - 86440 }, # today
     }, {
         order_by => 'RAND()',
         rows => 12,
