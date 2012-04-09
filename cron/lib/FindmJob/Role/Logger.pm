@@ -3,6 +3,6 @@ package FindmJob::Role::Logger;
 use Moose::Role;
 with 'MooseX::Role::Loggable';
 
-has '+debug' => (default => 1);
+has 'debug' => (is => 'rw', isa => 'Bool', default => 1);
 
 1;
