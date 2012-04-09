@@ -30,6 +30,8 @@ sub share {
         tags  => join(', ', @tags)
     } );
     $self->log_debug("# added " . $job->url . " $st");
+
+    return $st;
 }
 
 1;

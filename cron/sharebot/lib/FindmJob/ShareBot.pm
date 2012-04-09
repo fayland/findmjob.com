@@ -35,9 +35,9 @@ sub run {
             next if $is_inserted;
 
             $self->log_debug("# on " . $job->id . " with $pkg");
-            $plugin->share($job);
+            my $st = $plugin->share($job);
 
-            $insert_sth->execute($job->id, $pkg, time());
+            $insert_sth->execute($job->id, $pkg, time()) if $st;
 
             sleep 2;
         }
