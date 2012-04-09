@@ -9,8 +9,8 @@ has 'delicious' => ( is => 'ro', isa => 'Net::Delicious', lazy_build => 1 );
 sub _build_delicious {
     my $self = shift;
     my $config = $self->config;
-    die Dumper($config->{Delicious}); use Data::Dumper;
-    Net::Delicious->new({ user => $config->{Delicious}->{u}, pswd => $config->{Delicious}->{p}, debug => 1 });
+    my $t = $config->{share}->{Delicious};
+    Net::Delicious->new({ user => $t->{u}, pswd => $t->{p} }) #, debug => 1 });
 }
 
 sub share {
@@ -19,6 +19,8 @@ sub share {
     my @tags = @{ $job->tags };
     @tags = map { $_->{text} } @tags;
     return unless @tags;
+
+    push @tags, 'findmjob', 'job';
 
     my $config = $self->config;
     my $st = $self->delicious->add_post( {

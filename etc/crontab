@@ -7,3 +7,4 @@
 50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
 10 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
+59 */2 * * * perl /findmjob.co/cron/sharebot/sharebot.pl
