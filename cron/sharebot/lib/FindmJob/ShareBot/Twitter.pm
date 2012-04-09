@@ -47,7 +47,7 @@ sub share {
     $self->log_debug("# tweet $update");
 
     my $st = eval { $self->twitter->update($update) };
-    $self->log_fatal( "Error posting tweet: $@" ) if $@;
+    $self->log_debug( "# Error posting tweet: $@" ) if $@;
 
     return exists $st->{id} ? 1: 0;
 }
