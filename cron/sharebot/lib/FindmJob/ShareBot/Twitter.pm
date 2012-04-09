@@ -46,15 +46,10 @@ sub share {
     my $update = "$title $shorten_url $tags";
     $self->log_debug("# tweet $update");
 
-    my $st;
-    try {
-        $st = $self->twitter->update($update);
-    } catch {
-        $st = 0;
-        $self->log_fatal( "Error posting tweet: $_" );
-    };
+    my $st = eval { $self->twitter->update($update) };
+    $self->log_fatal( "Error posting tweet: $@" ) if $@;
 
-    return $st;
+    return exists $st->{id} ? 1: 0;
 }
 
 1;
