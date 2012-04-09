@@ -5,7 +5,7 @@ use Moose::Role;
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::UA';
 with 'FindmJob::Role::TextFormatter';
-with 'MooseX::Role::Loggable';
+with 'FindmJob::Role::Logger';
 
 has 'opt_update' => ( is => 'ro', isa => 'Bool', default => '0' );
 

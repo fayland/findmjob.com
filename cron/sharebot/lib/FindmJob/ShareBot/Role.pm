@@ -2,6 +2,6 @@ package FindmJob::ShareBot::Role;
 
 use Moose::Role;
 with 'FindmJob::Role::Basic';
-with 'MooseX::Role::Loggable';
+with 'FindmJob::Role::Logger';
 
 1;
