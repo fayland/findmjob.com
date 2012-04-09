@@ -3,7 +3,8 @@ package FindmJob::Scrape::Role;
 use Moose::Role;
 use FindmJob::Basic;
 
-with 'FindmJob::Scrape::Role::UA';
+with 'FindmJob::Role::UA';
+with 'FindmJob::Role::TextFormatter';
 with 'MooseX::Role::Loggable';
 
 has 'opt_update' => ( is => 'ro', isa => 'Bool', default => '0' );

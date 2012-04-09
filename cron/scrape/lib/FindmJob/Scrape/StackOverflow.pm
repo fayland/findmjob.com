@@ -2,7 +2,6 @@ package FindmJob::Scrape::StackOverflow;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
-with 'FindmJob::Scrape::Role::TextFormatter';
 
 use XML::Simple 'XMLin';
 use HTML::TreeBuilder;

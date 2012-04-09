@@ -2,7 +2,6 @@ package FindmJob::Scrape::oDesk;
 
 use Moose;
 with 'FindmJob::Scrape::Role';
-with 'FindmJob::Scrape::Role::TextFormatter';
 
 use Try::Tiny;
 use Data::Dumper;
