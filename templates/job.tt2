@@ -57,7 +57,7 @@
     [% END %]
 [% END %]
 
-<li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.posted_at %]">[% job.expired_at %]</span></p></li>
+<li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
 
 <li><p><b>Description</b>:</p>
 <div class="well">
