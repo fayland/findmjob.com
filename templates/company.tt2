@@ -16,7 +16,7 @@
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
     <div class="span6">
         <div class="well">
-        <h3>[% job.title %]</h3>
+        <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
         <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
         </div>
