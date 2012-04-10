@@ -6,6 +6,7 @@
 <link href="[% config.sites.static %]/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 [%- IF title %]
 <meta property="og:title" content="[% title.squote %]" />
