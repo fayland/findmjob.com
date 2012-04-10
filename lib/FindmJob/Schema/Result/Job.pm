@@ -56,6 +56,12 @@ __PACKAGE__->table("job");
   datetime_undef_if_invalid: 1
   is_nullable: 0
 
+=head2 expired_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
 =head2 description
 
   data_type: 'text'
@@ -106,6 +112,12 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
+  "expired_at",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
   "description",
   { data_type => "text", is_nullable => 0 },
   "location",
@@ -147,8 +159,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-03 14:43:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0/LwsUi6MRfyIpCfYrEWLw
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-10 23:19:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ivBHAFZzOzj1+1kkLkjFeQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
