@@ -89,15 +89,18 @@ sub run {
         my @tags =  map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
         push @tags, map { $_->{name} } @{$r->{position}->{industries}->{values}};
         push @tags, $self->get_extra_tags_from_desc($desc);
-        my $pd = $r->{postingDate};
+        my $pd = delete $r->{postingDate};
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
+        my $ed = delete $r->{expirationDate};
+        my $expirationDate = sprintf('%04d-%02d-%02d', $ed->{year}, $ed->{month}, $ed->{day});
 
         my $row = {
             source_url => $link,
             title => delete $r->{position}->{title},
             company_id => $company->id,
             contact   => '',
-            posted_at => $postingDate,
+            posted_at  => $postingDate,
+            expired_at => $expirationDate,
             description => $desc,
             location => $r->{position}->{location}->{name},
             type     => $r->{position}->{jobType}->{name},

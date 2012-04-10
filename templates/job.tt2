@@ -9,7 +9,7 @@
 <hr class="soften">
 
 <ul class="unstyled">
-<li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</p></li>
+<li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</span></p></li>
 
 [% IF job.tags.size %]
 <li><p><b>Tags</b>:
@@ -48,18 +48,16 @@
     [% ELSIF job.source_url.search('www.odesk.com') %]
         <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
         <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
-        <li><p><b>Expiry Date:</b>: [% job.extra_data.op_job_expiration %]</p></li>
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
-        <li><p><b>Expiry Date:</b>: [% job.extra_data.expirationDate.year %]-[% job.extra_data.expirationDate.month %]-[% job.extra_data.expirationDate.day %]</p></li>
         <li><p><b>job Poster:</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
-        <li><p><b>Expiry Date:</b>: [% date.format(job.extra_data.endDate, '%Y-%m-%d %H:%M:%S') %]</p></li>
         <li><p><b>job Poster:</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
-        <li><p><b>Expiry Date:</b>: [% job.extra_data.EndDate %]</p></li>
         <li><p><b>job Poster:</b>: [% job.extra_data.ContactInfoName %]</p></li>
     [% END %]
 [% END %]
+
+<li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.posted_at %]">[% job.expired_at %]</span></p></li>
 
 <li><p><b>Description</b>:</p>
 <div class="well">
