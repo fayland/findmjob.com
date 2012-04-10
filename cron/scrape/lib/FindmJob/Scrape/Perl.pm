@@ -53,9 +53,9 @@ sub on_single_page {
             $data->{$k} = $v;
         }
 
-        $data->{website} = 'http://' . $data->{website} unless $data->{website} and $data->{website} =~ /^http\:/;
         my @tags = ('perl', 'jobs.perl.org');
         push @tags, 'telecommute' if $data->{onsite} eq 'no' or $data->{onsite} eq 'some';
+        push @tags, $self->get_extra_tags_from_desc($data->{description});
 
         delete $data->{posted_on};
         my $row = {
@@ -63,7 +63,7 @@ sub on_single_page {
             title => $title,
             company => {
                 name => delete $data->{company_name},
-                website => delete $data->{website},
+                website => delete $data->{website} || '',
             },
             contact   => delete $data->{contact},
             posted_at => human_to_db_datetime($item->{'dc:date'}),

@@ -34,7 +34,10 @@ around 'create' => sub {
     if ((grep { $_ eq $table } @tags_tables) and defined $tags) {
         my $schema = $self->result_source->schema;
         my @tags = @$tags; @tags = uniq @tags;
+        my %dups;
         foreach my $tag (@tags) {
+            next if $dups{lc $tag};
+            $dups{lc $tag} = 1;
             my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
             $schema->resultset('ObjectTag')->create( {
                 object => $row->id,
@@ -62,7 +65,10 @@ around 'update' => sub {
         while (my $row = $self->next) {
             $schema->resultset('ObjectTag')->search( { object => $row->id } )->delete;
             my @tags = @$tags; @tags = uniq @tags;
+            my %dups;
             foreach my $tag (@tags) {
+                next if $dups{lc $tag};
+                $dups{lc $tag} = 1;
                 my $tag_row = $schema->resultset('Tag')->get_or_create_by_text($tag);
                 $schema->resultset('ObjectTag')->create( {
                     object => $row->id,
