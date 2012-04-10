@@ -25,6 +25,7 @@ sub run {
         next if $is_inserted and not $self->opt_update;
 
         my $desc = $self->format_text($item->{description});
+        my @tags = $self->get_extra_tags_from_desc($desc);
         my $row = {
             source_url => $link,
             title => $item->{title},
@@ -40,7 +41,7 @@ sub run {
             extra    => $json->encode({
                 company_logo => $item->{company_logo},
             }),
-            tags     => ['github'],
+            tags     => ['github', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
             $self->schema->resultset('Job')->update_job($row);

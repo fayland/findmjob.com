@@ -88,6 +88,7 @@ sub run {
 
         my @tags =  map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
         push @tags, map { $_->{name} } @{$r->{position}->{industries}->{values}};
+        push @tags, $self->get_extra_tags_from_desc($desc);
         my $pd = $r->{postingDate};
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
 

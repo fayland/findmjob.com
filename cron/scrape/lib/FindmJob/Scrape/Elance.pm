@@ -70,6 +70,7 @@ sub run {
 
         my @tags =  split(/\,\s+/, delete $r->{skillTags});
         push @tags, delete $r->{subcategory};
+        push @tags, $self->get_extra_tags_from_desc($r->{description});
 
         my $row = {
             source_url => $link,

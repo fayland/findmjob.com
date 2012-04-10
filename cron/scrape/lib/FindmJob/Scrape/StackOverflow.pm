@@ -76,6 +76,7 @@ sub on_single_page {
         my $desc = $self->format_tree_text($jobdetail);
         $desc =~ s/\s*apply\s*$//is;
         $desc =~ s/^\s*Job Description\s*\-+\s*//isg;
+        push @tags, $self->get_extra_tags_from_desc($desc);
 
         my $row = {
             source_url => $link,

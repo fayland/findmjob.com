@@ -37,6 +37,7 @@ sub run {
         my @tags = split(/,\s*/, delete $item->{op_required_skills});
 
         my $desc = $self->format_text(delete $item->{op_description});
+        push @tags, $self->get_extra_tags_from_desc($desc);
 
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
