@@ -1,6 +1,7 @@
 (function() {
 
   $(document).ready(function() {
+    $.timeago.settings.allowFuture = true;
     $('.timeago').timeago();
     return $('.search-form').submit(function() {
       var q;
