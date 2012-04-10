@@ -37,7 +37,8 @@
 
 </div> <!-- end for <div class="span10"> -->
 <div class="span2">
-    <ul class="unstyled">
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
     [%# hardcode for now %]
     [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
     <li><a href='/tag/Perl'>Perl</a></li>
@@ -51,6 +52,7 @@
     <li><a href='/tag/jQuery'>jQuery</a></li>
 
     </ul>
+  </div>
 </div>
 
 </div></div>
