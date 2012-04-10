@@ -14,8 +14,13 @@
 <h2>Recent Jobs</h2>
 <hr class="soften">
 
+<div class="container-fluid">
+<div class="row-fluid">
+
+<div class="span10">
+
 [% FOREACH job IN jobs %]
-[% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
+[% IF loop.count MOD 2 == 1 %]<div class="row-fluid">[% END %]
     <div class="span6">
         <div class="well">
         <h3>[% job.title %]</h3>
@@ -29,3 +34,23 @@
 [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
 [% INCLUDE pager.tt base_url='/jobs' %]
+
+</div> <!-- end for <div class="span10"> -->
+<div class="span2">
+    <ul class="unstyled">
+    [%# hardcode for now %]
+    [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
+    <li><a href='/tag/Perl'>Perl</a></li>
+    <li><a href='/tag/Python'>Python</a></li>
+    <li><a href='/tag/Ruby'>Ruby</a></li>
+    <li><a href='/tag/PHP'>PHP</a></li>
+    <li><a href='/tag/Java'>Java</a></li>
+    <li><a href='/tag/ruby-on-rails'>ruby-on-rails</a></li>
+    <li><a href='/tag/Javascript'>Javascript</a></li>
+    <li><a href='/tag/MySQL'>MySQL</a></li>
+    <li><a href='/tag/jQuery'>jQuery</a></li>
+
+    </ul>
+</div>
+
+</div></div>
