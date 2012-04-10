@@ -8,7 +8,10 @@ use FindmJob::Basic;
 
 my $dbh = FindmJob::Basic->dbh;
 
-my @language = ('perl', 'python', 'java', 'asp', 'php', 'javascript', 'ruby', 'c#', 'c++', 'lisp', 'actionscript', 'c', 'objective-c', 'visual basic', 'sql', '.net', 'asp.net', 'pascal', 'lua', 'fortran', 'scheme', 'bash', 'haskell', 'smalltalk', 'erlang', 'groovy', 'prolog');
+my @language = ('perl', 'python', 'java', 'asp', 'php', 'javascript', 'ruby', 'c#', 'c++', 'lisp', 'actionscript', 'c', 'objective-c', 'visual basic', 'sql', '.net', 'asp.net', 'pascal', 'lua', 'fortran', 'scheme', 'bash', 'haskell', 'smalltalk', 'erlang', 'groovy', 'prolog', 'html', 'css');
 $dbh->do("UPDATE tag SET category='language' WHERE text IN (" . join(', ', split(//, '?' x @language)) . ")", undef, @language);
+
+my @skills = ('MySQL', 'Linux', 'svn', 'git', 'Apache', 'Ajax');
+$dbh->do("UPDATE tag SET category='skill' WHERE text IN (" . join(', ', split(//, '?' x @skills)) . ")", undef, @skills);
 
 1;

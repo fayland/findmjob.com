@@ -54,8 +54,10 @@ sub on_single_page {
         }
 
         my @tags = ('perl', 'jobs.perl.org');
-        push @tags, 'telecommute' if $data->{onsite} eq 'no' or $data->{onsite} eq 'some';
+        push @tags, 'telecommute' if $data->{onsite} and ($data->{onsite} eq 'no' or $data->{onsite} eq 'some');
         push @tags, $self->get_extra_tags_from_desc($data->{description});
+        push @tags, $self->get_extra_tags_from_desc($data->{skills_required});
+        push @tags, $self->get_extra_tags_from_desc($data->{skills_desired});
 
         delete $data->{posted_on};
         my $row = {
