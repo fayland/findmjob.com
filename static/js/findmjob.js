@@ -2,7 +2,7 @@
 
   $(document).ready(function() {
     $('.timeago').timeago();
-    return $('#search').submit(function() {
+    return $('.search-form').submit(function() {
       var q;
       q = $(this).find('input[name="q"]').val();
       if (!q.length) return false;

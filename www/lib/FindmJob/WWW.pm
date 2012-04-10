@@ -60,6 +60,25 @@ get qr'.+/$' => sub {
 };
 
 get '/' => sub {
+    # backwards
+    if ( vars->{page} or vars->{feed_format} ) {
+        forward '/jobs';
+    }
+
+    my $schema = FindmJob::Basic->schema;
+    my $job_rs = $schema->resultset('Job')->search( undef, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => 1,
+    });
+    my @jobs = $job_rs->all;
+    var pager => $job_rs->pager;
+    var jobs  => \@jobs;
+
+    template 'index.tt2';
+};
+
+get '/jobs' => sub {
     my $schema = FindmJob::Basic->schema;
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( undef, {
@@ -77,7 +96,7 @@ get '/' => sub {
         return _render_feed(@jobs);
     }
 
-    template 'index.tt2';
+    template 'jobs.tt2';
 };
 
 get '/job/:jobid' => sub {

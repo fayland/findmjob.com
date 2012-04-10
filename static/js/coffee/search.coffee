@@ -2,7 +2,7 @@ $(document).ready ->
     ## timeago
     $('.timeago').timeago();
 
-    $('#search').submit ->
+    $('.search-form').submit ->
         q = $(this).find('input[name="q"]').val();
         return false unless q.length
         if /^\w+$/.test(q)

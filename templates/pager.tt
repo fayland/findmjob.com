@@ -1,5 +1,8 @@
 [% IF pager AND pager.last_page > 1 %]
-[% base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '') %]
+[%  UNLESS base_url;
+        base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
+    END;
+%]
 <div class="pagination pull-right">
   <ul>
     [% IF pager.previous_page %]

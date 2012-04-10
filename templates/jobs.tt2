@@ -1,17 +1,9 @@
-[% title = 'Find My Job Today!' %]
+[% title = 'Recent Jobs' %]
+[% has_feed = 1 %]
 
 [% USE String %]
 
-<div class="row">
-  <div class="span4 offset4">
-    <form action='/search' id="search" class="search-form">
-        <input type="text" class="search-query span2" name="q" placeholder="Keyword, Location ...">
-        <input type='submit' class="btn btn-primary" value="Search" />
-    </form>
-  </div>
-</div>
-
-<h2>Recent Jobs</h2>
+<h1>[% title %] (Total: [% pager.total_entries %])</h1>
 <hr class="soften">
 
 [% FOREACH job IN jobs %]
@@ -28,4 +20,4 @@
 [%# to close tag %]
 [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
-[% INCLUDE pager.tt base_url='/jobs' %]
+[% INCLUDE pager.tt %]

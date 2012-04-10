@@ -3,7 +3,7 @@
 
 [% USE String %]
 
-<h1>[% title %] (Total: [% pager.total_entries %])</h1>
+<h1>[% title %][% IF jobs.size %] (Total: [% pager.total_entries %])[% END %]</h1>
 <hr class="soften">
 
 [% IF jobs.size %]
