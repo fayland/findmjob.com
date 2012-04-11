@@ -80,7 +80,14 @@ get '/' => sub {
 
 get '/jobs' => sub {
     my $schema = FindmJob::Basic->schema;
+
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $rows = 12;
+    if ( vars->{feed_format} ) {
+        $rows = 20; # more for feeds
+        $p = 1;
+    }
+
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
         rows => 12,
