@@ -24,7 +24,7 @@ sub get_extra_tags_from_desc {
     return unless $desc and length $desc;
 
     my $language_regex = $self->language_regex;
-    my @tags = ($desc =~ /(?:^|[\s\,\/\(\)]+)($tags)(?:[\s\,\/\(\)]+|$)/isg);
+    my @tags = ($desc =~ /(?:^|[\s\,\/\(\)]+)($language_regex)(?:[\s\,\/\(\)]+|$)/isg);
 
     return @tags;
 }
