@@ -45,6 +45,7 @@ sub run {
         $JobRequirements = $self->format_text($JobRequirements);
         $r->{JobRequirements} = $JobRequirements;
 
+        push @tags, $self->get_extra_tags_from_desc($r->{JobTitle});
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, $self->get_extra_tags_from_desc($r->{JobRequirements});
 

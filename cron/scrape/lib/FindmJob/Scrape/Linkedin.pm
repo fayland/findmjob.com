@@ -46,8 +46,6 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
-        my $desc = $self->format_text(delete $r->{description});
-
         # some row return company->id, others just return name
         my $company;
         if ($r->{company}->{id}) {
@@ -86,9 +84,13 @@ sub run {
             } );
         }
 
+        my $desc = $self->format_text(delete $r->{description});
+
         my @tags =  map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
         push @tags, map { $_->{name} } @{$r->{position}->{industries}->{values}};
+        push @tags, $self->get_extra_tags_from_desc($r->{position}->{title});
         push @tags, $self->get_extra_tags_from_desc($desc);
+
         my $pd = delete $r->{postingDate};
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
         my $ed = delete $r->{expirationDate};

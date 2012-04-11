@@ -25,7 +25,10 @@ sub run {
         next if $is_inserted and not $self->opt_update;
 
         my $desc = $self->format_text($item->{description});
-        my @tags = $self->get_extra_tags_from_desc($desc);
+
+        my @tags = $self->get_extra_tags_from_desc($item->{title});
+        push @tags, $self->get_extra_tags_from_desc($desc);
+
         my $row = {
             source_url => $link,
             title => $item->{title},
