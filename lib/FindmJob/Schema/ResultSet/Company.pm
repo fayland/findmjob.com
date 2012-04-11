@@ -18,7 +18,7 @@ sub get_or_create {
     $row->{name} //= $row->{website}; #/
     $row->{name} =~ s#http://(www\.)?##;
     $row->{website} //= ''; #/
-    return 'NA' unless length $row->{name};
+    $row->{name} //= 'Unknown'; #/
     my $r = $self->get_by_name( $row->{name} );
     return $r if $r;
     return $self->create($row);
