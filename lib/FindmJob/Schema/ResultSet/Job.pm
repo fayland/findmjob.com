@@ -31,6 +31,7 @@ sub update_job {
         my $company = $schema->resultset('Company')->get_or_create(delete $row->{company});
         $row->{company_id} = $company->id;
     }
+    $row->{expired_at} ||= \"DATE_ADD(NOW(), INTERVAL 1 MONTH)"; #" default to expired after 1 month
     $row->{inserted_at} = time();
     my $source_url = delete $row->{source_url};
     $self->search( { source_url => $source_url } )->update($row);
