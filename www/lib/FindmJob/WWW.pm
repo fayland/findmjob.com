@@ -90,7 +90,7 @@ get '/jobs' => sub {
 
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
-        rows => 12,
+        rows => $rows,
         page => $p
     });
     my @jobs = $job_rs->all;
