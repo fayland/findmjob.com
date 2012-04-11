@@ -18,7 +18,7 @@ sub create_job {
         my $company = $schema->resultset('Company')->get_or_create(delete $row->{company});
         $row->{company_id} = $company->id;
     }
-    $row->{expired_at} ||= \"DATE_ADD(posted_at, INTERVAL 1 MONTH)"; #" default to expired after 1 month
+    $row->{expired_at} ||= \"DATE_ADD(NOW(), INTERVAL 1 MONTH)"; #" default to expired after 1 month
     $row->{inserted_at} = time();
     $self->create($row);
 }
