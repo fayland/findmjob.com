@@ -6,6 +6,7 @@ use parent 'Web::Machine::Resource';
 
 use JSON::XS ();
 use FindmJob::Basic;
+use FindmJob::Search;
 
 my $JSON = JSON::XS->new->allow_nonref->pretty;
 
@@ -52,8 +53,14 @@ sub _dispatcher {
         my $company = $job->company;
         $data->{company} = { id => $company->id, name => $company->name, website => $company->website };
     } elsif ($action eq 'search') {
-        my $q =  $req->param('q');
-
+        my $q = $req->param('q');
+        my $p = $req->param('page'); $p = 1 unless $p and $p =~ /^\d+$/;
+        my $search = FindmJob::Search->new;
+        my $ret = $search->search_job( {
+            'q' => $q,
+            rows => 12,
+            page => $p,
+        } );
     }
     $self->{_data} = $data;
     return 1;

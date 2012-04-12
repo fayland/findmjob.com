@@ -5,10 +5,10 @@ use Dancer ':syntax';
 our $VERSION = '0.1';
 
 use FindmJob::Basic;
+use FindmJob::Search;
 use Encode;
 use JSON::XS ();
 use Dancer::Plugin::Feed;
-use Sphinx::Search;
 use Data::Page;
 
 # different template dir than default one
@@ -127,16 +127,13 @@ get qr'/search.*?' => sub {
     my $q = vars->{html_filename} || params->{'q'};
     var 'q' => $q;
 
-    my $sph = Sphinx::Search->new;
-    $sph->SetServer('localhost', 9312);
-    $sph->SetLimits(($p - 1) * $rows, $rows, 800);
-    $sph->SetMatchMode(SPH_MATCH_EXTENDED2);
-    $sph->SetSortMode(SPH_SORT_RELEVANCE);
-    my @k = split(/\s+/, $q);
-    @k = map { $sph->EscapeString($_) } @k;
-    @k = map { '"' . $_ . '"' } @k;
-    my $k = '(' . join(' & ', @k) . ')';
-    my $ret = $sph->Query('@* ' . $k);
+    my $search = FindmJob::Search->new;
+    my $ret = $search->search_job( {
+        'q' => $q,
+        rows => $rows,
+        page => $p,
+    } );
+
     if ($ret->{total}) {
         my @jobids = map { $_->{id} } @{$ret->{matches}};
         my $schema = FindmJob::Basic->schema;
