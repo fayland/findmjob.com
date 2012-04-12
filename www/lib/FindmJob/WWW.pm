@@ -126,12 +126,12 @@ get qr'/search.*?' => sub {
 
     my $q = params->{'q'};
     my $loc = params->{loc};
-    if ( vars->{html_filename} ) {
+    if (vars->{html_filename}) {
         if ( vars->{html_filename} =~ /^(\w+)\_in\_(\w+)$/ ) {
             $q = $1;
             $loc = $2;
         } elsif ( vars->{html_filename} =~ /^in\_(\w+)$/ ) {
-            $loc = $2;
+            $loc = $1;
         } else {
             $q = vars->{html_filename};
         }
