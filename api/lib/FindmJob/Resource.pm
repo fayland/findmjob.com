@@ -40,11 +40,13 @@ sub _dispatcher {
         return 0 unless $job;
         $data = _export_job_as_hashref($job);
     } elsif ($action eq 'search') {
-        my $q = $req->param('q');
+        my $q   = $req->param('q');
+        my $loc = $req->param('loc');
         my $p = $req->param('page'); $p = 1 unless $p and $p =~ /^\d+$/;
         my $search = FindmJob::Search->new;
         my $ret = $search->search_job( {
             'q' => $q,
+            loc => $loc,
             rows => 12,
             page => $p,
         } );
