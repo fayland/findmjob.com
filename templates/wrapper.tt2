@@ -13,6 +13,7 @@
 <meta property="og:site_name" content="FindmJob.com" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="[% request.uri_base %][% request.uri %]" />
+<meta property="og:image" content="[% config.sites.static %]/Logo.png" />
 [% END %]
 [% IF description -%]
 [% description = description.replace("\n", ' ').squote %]
