@@ -2,16 +2,6 @@
 
 [% USE String %]
 
-<div class="row">
-  <div class="span4"><img src="[% config.sites.static %]/Logo.png" /></div>
-  <div class="span4 offset2">
-    <form action='/search' id="search" class="search-form">
-        <input type="text" class="search-query span2" name="q" placeholder="Keyword, Location ...">
-        <input type='submit' class="btn btn-primary" value="Search" />
-    </form>
-  </div>
-</div>
-
 <h2>Recent Jobs</h2>
 <hr class="soften">
 

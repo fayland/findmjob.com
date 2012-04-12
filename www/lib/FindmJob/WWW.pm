@@ -124,16 +124,26 @@ get qr'/search.*?' => sub {
     my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
     my $rows = 12;
 
-    my $q = vars->{html_filename} || params->{'q'};
+    my $q = params->{'q'};
+    my $loc = params->{loc};
+    if ( vars->{html_filename} ) {
+        if ( vars->{html_filename} =~ /^(\w+)\_in\_(\w+)$/ ) {
+            $q = $1;
+            $loc = $2;
+        } else {
+            $q = vars->{html_filename};
+        }
+    }
     var 'q' => $q;
+    var 'loc' => $loc;
 
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
         'q' => $q,
+        loc => $loc,
         rows => $rows,
         page => $p,
     } );
-
     if ($ret->{total}) {
         my @jobids = map { $_->{id} } @{$ret->{matches}};
         my $schema = FindmJob::Basic->schema;
