@@ -1,4 +1,6 @@
 [% title = company.name %]
+[% description = 'Jobs at ' _ company.name %]
+[% meta_keywords = company.name %]
 
 [% USE String %]
 
@@ -8,7 +10,7 @@
 </div>
 [% IF company.website %]
 [% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
-<p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '') %]</a></p>
+<p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
 <hr class="soften">
 
