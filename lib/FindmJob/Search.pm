@@ -31,10 +31,13 @@ sub search_job {
         $sph->SetSortMode(SPH_SORT_RELEVANCE);
     }
 
-    my @k = split(/\s+/, $q);
-    @k = map { $sph->EscapeString($_) } @k;
-    @k = map { '"' . $_ . '"' } @k;
-    my @query = ('@* (' . join(' & ', @k) . ')'); # @* (Perl & Python)
+    my @query;
+    if ($q) {
+        my @k = split(/\s+/, $q);
+        @k = map { $sph->EscapeString($_) } @k;
+        @k = map { '"' . $_ . '"' } @k;
+        push @query, '@* (' . join(' & ', @k) . ')'; # @* (Perl & Python)
+    }
     if ($loc) {
         push @query, '@location "' . $sph->EscapeString($loc) . '"';
     }
