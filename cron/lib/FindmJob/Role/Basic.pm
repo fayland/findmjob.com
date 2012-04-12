@@ -1,6 +1,7 @@
 package FindmJob::Role::Basic;
 
 use Moose::Role;
+use namespace::autoclean;
 
 use FindmJob::Basic;
 has 'basic' => (

@@ -1,6 +1,7 @@
 package FindmJob::Scrape::Role;
 
 use Moose::Role;
+use namespace::autoclean;
 
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::UA';

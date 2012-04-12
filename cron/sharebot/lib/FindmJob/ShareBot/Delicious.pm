@@ -1,6 +1,7 @@
 package FindmJob::ShareBot::Delicious;
 
 use Moose;
+use namespace::autoclean;
 with 'FindmJob::ShareBot::Role';
 
 use Net::Delicious;
@@ -32,5 +33,7 @@ sub share {
 
     return $st;
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

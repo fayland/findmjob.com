@@ -1,6 +1,7 @@
 package FindmJob::Role::Shorten;
 
 use Moose::Role;
+use namespace::autoclean;
 use WWW::Shorten::Bitly;
 
 requires 'config'; # from Role::Basic;

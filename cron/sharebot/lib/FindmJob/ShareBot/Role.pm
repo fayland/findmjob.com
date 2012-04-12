@@ -1,6 +1,7 @@
 package FindmJob::ShareBot::Role;
 
 use Moose::Role;
+use namespace::autoclean;
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::Logger';
 

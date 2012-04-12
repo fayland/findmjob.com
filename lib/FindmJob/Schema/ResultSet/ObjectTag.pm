@@ -22,4 +22,6 @@ sub get_tags_by_object {
     return wantarray ? @tags : \@tags;
 }
 
+__PACKAGE__->meta->make_immutable;
+
 1;

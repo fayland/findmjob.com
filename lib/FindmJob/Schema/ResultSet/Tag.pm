@@ -29,4 +29,6 @@ sub get_or_create_by_text {
     return $row;
 }
 
+__PACKAGE__->meta->make_immutable;
+
 1;

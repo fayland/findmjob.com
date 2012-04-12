@@ -1,6 +1,7 @@
 package FindmJob::Role::UA;
 
 use Moose::Role;
+use namespace::autoclean;
 use Class::Load 'load_class';
 
 has 'ua_class' => (is => 'rw', isa => 'Str', default => 'LWP::UserAgent');

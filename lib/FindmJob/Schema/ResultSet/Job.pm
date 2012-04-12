@@ -37,4 +37,6 @@ sub update_job {
     $self->search( { source_url => $source_url } )->update($row);
 }
 
+__PACKAGE__->meta->make_immutable;
+
 1;

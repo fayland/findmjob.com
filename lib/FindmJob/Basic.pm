@@ -1,6 +1,7 @@
 package FindmJob::Basic;
 
 use MooseX::Singleton;
+use namespace::autoclean;
 
 use File::Spec; use Cwd qw/abs_path/;
 has 'root' => ( is => 'ro', isa => 'Str', lazy_build => 1 );

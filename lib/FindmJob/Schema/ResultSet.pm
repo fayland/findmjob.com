@@ -82,4 +82,6 @@ around 'update' => sub {
     return $st;
 };
 
+__PACKAGE__->meta->make_immutable;
+
 1;

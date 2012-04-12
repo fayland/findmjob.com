@@ -1,6 +1,7 @@
 package FindmJob::Role::TextFormatter;
 
 use Moose::Role;
+use namespace::autoclean;
 use FindmJob::HTML::FormatText;
 use HTML::TreeBuilder;
 

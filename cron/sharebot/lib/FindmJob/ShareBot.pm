@@ -1,6 +1,7 @@
 package FindmJob::ShareBot;
 
 use Moose;
+use namespace::autoclean;
 use Module::Pluggable::Object;
 with 'FindmJob::ShareBot::Role';
 
@@ -48,5 +49,7 @@ sub run {
         sleep 10;
     }
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

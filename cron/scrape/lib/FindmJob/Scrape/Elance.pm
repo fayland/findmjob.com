@@ -1,6 +1,8 @@
 package FindmJob::Scrape::Elance;
 
 use Moose;
+use namespace::autoclean;
+
 with 'FindmJob::Scrape::Role';
 
 use Try::Tiny;
@@ -95,5 +97,7 @@ sub run {
         }
     }
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

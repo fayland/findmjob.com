@@ -1,6 +1,7 @@
 package FindmJob::ShareBot::Twitter;
 
 use Moose;
+use namespace::autoclean;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
@@ -51,5 +52,7 @@ sub share {
 
     return exists $st->{id} ? 1: 0;
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
