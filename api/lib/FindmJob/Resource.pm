@@ -7,6 +7,7 @@ use parent 'Web::Machine::Resource';
 use JSON::XS 'encode_json';
 use FindmJob::Basic;
 use FindmJob::Search;
+use URI::Escape ();
 
 # read-only API for now
 sub content_types_provided { [{ 'application/json' => 'to_json'   }] }
@@ -95,6 +96,14 @@ sub _export_job_as_hashref {
     return $data;
 }
 
-sub to_json { encode_json( (shift)->{_data} ) }
+sub to_json {
+    my $self = shift;
+    my $json = encode_json( $self->{_data} );
+    if (my $callback = $self->request->param('callback')) {
+        my $cb = URI::Escape::uri_unescape($callback);
+        $json = "$cb($json)";
+    }
+    return $json;
+}
 
 1;
