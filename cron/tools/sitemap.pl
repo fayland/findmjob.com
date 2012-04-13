@@ -24,7 +24,8 @@ $map->add(
     priority => 1.0,
 );
 
-my $sth = $dbh->prepare("SELECT id, tbl FROM object ORDER BY time DESC LIMIT 1000");
+# Each text file can contain a maximum of 50,000 URLs and must be no larger than 10MB (10,485,760 bytes)
+my $sth = $dbh->prepare("SELECT id, tbl FROM object ORDER BY time DESC LIMIT 10000");
 $sth->execute();
 while (my ($id, $tbl) = $sth->fetchrow_array) {
     my $obj = $schema->resultset(ucfirst $tbl)->find($id);
