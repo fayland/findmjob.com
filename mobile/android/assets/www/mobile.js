@@ -18,14 +18,21 @@
       $('#debug').html('submitting');
       return $.ajax({
         url: 'http://api.findmjob.com/search',
-        type: 'POST',
-        dataType: 'jsonp',
+        type: 'GET',
+        dataType: 'json',
         data: {
           q: q,
           loc: loc
         },
-        success: function(response) {
-          return $('#debug').html(response);
+        success: function(data) {
+          var job, _i, _len, _ref, _results;
+          _ref = data.jobs;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            job = _ref[_i];
+            _results.push($('#debug').append("<p>" + job.id + " " + job.title + "</p>"));
+          }
+          return _results;
         },
         error: function(xhr, ajaxOptions, thrownError) {
           return $('#debug').html('failed');

@@ -17,11 +17,12 @@ $(document).ready ->
         $('#debug').html 'submitting'
         $.ajax {
             url: 'http://api.findmjob.com/search',
-            type: 'POST',
-            dataType: 'jsonp',
+            type: 'GET',
+            dataType: 'json',
             data: { q: q, loc: loc },
-            success: (response) ->
-                $('#debug').html response
+            success: (data) ->
+                for job in data.jobs
+                    $('#debug').append """<p>#{job.id} #{job.title}</p>"""
             error: (xhr, ajaxOptions, thrownError) ->
                 $('#debug').html 'failed'
         }
