@@ -59,18 +59,24 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
-        print Dumper(\$item);
         next unless $item->{budgetMin} and $item->{budgetMin} >= 500; # only scrape those more than 500$
 
         # we need more stuff so we dig into it
         my $jobId = $item->{jobId};
+        my $r;
         $url = "http://api.elance.com/api2/jobs/$jobId?access_token=$access_token";
         $resp = $self->ua->get($url);
-        $data = $json->decode( $resp->decoded_content );
-        sleep 3;
-        my $r = $data->{data}->{jobData};
+        if ($resp->is_success) {
+            $data = $json->decode($resp->decoded_content);
+            sleep 3;
+            $r = $data->{data}->{jobData};
+        } else {
+            $r = $item;
+        }
 
-        my @tags =  split(/\,\s+/, delete $r->{keywords});
+        my @tags;
+        push @tags, split(/\,\s+/, delete $r->{keywords})  if $r->{keywords};
+        push @tags, split(/\,\s+/, delete $r->{skillTags}) if $r->{skillTags};
         push @tags, delete $r->{subcategory};
         push @tags, $self->get_extra_tags_from_desc($r->{name});
         push @tags, $self->get_extra_tags_from_desc($r->{description});
@@ -85,7 +91,7 @@ sub run {
             posted_at  => human_to_db_datetime(delete $r->{postedDate}),
             expired_at => human_to_db_datetime(delete $r->{endDate}),
             description => delete $r->{description},
-            location => delete $r->{location},
+            location => delete $r->{location} || delete $r->{clientCountry},
             type     => '',
             extra    => $json->encode($r),
             tags     => ['elance', @tags],
