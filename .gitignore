@@ -3,3 +3,7 @@
 script/oneoff/*.token.txt
 log/*
 sphinxdata/*
+mobile/android/assets/www/cordova-*.js
+mobile/android/libs/cordova-*.jar
+mobile/android/bin/*
+mobile/android/gen/*

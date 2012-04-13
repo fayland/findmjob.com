@@ -1,13 +1,14 @@
 package com.findmjob.search;
 
-import android.app.Activity;
 import android.os.Bundle;
+import org.apache.cordova.*;
 
-public class FindmJobActivity extends Activity {
-    /** Called when the activity is first created. */
+public class FindmJobActivity extends DroidGap
+{
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        super.loadUrl("file:///android_asset/www/index.html");
     }
 }
