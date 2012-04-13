@@ -74,6 +74,8 @@ sub run {
             $r = $item;
         }
 
+        $r->{description} =~ s/\s*\(ID\:\s*(\d+)\)$//is;
+
         my @tags;
         push @tags, split(/\,\s+/, delete $r->{keywords})  if $r->{keywords};
         push @tags, split(/\,\s+/, delete $r->{skillTags}) if $r->{skillTags};
