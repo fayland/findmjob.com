@@ -53,7 +53,7 @@ sub run {
     my $resp = $self->ua->get($url);
     my $data = $json->decode( $resp->decoded_content );
     foreach my $i (1 .. 25) {
-        my $item = $data->{data}->{pageResults}->{$i};
+        my $item = $data->{data}->{pageResults}->[$i];
         next unless ref $item eq 'HASH';
         my $link = $item->{jobURL};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
@@ -70,7 +70,7 @@ sub run {
         sleep 3;
         my $r = $data->{data}->{jobData};
 
-        my @tags =  split(/\,\s+/, delete $r->{skillTags});
+        my @tags =  split(/\,\s+/, delete $r->{keywords});
         push @tags, delete $r->{subcategory};
         push @tags, $self->get_extra_tags_from_desc($r->{name});
         push @tags, $self->get_extra_tags_from_desc($r->{description});
