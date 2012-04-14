@@ -28,6 +28,11 @@
 </head>
 <body>
 
+[%+ IF is_fb_app %]
+<div class="row-fluid">
+<div class="span12">
+[% END +%]
+
 <div class="container">
 
 <header>
@@ -73,6 +78,11 @@
 </footer>
 
 </div>
+
+[%+ IF is_fb_app %]
+</div>
+</div> <!-- <div class="row-fluid"> -->
+[% END +%]
 
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
 [%+ IF is_fb_app %]
