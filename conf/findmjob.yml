@@ -33,3 +33,6 @@ share:
     consumer_secret: 'secret'
     access_token: 'secret'
     access_token_secret: 'secret'
+  100zakladok:
+    u: 'findmjob'
+    p: 'secret'
