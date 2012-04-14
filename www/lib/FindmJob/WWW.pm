@@ -26,7 +26,7 @@ hook before_template_render => sub {
 
     ## if it is Facebook App
     if (request->host =~ /fb/) { # fb.findmjob.com
-        $token->{is_fb_app} = 1;
+        $tokens->{is_fb_app} = 1;
     }
 
     $tokens->{config} = FindmJob::Basic->config;
