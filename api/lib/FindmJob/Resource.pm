@@ -82,7 +82,7 @@ sub _export_job_as_hashref {
     my $data;
 
     # only known cols are exported
-    foreach my $col ('id', 'source_url', 'title', 'location', 'description', 'type', 'contact', 'inserted_at', 'expired_at') {
+    foreach my $col (qw/id source_url title location description type contact inserted_at posted_at expired_at/) {
         $data->{$col} = $job->get_column($col);
     }
 

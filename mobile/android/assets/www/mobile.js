@@ -45,7 +45,7 @@ show_job = function(id) {
     job = jobs[_i];
     if (job.id === id) {
       description = job.description.replace(/[\r\n]/g, "<br />");
-      html = "<h2>" + job.title + "</h2>\n<div data-role=\"collapsible\" data-collapsed=\"false\" data-content-theme=\"c\">\n   <h3>Description</h3>\n   <p>" + description + "</p>\n</div>\n<input type='button' onclick=\"javascript:back_search()\" data-role=\"button\" value=\"Back to Search\" />";
+      html = "<h2>" + job.title + "</h2>\n<div data-role=\"collapsible-set\">\n    <div data-role=\"collapsible\" data-content-theme=\"c\">\n    <h3>Attributes</h3>\n    <p><b>Posted</b>: " + job.posted_at + "</p>\n    <p><b>Company</b>: " + job.company.name + "</p>\n    <p><b>Location</b>: " + job.location + "</p>\n    <p><b>Tag</b>: " + (job.tag.join(', ')) + "</p>\n    <p><b>Hours</b>: " + job.type + "</p>\n    </div>\n    <div data-role=\"collapsible\" data-collapsed=\"false\" data-content-theme=\"c\">\n       <h3>Description</h3>\n       <p>" + description + "</p>\n    </div>\n    <div data-role=\"collapsible\" data-content-theme=\"c\">\n    <h3>Contact</h3>\n    <p>" + job.contact + "</p>\n    </div>\n</div>\n<input type='button' onclick=\"javascript:back_search()\" data-role=\"button\" value=\"Back to Search\" />";
       $('#job_detail').html(html);
       $('#job_detail input[data-role=button]').button();
       $('#job_detail div[data-role=collapsible]').collapsible();

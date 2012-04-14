@@ -36,11 +36,25 @@ show_job = (id) ->
             description = job.description.replace(/[\r\n]/g, "<br />")
             html = """
                     <h2>#{job.title}</h2>
-                    <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
-                       <h3>Description</h3>
-                       <p>#{description}</p>
+                    <div data-role="collapsible-set">
+                        <div data-role="collapsible" data-content-theme="c">
+                            <h3>Attributes</h3>
+                            <p><b>Posted</b>: #{job.posted_at}</p>
+                            <p><b>Company</b>: #{job.company.name}</p>
+                            <p><b>Location</b>: #{job.location}</p>
+                            <p><b>Tag</b>: #{job.tag.join(', ')}</p>
+                            <p><b>Hours</b>: #{job.type}</p>
+                        </div>
+                        <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+                           <h3>Description</h3>
+                           <p>#{description}</p>
+                        </div>
+                        <div data-role="collapsible" data-content-theme="c">
+                            <h3>Contact</h3>
+                            <p>#{job.contact}</p>
+                        </div>
                     </div>
-                    <input type='button' onclick="javascript:back_search()" data-role="button" value="Back to Search" />
+                    <input type='button' onclick="javascript:back_search()" data-role="button" value="Back to Search Results" />
                    """
             $('#job_detail').html(html)
             $('#job_detail input[data-role=button]').button()
