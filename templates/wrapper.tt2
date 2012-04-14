@@ -77,6 +77,7 @@
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.cookie.js"></script>
 [%+ IF request.params.hash.signed_request %]
+<div id="fb-root"></div>
 <script>
 $(document).ready(function() {
     $.cookie('in_fb_app', 'yes');
