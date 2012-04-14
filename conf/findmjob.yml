@@ -36,3 +36,8 @@ share:
   100zakladok:
     u: 'findmjob'
     p: 'secret'
+  Plurk:
+    consumer_key: 'R1TPeL0UJPdY'
+    consumer_secret: 'secret'
+    access_token: 'secret'
+    access_token_secret: 'secret'
