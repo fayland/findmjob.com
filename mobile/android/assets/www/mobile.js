@@ -22,7 +22,7 @@ $(document).bind('pageinit', function() {
     $.mobile.showPageLoadingMsg();
     $('#search_result').html("");
     $('#job_detail').html("");
-    return $.getJSON('http://api.findmjob.com/search?q=' + q + '&loc=' + loc + '&callback=?', function(data) {
+    return $.getJSON('http://api.findmjob.com/search?sort=date&q=' + q + '&loc=' + loc + '&callback=?', function(data) {
       return show_search_results(data);
     });
   });

@@ -44,10 +44,12 @@ sub _dispatcher {
         my $q   = $req->param('q');
         my $loc = $req->param('loc');
         my $p = $req->param('page'); $p = 1 unless $p and $p =~ /^\d+$/;
+        my $sort = $req->param('sort');
         my $search = FindmJob::Search->new;
         my $ret = $search->search_job( {
-            'q' => $q,
-            loc => $loc,
+            'q'  => $q,
+            loc  => $loc,
+            sort => $sort,
             rows => 12,
             page => $p,
         } );
@@ -82,7 +84,7 @@ sub _export_job_as_hashref {
     my $data;
 
     # only known cols are exported
-    foreach my $col (qw/id source_url title location description type contact inserted_at posted_at expired_at/) {
+    foreach my $col (qw/id source_url title location description type contact posted_at expired_at/) {
         $data->{$col} = $job->get_column($col);
     }
 

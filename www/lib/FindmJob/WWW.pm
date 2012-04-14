@@ -144,10 +144,12 @@ get qr'/search.*?' => sub {
     var 'q' => $q;
     var 'loc' => $loc;
 
+    my $sort = params->{sort};
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
-        'q' => $q,
-        loc => $loc,
+        'q'  => $q,
+        loc  => $loc,
+        sort => $sort,
         rows => $rows,
         page => $p,
     } );

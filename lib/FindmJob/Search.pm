@@ -25,7 +25,7 @@ sub search_job {
     my $sph = $self->sphinx;
     $sph->SetLimits(($page - 1) * $rows, $rows, 800);
     $sph->SetMatchMode(SPH_MATCH_EXTENDED2);
-    if ($args{order} and $args{order} =~ /(date|time)/) {
+    if ($args{sort} and $args{sort} =~ /(date|time)/) {
         $sph->SetSortMode(SPH_SORT_ATTR_DESC, 'inserted_at');
     } else {
         $sph->SetSortMode(SPH_SORT_RELEVANCE);

@@ -21,7 +21,7 @@ $(document).bind 'pageinit', () ->
         $('#search_result').html ""
         $('#job_detail').html ""
 
-        $.getJSON 'http://api.findmjob.com/search?q=' + q + '&loc=' + loc + '&callback=?', (data) ->
+        $.getJSON 'http://api.findmjob.com/search?sort=date&q=' + q + '&loc=' + loc + '&callback=?', (data) ->
             show_search_results(data)
 
     $('input[name="q"]').val(default_q).bind 'focus', (e) ->
