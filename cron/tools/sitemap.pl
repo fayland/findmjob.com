@@ -6,6 +6,8 @@ use FindBin qw/$Bin/;
 use lib "$Bin/../../lib";
 use FindmJob::Basic;
 use WWW::Sitemap::XML;
+use LWP::UserAgent;
+use URI::Escape;
 
 my $root = FindmJob::Basic->root;
 my $file = "$root/static/sitemap.xml.gz";
@@ -46,5 +48,8 @@ while (my ($id, $tbl) = $sth->fetchrow_array) {
 }
 
 $map->write($file);
+
+# add ping
+LWP::UserAgent->new->get( "http://www.google.com/webmasters/tools/ping?sitemap=" . uri_escape($config->{sites}->{main} . '/sitemap.xml.gz') );
 
 1;
