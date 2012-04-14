@@ -5,18 +5,37 @@ $(document).bind 'pageinit', () ->
         if networkState == Connection.NONE
             alert "You're offline now, please check your network"
 
+    default_q = 'Keyword...'
+    default_l = 'Location...'
+
     ## for search
     $('.search_btn').bind 'click', (e) ->
+        e.preventDefault()
+        q = $.trim $('input[name="q"]').val()
+        q = '' if q == default_q
+        loc = $.trim $('input[name="loc"]').val()
+        loc = '' if loc == default_l
+        return false unless q.length > 0 or loc.length > 0
+
         $.mobile.showPageLoadingMsg()
         $('#search_result').html ""
         $('#job_detail').html ""
 
-        e.preventDefault()
-        q = $.trim $('input[name="q"]').val()
-        loc = $.trim $('input[name="loc"]').val()
-        return false unless q.length or loc.length
         $.getJSON 'http://api.findmjob.com/search?q=' + q + '&loc=' + loc + '&callback=?', (data) ->
             show_search_results(data)
+
+    $('input[name="q"]').val(default_q).bind 'focus', (e) ->
+        if $(this).val() == default_q
+            $(this).val('')
+    .bind 'blur', (e) ->
+        if $(this).val() == ''
+            $(this).val(default_q)
+    $('input[name="loc"]').val(default_l).bind 'focus', (e) ->
+        if $(this).val() == default_l
+            $(this).val('')
+    .bind 'blur', (e) ->
+        if $(this).val() == ''
+            $(this).val(default_l)
 
 show_search_results = (data) ->
     $(document).jqmData('jobs', data.jobs)
@@ -38,7 +57,7 @@ show_job = (id) ->
                     <h2>#{job.title}</h2>
                     <div data-role="collapsible-set">
                         <div data-role="collapsible" data-content-theme="c">
-                            <h3>Attributes</h3>
+                            <h3>Info</h3>
                             <p><b>Posted</b>: #{job.posted_at}</p>
                             <p><b>Company</b>: #{job.company.name}</p>
                             <p><b>Location</b>: #{job.location}</p>
