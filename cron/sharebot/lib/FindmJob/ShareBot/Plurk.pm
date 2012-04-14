@@ -39,8 +39,7 @@ sub share {
 
     my $config = $self->config;
     my $url = $config->{sites}->{main} . $job->url;
-    # randomly shorten, want to see which one works better?
-    my $shorten_url = time() % 2 == 1 ? $self->shorten($url) : $url;
+    my $shorten_url = $self->shorten($url);
 
     my $content = $job->title . ' ' . $shorten_url . ' ' . $tags;
     my $json = $self->plurk->add_plurk($content, 'shares');
