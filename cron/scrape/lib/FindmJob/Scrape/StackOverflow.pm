@@ -73,6 +73,10 @@ sub on_single_page {
             if ($tag eq 'div' and $h->attr('class') and $h->attr('class') =~ 'apply') {
                 $h->detach();
             }
+            # <img alt="apply" class="analytic" data-analyticurl="/analytics/jobapply/16890" id="applyanalytic" />
+            if ($tag eq 'img' and $h->attr('id') and $h->attr('id') eq 'applyanalytic') {
+                $h->detach();
+            }
         }
 
         my $desc = $self->format_tree_text($jobdetail);
