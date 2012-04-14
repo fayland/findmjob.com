@@ -7,7 +7,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
 
-[% is_fb_app = 1 %]
 [%+ IF is_fb_app %]
 <link href="[% config.sites.static %]/bootstrap/css/fbootstrapp.min.css" rel="stylesheet">
 [% END +%]
