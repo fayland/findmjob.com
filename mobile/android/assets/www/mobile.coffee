@@ -1,8 +1,10 @@
-$(document).bind "mobileinit", () ->
-    ## Make your jQuery Mobile framework configuration changes here!
-    $.mobile.allowCrossDomainPages = true
-
 $(document).bind 'pageinit', () ->
+    ## check network state
+    document.addEventListener "deviceready", () ->
+        networkState = navigator.network.connection.type;
+        if networkState == Connection.NONE
+            alert "You're offline now, please check your network"
+
     ## for search
     $('.search_btn').bind 'click', (e) ->
         $.mobile.showPageLoadingMsg()
@@ -13,7 +15,6 @@ $(document).bind 'pageinit', () ->
         q = $.trim $('input[name="q"]').val()
         loc = $.trim $('input[name="loc"]').val()
         return false unless q.length or loc.length
-        console.log 'submitting'
         $.getJSON 'http://api.findmjob.com/search?q=' + q + '&loc=' + loc + '&callback=?', (data) ->
             show_search_results(data)
 
@@ -32,15 +33,18 @@ show_job = (id) ->
     jobs = $(document).jqmData('jobs')
     for job in jobs
         if job.id == id
-            description = job.description.replace("\n", "<br />")
+            description = job.description.replace(/[\r\n]/g, "<br />")
             html = """
-                    <h3>#{job.title}</h3>
-                    <p>#{job.description}#</p>
+                    <h2>#{job.title}</h2>
+                    <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+                       <h3>Description</h3>
+                       <p>#{description}</p>
+                    </div>
                     <input type='button' onclick="javascript:back_search()" data-role="button" value="Back to Search" />
                    """
             $('#job_detail').html(html)
-            ## $('#job_detail').trigger( 'updatelayout' );
             $('#job_detail input[data-role=button]').button()
+            $('#job_detail div[data-role=collapsible]').collapsible()
             break
 
 back_search = () ->

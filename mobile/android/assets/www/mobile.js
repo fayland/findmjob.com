@@ -1,10 +1,13 @@
 var back_search, show_job, show_search_results;
 
-$(document).bind("mobileinit", function() {
-  return $.mobile.allowCrossDomainPages = true;
-});
-
 $(document).bind('pageinit', function() {
+  document.addEventListener("deviceready", function() {
+    var networkState;
+    networkState = navigator.network.connection.type;
+    if (networkState === Connection.NONE) {
+      return alert("You're offline now, please check your network");
+    }
+  });
   return $('.search_btn').bind('click', function(e) {
     var loc, q;
     $.mobile.showPageLoadingMsg();
@@ -14,7 +17,6 @@ $(document).bind('pageinit', function() {
     q = $.trim($('input[name="q"]').val());
     loc = $.trim($('input[name="loc"]').val());
     if (!(q.length || loc.length)) return false;
-    console.log('submitting');
     return $.getJSON('http://api.findmjob.com/search?q=' + q + '&loc=' + loc + '&callback=?', function(data) {
       return show_search_results(data);
     });
@@ -42,10 +44,11 @@ show_job = function(id) {
   for (_i = 0, _len = jobs.length; _i < _len; _i++) {
     job = jobs[_i];
     if (job.id === id) {
-      description = job.description.replace("\n", "<br />");
-      html = "<h3>" + job.title + "</h3>\n<p>" + job.description + "#</p>\n<input type='button' onclick=\"javascript:back_search()\" data-role=\"button\" value=\"Back to Search\" />";
+      description = job.description.replace(/[\r\n]/g, "<br />");
+      html = "<h2>" + job.title + "</h2>\n<div data-role=\"collapsible\" data-collapsed=\"false\" data-content-theme=\"c\">\n   <h3>Description</h3>\n   <p>" + description + "</p>\n</div>\n<input type='button' onclick=\"javascript:back_search()\" data-role=\"button\" value=\"Back to Search\" />";
       $('#job_detail').html(html);
-      $('#job_detail').trigger('updatelayout');
+      $('#job_detail input[data-role=button]').button();
+      $('#job_detail div[data-role=collapsible]').collapsible();
       break;
     } else {
       _results.push(void 0);
