@@ -1,7 +1,8 @@
-package FindmJob::ShareBot::Twitter;
+package FindmJob::ShareBot::Plurk;
 
 use Moose;
 use namespace::autoclean;
+use Data::Dumper;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
@@ -21,7 +22,7 @@ sub _build_plurk {
     $p->authorize(
         access_token => $t->{access_token},
         access_token_secret => $t->{access_token_secret}
-    )
+    );
 
     return $p;
 }
@@ -42,12 +43,12 @@ sub share {
     my $shorten_url = time() % 2 == 1 ? $self->shorten($url) : $url;
 
     my $content = $job->title . ' ' . $shorten_url . ' ' . $tags;
-    my $resp = $self->plurk->add_plurk($update, 'shares');
-    my $st = $resp =~ /plurk_id/ ? 1 : 0;
-    $self->log_debug("# failed: $resp") unless $st;
+    my $json = $self->plurk->add_plurk($content, 'shares');
+    my $st = $json->{plurk_id} ? 1 : 0;
+    $self->log_debug("# failed: " . Dumper(\$json)) unless $st;
     $self->log_debug("# plurk $content: $st");
 
-    return exists $st ? 1: 0;
+    return $st;
 }
 
 __PACKAGE__->meta->make_immutable;
