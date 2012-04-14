@@ -56,7 +56,7 @@ show_job = (id) ->
             html = """
                     <h2>#{job.title}</h2>
                     <div data-role="collapsible-set">
-                        <div data-role="collapsible" data-content-theme="c">
+                        <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
                             <h3>Info</h3>
                             <p><b>Posted</b>: #{job.posted_at}</p>
                             <p><b>Company</b>: #{job.company.name}</p>
@@ -68,7 +68,7 @@ show_job = (id) ->
                            <h3>Description</h3>
                            <p>#{description}</p>
                         </div>
-                        <div data-role="collapsible" data-content-theme="c">
+                        <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
                             <h3>Contact</h3>
                             <p>#{job.contact}</p>
                         </div>
