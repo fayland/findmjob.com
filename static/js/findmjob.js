@@ -5,7 +5,7 @@
     $.timeago.settings.allowFuture = true;
     $('.timeago').timeago();
     in_fb_app = $.cookie('in_fb_app');
-    if ((in_fb_app != null) && in_fb_app(eq('yes'))) {
+    if ((in_fb_app != null) && in_fb_app === 'yes') {
       window.fbAsyncInit = function() {
         FB.init({
           appId: '281749461905114',
