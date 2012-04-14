@@ -13,48 +13,16 @@
   <body>
     <div data-role="page" id="index">
         <div data-role="header">
-            <h1>Find My Job</h1>
+            <h1 id="h1">Find My Job</h1>
         </div>
 
         <div data-role="content">
-            <div id='debug'>Hello</div>
+            <div id='search_loading' style="display:none"><h3>Loading...</h3></div>
+            <ul data-role="listview" id="search_result"></ul>
+            <div id='job_detail'></div>
             <input type='text' name='q' />
             <input type='text' name='loc' />
-            <input type='button' id='search_btn' value='Search' />
-        </div>
-
-        <div data-role="footer">
-            <h4>&copy; FindmJob.com</h4>
-        </div>
-    </div>
-
-    <div data-role="page" id="search">
-        <div data-role="header">
-            <h1 id='search_h1'>Search</h1>
-        </div>
-
-        <div data-role="content">
-            <div id='search_result'></div>
-            <input type='text' name='q' />
-            <input type='text' name='loc' />
-            <input type='button' id='search_btn' value='Search' />
-        </div>
-
-        <div data-role="footer">
-            <h4>&copy; FindmJob.com</h4>
-        </div>
-    </div>
-
-    <div data-role="page" id="job">
-        <div data-role="header">
-            <h1 id="job_h1">FindmJob</h1>
-        </div>
-
-        <div data-role="content">
-            <div id='job_details'></div>
-            <input type='text' name='q' />
-            <input type='text' name='loc' />
-            <input type='button' id='search_btn' value='Search' />
+            <input type='button' id='search_btn' class='search_btn' value='Search' />
         </div>
 
         <div data-role="footer">
