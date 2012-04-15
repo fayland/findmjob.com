@@ -10,7 +10,7 @@ use Data::Dumper;
 use LWP::Authen::OAuth;
 
 my $config = FindmJob::Basic->config;
-my $api = $config->{api}->{givealink};
+my $api = $config->{share}->{givealink};
 
 my $ua = LWP::Authen::OAuth->new(
     oauth_consumer_key => $api->{key},
