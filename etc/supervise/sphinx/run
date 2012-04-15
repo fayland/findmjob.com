@@ -1,0 +1,3 @@
+#!/bin/bash
+
+searchd --config /findmjob.com/etc/sphinx.conf
