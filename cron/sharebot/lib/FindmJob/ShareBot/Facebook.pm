@@ -68,13 +68,14 @@ sub share {
 
     my $title = $job->title;
     my $update = "$title $shorten_url $tags";
-    $self->log_debug("# facebook set status $update");
 
     my $response = $self->facebook->add_post
         ->set_message($update)
         ->publish;
     # {"id":"100003659837802_120048934793767"}
-    my $st = $response->as_string =~ /[\'\"]id[\'\"]\:/ ? 1 : 0
+    my $st = $response->as_string =~ /[\'\"]id[\'\"]\:/ ? 1 : 0;
+    $self->log_debug("# facebook set status $update: $st");
+    $self->log_debug("# facebook failed: " . $response->as_string) unless $st;
 
     return $st ? 1: 0;
 }
