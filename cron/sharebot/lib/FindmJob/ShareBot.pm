@@ -2,24 +2,30 @@ package FindmJob::ShareBot;
 
 use Moose;
 use namespace::autoclean;
-use Module::Pluggable::Object;
+use Class::Load 'load_class';
 with 'FindmJob::ShareBot::Role';
+
+has 'module' => (is => 'ro', isa => 'Str', required => 1);
+has 'num'    => (is => 'ro', isa => 'Int', default => 12);
+has 'debug'  => (is => 'ro', isa => 'Bool', default => 0);
 
 sub run {
     my ($self) = @_;
 
-    my @plugins = Module::Pluggable::Object->new(
-        instantiate => 'new',
-        search_path => 'FindmJob::ShareBot',
-        except => ['FindmJob::ShareBot::Role'],
-    )->plugins;
+    my @plugins;
+    my @modules = split(/\,/, $self->module);
+    foreach my $m (@modules) {
+        my $module = "FindmJob::ShareBot::$m";
+        load_class($module) or die "Failed to load $module\n";
+        push @plugins, $module->new;
+    }
 
     # random so that every job have the chance
     my $job_rs = $self->schema->resultset('Job')->search( {
         inserted_at => { '>', time() - 86440 }, # today
     }, {
         order_by => 'RAND()',
-        rows => 12,
+        rows => $self->num * 2,
         page => 1
     });
 
@@ -27,25 +33,25 @@ sub run {
     my $is_inserted_sth = $dbh_log->prepare("SELECT 1 FROM `findmjob_log`.`sharebot` WHERE id = ? AND site = ?");
     my $insert_sth = $dbh_log->prepare("INSERT INTO `findmjob_log`.`sharebot` (id, site, time) VALUES (?, ?, ?)");
 
+    my $posted_num = 0;
     while (my $job = $job_rs->next) {
         foreach my $plugin ( @plugins ) {
             my $pkg = ref $plugin; $pkg =~ s{FindmJob::ShareBot::}{};
-
-            # test usage
-            # next unless $pkg eq 'x100zakladok';
 
             # check if we did it
             $is_inserted_sth->execute($job->id, $pkg);
             my ($is_inserted) = $is_inserted_sth->fetchrow_array;
             next if $is_inserted;
 
+            $posted_num++;
+            last if $posted_num >= $self->num;
+
             $self->log_debug("# on " . $job->id . " with $pkg");
             my $st = $plugin->share($job);
 
             $insert_sth->execute($job->id, $pkg, time()) if $st;
-
-            sleep 2;
         }
+        last if $self->debug; # debug means test one job
         sleep 10;
     }
 }
