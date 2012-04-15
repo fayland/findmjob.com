@@ -33,6 +33,9 @@ share:
     consumer_secret: 'secret'
     access_token: 'secret'
     access_token_secret: 'secret'
+  Facebook:
+    app_id: '281749461905114'
+    secret: 'secret'
   100zakladok:
     u: 'findmjob'
     p: 'secret'

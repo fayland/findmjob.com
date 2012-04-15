@@ -36,6 +36,9 @@ sub run {
 
     my $posted_num = 0;
     while (my $job = $job_rs->next) {
+        $posted_num++;
+        last if $posted_num > $self->num;
+
         foreach my $plugin ( @plugins ) {
             my $pkg = ref $plugin; $pkg =~ s{FindmJob::ShareBot::}{};
 
@@ -43,9 +46,6 @@ sub run {
             $is_inserted_sth->execute($job->id, $pkg);
             my ($is_inserted) = $is_inserted_sth->fetchrow_array;
             next if $is_inserted;
-
-            $posted_num++;
-            last if $posted_num >= $self->num;
 
             $self->log_debug("# on " . $job->id . " with $pkg");
             my $st = $plugin->share($job);
