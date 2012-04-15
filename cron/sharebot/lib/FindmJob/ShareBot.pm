@@ -13,11 +13,6 @@ has 'debug'  => (is => 'ro', isa => 'Bool', default => 0, traits => [ 'Getopt' ]
 sub run {
     my ($self) = @_;
 
-    print $self->module;
-    print $self->num;
-    print $self->debug;
-    exit;
-
     my @plugins;
     my @modules = split(/\,/, $self->module);
     foreach my $m (@modules) {
