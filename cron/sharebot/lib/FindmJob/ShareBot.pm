@@ -4,13 +4,19 @@ use Moose;
 use namespace::autoclean;
 use Class::Load 'load_class';
 with 'FindmJob::ShareBot::Role';
+with 'MooseX::Getopt::Strict';
 
-has 'module' => (is => 'ro', isa => 'Str', required => 1);
-has 'num'    => (is => 'ro', isa => 'Int', default => 12);
-has 'debug'  => (is => 'ro', isa => 'Bool', default => 0);
+has 'module' => (is => 'ro', isa => 'Str', required => 1, traits => [ 'Getopt' ], cmd_aliases => 'm');
+has 'num'    => (is => 'ro', isa => 'Int', default => 12, traits => [ 'Getopt' ], cmd_aliases => 'n');
+has 'debug'  => (is => 'ro', isa => 'Bool', default => 0, traits => [ 'Getopt' ], cmd_aliases => 'd');
 
 sub run {
     my ($self) = @_;
+
+    print $self->module;
+    print $self->num;
+    print $self->debug;
+    exit;
 
     my @plugins;
     my @modules = split(/\,/, $self->module);
