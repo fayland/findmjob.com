@@ -2,10 +2,8 @@
 [% title = job.title %]
 [% description = String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]
 
+[% INCLUDE include/addthis.tt2 %]
 <h1>[% title %]</h1>
-<div class="span4 offset8">
-    [% INCLUDE include/addthis.tt2 %]
-</div>
 <hr class="soften">
 
 <ul class="unstyled">

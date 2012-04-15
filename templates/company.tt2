@@ -4,10 +4,8 @@
 
 [% USE String %]
 
+[% INCLUDE include/addthis.tt2 %]
 <h1>[% title %]</h1>
-<div class="span4 offset8">
-    [% INCLUDE include/addthis.tt2 %]
-</div>
 [% IF company.website %]
 [% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>

@@ -1,3 +1,5 @@
+<div class="row pull-right">
+
 [% IF is_fb_app %]
 <div class="fb-like" data-href="[% config.site.main %][% request.uri %]" data-send="true" data-layout="button_count" data-width="200" data-show-faces="true"></div>
 [% ELSE %]
@@ -11,3 +13,5 @@
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f7818b37cce11fd"></script>
 <!-- AddThis Button END -->
 [% END %]
+
+</div>
