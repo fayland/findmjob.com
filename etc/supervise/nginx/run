@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sudo -u www-data plackup -E production -s Starman --workers=2 -l /tmp/findmjob.sock -a /findmjob.com/www/bin/app.pl
+exec softlimit -a 300000000 sudo -u www-data plackup -E production -s Starman --workers=2 -l /tmp/findmjob.sock -a /findmjob.com/www/bin/app.pl
 
-sudo -u www-data plackup -E production -s Starman --workers=2 -l /tmp/findmjob.api.sock -a /findmjob.com/api/app.psgi
+exec softlimit -a 100000000 sudo -u www-data plackup -E production -s Starman --workers=2 -l /tmp/findmjob.api.sock -a /findmjob.com/api/app.psgi
