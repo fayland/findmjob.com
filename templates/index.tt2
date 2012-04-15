@@ -5,14 +5,14 @@
 <h2>Recent Jobs</h2>
 <hr class="soften">
 
-<div class="container-fluid">
-<div class="row-fluid">
+<div class="container">
+<div class="row">
 
 <div class="span10">
 
 [% FOREACH job IN jobs %]
-[% IF loop.count MOD 2 == 1 %]<div class="row-fluid">[% END %]
-    <div class="span6">
+[% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
+    <div class="span5">
         <div class="well">
         <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
