@@ -42,7 +42,9 @@ sub share {
     my $shorten_url = $self->shorten($url);
 
     my $content = $job->title . ' ' . $shorten_url . ' ' . $tags;
-    my $json = $self->plurk->add_plurk($content, 'shares');
+    my @qualifier = ('wants', 'likes', 'shares', 'loves', 'needs', 'says', 'is');
+    my $qualifier = $qualifier[rand(scalar @qualifier)];
+    my $json = $self->plurk->add_plurk($content, $qualifier);
     my $st = $json->{plurk_id} ? 1 : 0;
     $self->log_debug("# failed: " . Dumper(\$json)) unless $st;
     $self->log_debug("# plurk $content: $st");
