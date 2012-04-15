@@ -43,8 +43,6 @@ sub _build_facebook {
 
     $fb->access_token($token);
 
-    print Dumper(\$fb);
-
     return $fb;
 }
 
