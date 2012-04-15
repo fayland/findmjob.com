@@ -64,7 +64,7 @@ get qr'.+/$' => sub {
     forward $uri;
 };
 
-any ['get', 'post'] => '/' => sub {
+any ['head', 'get', 'post'] => '/' => sub {
     # backwards
     if ( vars->{page} or vars->{feed_format} ) {
         forward '/jobs';

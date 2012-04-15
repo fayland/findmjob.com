@@ -44,3 +44,6 @@ share:
     consumer_secret: 'secret'
     access_token: 'secret'
     access_token_secret: 'secret'
+  givealink:
+    key: '6prR5nnj8wEuhx3sZPLQ'
+    secret: 'secret'
