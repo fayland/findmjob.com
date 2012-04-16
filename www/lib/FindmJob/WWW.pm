@@ -10,6 +10,7 @@ use Encode;
 use JSON::XS ();
 use Dancer::Plugin::Feed;
 use Data::Page;
+use DateTime ();
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -250,13 +251,14 @@ sub _render_feed {
 
     my @entries;
     foreach my $obj (@obj) {
-        my ($title, $content, $link, $author);
+        my ($title, $content, $link, $author, $issued);
         # refer templates/object.tt2
         if ($obj->{tbl} eq 'job') {
             $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->title;
             $author = $obj->company->name;
             $content = $obj->description;
+            $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
         } elsif ($obj->{tbl} eq 'company') {
             $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->name;
@@ -266,6 +268,7 @@ sub _render_feed {
             id => $obj->id,
             link => $link,
             title => $title,
+            $issued ? (issued => $issued) : (),
             $author ? (author => $author) : (),
             $content ? (content => $content) : (),
         };
