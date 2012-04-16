@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<div class="container[% IF is_fb_app +%] canvas[% END %]">
+<div class="container[% IF is_fb_app +%] canvas[% END %]" style="margin-top: 10px">
 
 <header>
 <div class="row">

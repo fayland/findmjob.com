@@ -114,7 +114,7 @@ get '/jobs' => sub {
 get '/job/:jobid' => sub {
     my $jobid = params->{jobid};
     my $schema = FindmJob::Basic->schema;
-    # weird dancer behaviour!
+    # weird dancer behavior!
     # jobid as 'muFKp3WE4RGPL8yCVyTbMg?utm_source=twitterfeed&utm_medium=twitter'
     $jobid =~ s/\?(.*?)$//;
     my $job = $schema->resultset('Job')->find($jobid);
