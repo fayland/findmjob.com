@@ -265,7 +265,7 @@ sub _render_feed {
         }
 
         push @entries, {
-            id => $obj->id,
+            id => $link,
             link => $link,
             title => $title,
             $issued ? (issued => $issued, modified => $issued) : (),
@@ -277,7 +277,10 @@ sub _render_feed {
     my $feed = create_feed(
         format  => vars->{feed_format},
         title   => vars->{title} . " Jobs - FindmJob.com",
-        entries => \@entries,
+        description => 'Find My Job Today',
+        id      => $config->{sites}->{main},
+        modified => DateTime->now,
+        entries  => \@entries,
     );
     return $feed;
 }
