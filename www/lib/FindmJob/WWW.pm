@@ -268,7 +268,7 @@ sub _render_feed {
             id => $obj->id,
             link => $link,
             title => $title,
-            $issued ? (issued => $issued) : (),
+            $issued ? (issued => $issued, modified => $issued) : (),
             $author ? (author => $author) : (),
             $content ? (content => $content) : (),
         };
