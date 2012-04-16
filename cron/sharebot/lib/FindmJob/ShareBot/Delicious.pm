@@ -27,7 +27,8 @@ sub share {
         url => $config->{sites}->{main} . $job->url,
         title => $job->title,
         description => substr($job->description, 0, 255) . '...',
-        tags  => join(', ', @tags)
+        tags  => join(', ', @tags),
+        shared => 1
     } );
     $self->log_debug("# added " . $job->url . " $st");
 
