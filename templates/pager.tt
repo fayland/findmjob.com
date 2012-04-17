@@ -2,7 +2,7 @@
 [%  UNLESS base_url;
         base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
     END;
-    IF base_url.match('.html');
+    IF base_url.search('.html');
         pmatches = base_url.match('^(.*)/([^\/]+)$');
     ELSE;
         pmatches = [base_url, ''];
