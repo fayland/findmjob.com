@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="span6">
+        <table class="table">
+        <tr><th>Date</th><th>Count</th></tr>
+
+        <% while row = @sth.fetch do %>
+                <tr><td><%= row[0].strftime('%a %d %b %Y') %></td><td><%= row[1] %></td></tr>
+        <% end %>
+
+        </table>
+    </div>
+</div>
