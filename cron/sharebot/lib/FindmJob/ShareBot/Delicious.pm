@@ -26,7 +26,7 @@ sub share {
     my $st = $self->delicious->add_post( {
         url => $config->{sites}->{main} . $job->url,
         title => $job->title,
-        description => substr($job->description, 0, 255) . '...',
+        description => $job->title, # substr($job->description, 0, 255) . '...',
         tags  => join(', ', @tags),
         shared => 1
     } );
