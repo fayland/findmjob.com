@@ -7,7 +7,7 @@
 <div class="pagination pull-right">
   <ul>
     [% IF pager.previous_page %]
-    <li><a href="[% base_url %]/">First</a></li>
+    <li><a href="[% pmatches.0 %]/[% pmatches.1 %]">First</a></li>
     <li><a href="[% pmatches.0 %]/p.[% pager.previous_page %]/[% pmatches.1 %]">Prev</a></li>
     [% END %]
 
