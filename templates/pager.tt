@@ -2,12 +2,13 @@
 [%  UNLESS base_url;
         base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
     END;
+    pmatches = base_url.match('^(.*)/([^\/]+)$');
 %]
 <div class="pagination pull-right">
   <ul>
     [% IF pager.previous_page %]
     <li><a href="[% base_url %]/">First</a></li>
-    <li><a href="[% base_url %]/p.[% pager.previous_page %]/">Prev</a></li>
+    <li><a href="[% pmatches.0 %]/p.[% pager.previous_page %]/[% pmatches.1 %]">Prev</a></li>
     [% END %]
 
     [% IF pager.current_page - 4 > 0 %]
@@ -24,11 +25,11 @@
 
     [% FOREACH page = [ start_page .. end_page ] %]
         <li[% IF page == pager.current_page %] class="active"[% END %]>
-        <a href='[% base_url %]/p.[% page %]/'>[% page %]</a>
+        <a href='[% pmatches.0 %]/p.[% page %]/[% pmatches.1 %]'>[% page %]</a>
     [% END %]
     [% IF pager.next_page %]
-    <li><a href="[% base_url %]/p.[% pager.next_page %]/">Next</a></li>
-    <li><a href="[% base_url %]/p.[% pager.last_page %]/">Last</a></li>
+    <li><a href="[% pmatches.0 %]/p.[% pager.next_page %]/[% pmatches.1 %]">Next</a></li>
+    <li><a href="[% pmatches.0 %]/p.[% pager.last_page %]/[% pmatches.1 %]">Last</a></li>
     [% END %]
   </ul>
 </div>
