@@ -2,7 +2,11 @@
 [%  UNLESS base_url;
         base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
     END;
-    pmatches = base_url.match('^(.*)/([^\/]+)$');
+    IF base_url.match('.html);
+        pmatches = base_url.match('^(.*)/([^\/]+)$');
+    ELSE;
+        pmatches = [base_url, ''];
+    END;
 %]
 <div class="pagination pull-right">
   <ul>
