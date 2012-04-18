@@ -6,7 +6,7 @@
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Github
 30 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m StackOverflow
 40 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
-50 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
+50 * * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
 10 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 20 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
 
