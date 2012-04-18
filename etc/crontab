@@ -17,3 +17,4 @@
 30 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Plurk -n 5
 40 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Facebook
 50 */3 * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m GiveaLink
+20 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m LinkedIn
