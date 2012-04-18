@@ -3,9 +3,10 @@ package FindmJob::ShareBot::LinkedIn;
 use Moose;
 use namespace::autoclean;
 with 'FindmJob::ShareBot::Role';
+with 'FindmJob::Role::Shorten';
 
 use LWP::Authen::OAuth;
-use HTML::Entities;
+use JSON::XS;
 
 has 'ua' => ( is => 'ro', isa => 'LWP::Authen::OAuth', lazy_build => 1 );
 sub _build_ua {
@@ -50,25 +51,22 @@ sub share {
     my $shorten_url = $self->shorten($url);
 
     my $title = $job->title;
-    $title = decode_entities($title);
     my $update = "$title $shorten_url $tags";
 
-    my $xml = <<'XML';
-<?xml version="1.0" encoding="UTF-8"?>
-<share>
-  <comment>$update</comment>
-  <content>
-	 <title>$title</title>
-	 <submitted-url>$url</submitted-url>
-  </content>
-  <visibility>
-	 <code>anyone</code>
-  </visibility>
-</share>
-XML
+    my $json = encode_json({
+        comment => $update,
+        content => {
+            title => $title,
+            'submitted-url' => $url,
+        },
+        visibility => {
+            code => 'anyone'
+        }
+    });
 
-    my $resp = $self->ua->post("http://api.linkedin.com/v1/people/~/shares", Content => $xml);
+    my $resp = $self->ua->post("http://api.linkedin.com/v1/people/~/shares", 'Content-Type' => 'application/json', Content => $json);
     my $st = $resp->code == 201 ? 1 : 0;
+    $self->log_debug("# failed to add linkedin share: " . $resp->content) unless $st;
     $self->log_debug("# Linkedin added " . $job->url . " $st");
 
     return $st;
