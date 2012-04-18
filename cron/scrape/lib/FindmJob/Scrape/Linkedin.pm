@@ -48,6 +48,20 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
+        my $desc = $self->format_text(delete $r->{description});
+        my @tags = $self->get_extra_tags_from_desc($r->{position}->{title});
+        push @tags, $self->get_extra_tags_from_desc($desc);
+
+        ## we really don't want follow some industries, mainly I want to do the IT jobs I think
+        ## and only when there is no tags we loved
+        unless (@tags) {
+            my @bad_industries = ('Financial Services', 'Transportation/Trucking/Railroad', 'Hospital & Health Care', 'Pharmaceuticals', 'Biotechnology');
+            my %bad_industries = map { $_ => 1 } @bad_industries;
+            my @industries = map { $_->{name} } @{$r->{position}->{industries}->{values}};
+            @industries = grep { not $bad_industries{$_} } @industries;
+            next unless @industries;
+        }
+
         # some row return company->id, others just return name
         my $company;
         if ($r->{company}->{id}) {
@@ -86,12 +100,9 @@ sub run {
             } );
         }
 
-        my $desc = $self->format_text(delete $r->{description});
-
-        my @tags =  map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
+        # maybe those are useful tags
         push @tags, map { $_->{name} } @{$r->{position}->{industries}->{values}};
-        push @tags, $self->get_extra_tags_from_desc($r->{position}->{title});
-        push @tags, $self->get_extra_tags_from_desc($desc);
+        push @tags, map { $_->{name} } @{$r->{position}->{jobFunctions}->{values}};
 
         my $pd = delete $r->{postingDate};
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
