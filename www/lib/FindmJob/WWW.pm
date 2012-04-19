@@ -57,8 +57,8 @@ get qr'.*?/([^\/]+).html' => sub {
     my $html = $1;
 
     # some static TT2 files
-    if ($uri !~ /\w/ and -e FindmJob::Basic->root . "/templates/" . $html . ".tt2") {
-        template $html . ".tt2";
+    if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/" . $html . ".tt2") {
+        template "$html.tt2";
     } else {
         var html_filename => $html;
         forward $uri;
