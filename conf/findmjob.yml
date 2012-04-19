@@ -11,6 +11,10 @@ sites:
   main: 'http://findmjob.com'
   static: 'http://static.findmjob.com'
 
+email:
+  default_from: 'noreply@findmjob.com'
+  default_to: 'findmjob.com@gmail.com'
+
 api:
   linkedin:
     key: 'e8dsod78mkwg'

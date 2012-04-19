@@ -35,7 +35,7 @@ end
 
 get '/stats' do
 
-  daysago = Time.now.to_i - 17 * 86400
+  daysago = Time.now.to_i - 14 * 86400
   @sth = @dbh_log.prepare("select DATE(FROM_UNIXTIME(time)) d, COUNT(*) as cnt from `findmjob_log`.sharebot WHERE time > #{daysago} group by d ORDER by d DESC")
   @sth.execute
 
