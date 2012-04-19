@@ -5,10 +5,10 @@
         <p />
         <ul>
             [% IF request.uri.search('/job') %]
-            <li>Sorry, we couldn’t locate that job listing. It might have expired or been removed.</li>
+            <li>Sorry, we couldn’t find that job. It might have expired or been removed.</li>
             [% END %]
             <li>Have you misspelled the url?</li>
-            <li>If you feel something is missing that should be here, please <a href="mailto:findmjob.com@gmail.com">contact us</a>.</li>
+            <li>If you feel something is wrong, please <a href="mailto:findmjob.com@gmail.com">contact us</a>.</li>
         </ul>
     </div>
 
