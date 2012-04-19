@@ -54,14 +54,21 @@ get qr'.*?/feed\.(rss|atom).*?' => sub {
 get qr'.*?/([^\/]+).html' => sub {
     my $uri = request->uri;
     $uri =~ s'/([^\/]+).html'';
-    var html_filename => $1;
-    forward $uri;
+    my $html = $1;
+
+    # some static TT2 files
+    if ($uri !~ /\w/ and -e FindmJob::Basic->root . "/templates/" . $html . ".tt2") {
+        template $html . ".tt2";
+    } else {
+        var html_filename => $html;
+        forward $uri;
+    }
 };
 
 # temp fix
 get qr'.+/$' => sub {
     my $uri = request->uri;
-    $uri =~ s'/$'';
+    $uri =~ s'/$''g;
     forward $uri;
 };
 
@@ -119,6 +126,11 @@ get '/job/:jobid' => sub {
     # jobid as 'muFKp3WE4RGPL8yCVyTbMg?utm_source=twitterfeed&utm_medium=twitter'
     $jobid =~ s/\?(.*?)$//;
     my $job = $schema->resultset('Job')->find($jobid);
+
+    unless ($job) {
+        forward '/404';
+    }
+
     if ($job->source_url =~ 'jobs.github.com') {
         $job->title( decode_utf8($job->title) );
         $job->description( decode_utf8($job->description) );
@@ -242,6 +254,11 @@ get '/tag/:tagid' => sub {
     }
 
     template 'tag.tt2';
+};
+
+any qr{.*} => sub {
+    status 'not_found';
+    template 'not_found.tt2';
 };
 
 sub _render_feed {

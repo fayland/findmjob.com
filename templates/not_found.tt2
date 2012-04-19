@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="span4 offset4 alert">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <strong>Warning!</strong> Not Found.
+    </div>
+</div>
