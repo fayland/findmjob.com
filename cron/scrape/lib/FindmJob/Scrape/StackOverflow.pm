@@ -30,6 +30,7 @@ sub run {
         next if $is_inserted and not $self->opt_update;
 
         my $row = $self->on_single_page($item);
+        next unless $row;
         if ( $is_inserted and $self->opt_update ) {
             $self->schema->resultset('Job')->update_job($row);
         } else {
@@ -44,6 +45,7 @@ sub on_single_page {
     my $link = $item->{link};
     my $resp = $self->get($link);
     my $content = $resp->decoded_content;
+    return if $content =~ /Job Not Found/ and $content =~ /It might have expired or been removed/;
     $content =~ s/\<span checked\>/ X /g; # for Joel Test
     my $tree = HTML::TreeBuilder->new_from_content($content);
  #   try {
