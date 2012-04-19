@@ -33,9 +33,9 @@ foreach my $d (sort { $b cmp $a } keys %sharebot_stats) {
         $text .= "$d\t$s\t$sharebot_stats{$d}{$s}\n";
         $total += $sharebot_stats{$d}{$s};
     }
-    print "=" x 30 . "\n";
+    $text .= "=" x 30 . "\n";
     $text .= "$d\tTotal\t$total\n";
-    print "=" x 40 . "\n";
+    $text .= "=" x 40 . "\n";
 }
 
 # jobs scraped
@@ -55,9 +55,9 @@ foreach my $d (sort { $b cmp $a } keys %scrape_stats) {
         $text .= "$d\t$s\t$scrape_stats{$d}{$s}\n";
         $total += $scrape_stats{$d}{$s};
     }
-    print "=" x 30 . "\n";
+    $text .= "=" x 30 . "\n";
     $text .= "$d\tTotal\t$total\n";
-    print "=" x 40 . "\n";
+    $text .= "=" x 40 . "\n";
 }
 
 sendmail($config->{email}->{default_from}, $config->{email}->{default_to}, 'Daily Report ' . today_date(), $text);
