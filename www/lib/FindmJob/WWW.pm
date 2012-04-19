@@ -215,7 +215,7 @@ get '/tag/:tagid' => sub {
 
     my $schema = FindmJob::Basic->schema;
     my $tag;
-    if ( length($tagid) == 22) {
+    if (length($tagid) == 22) {
         $tag = $schema->resultset('Tag')->find($tagid);
     }
     unless ($tag) {

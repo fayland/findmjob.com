@@ -1,0 +1,22 @@
+[% title = 'How Does It Work?' %]
+
+<section id="how_work">
+<div class="page-header">
+    <h1>[% title %] <small>Ways to keep up to date!</small></h1>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Feed</h2>
+    <p>
+        If you use any Feed Reader like Google Reader or software, you can always subscribe our tag feed: eg:
+        <a href='/tag/Perl/feed.rss'>http://findmjob.com/tag/Perl/feed.rss</a> or <a href='/tag/Ruby/feed.atom'>http://findmjob.com/tag/Ruby/feed.atom</a>
+    </p>
+    <p>
+        You can find it in the right bottom of the page next to <img src='[% config.sites.static %]/images/rss.png' />
+    </p>
+  </div>
+</div>
+
+
+</section>
