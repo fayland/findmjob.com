@@ -1,0 +1,23 @@
+[% title = 'Android App' %]
+
+<section id="how_work">
+<div class="page-header">
+    <h1>[% title %] <small>Another way to visit us!</small></h1>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Changes</h2>
+    <ul>
+        <li>beta: very limited function, but suggestions are welcome.</li>
+    </ul>
+  </div>
+
+  <div class="offset2 span4">
+    <a href="[% config.sites.static %]/FindmJob.apk" class="btn btn-large">Download Android App <small>(beta)</small></a>
+  </div>
+
+</div>
+
+
+</section>
