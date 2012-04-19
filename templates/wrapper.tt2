@@ -63,6 +63,20 @@
 
 [% content %]
 
+<p></p>
+
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7394624702378858";
+/* ffooter */
+google_ad_slot = "0140713934";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
 <br />
 <hr class="soften">
 <br />
