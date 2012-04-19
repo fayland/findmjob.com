@@ -1,6 +1,15 @@
 <div class="row">
-    <div class="span4 offset4 alert">
+    <div class="span8 offset2 alert">
         <a class="close" data-dismiss="alert">&times;</a>
-        <strong>Warning!</strong> Not Found.
+        <h3>Page Not Found <small>[% config.sites.main %][% request.path %]</small></h3>
+        <p />
+        <ul>
+            [% IF request.uri.search('/job') %]
+            <li>Sorry, we couldn’t locate that job listing. It might have expired or been removed.</li>
+            [% END %]
+            <li>Have you misspelled the url?</li>
+            <li>If you feel something is missing that should be here, please <a href="mailto:findmjob.com@gmail.com">contact us</a>.</li>
+        </ul>
     </div>
+
 </div>
