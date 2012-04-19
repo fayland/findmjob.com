@@ -93,7 +93,7 @@ sub run {
             posted_at  => human_to_db_datetime(delete $r->{postedDate}),
             expired_at => human_to_db_datetime(delete $r->{endDate}),
             description => delete $r->{description},
-            location => delete $r->{location} || delete $r->{clientCountry},
+            location => delete $r->{location} || delete $r->{clientCountry} || '',
             type     => '',
             extra    => $json->encode($r),
             tags     => ['elance', @tags],
