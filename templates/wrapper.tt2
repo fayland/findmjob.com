@@ -52,7 +52,9 @@
     <div class="container">
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active"><a href="/jobs">Jobs</a></li>
+        <!-- [% request.uri %] -->
+          <li[% IF request.uri.search('/job') %] class="active"[% END %]><a href="/jobs">Jobs</a></li>
+          <li[% IF request.uri == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html">How Does It Work?</a></li>
         </ul>
       </div>
     </div>
