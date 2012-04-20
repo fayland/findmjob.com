@@ -29,6 +29,8 @@
 <meta name="keywords" content="[% meta_keywords.squote %]" />
 [% END -%]
 
+<meta property="fb:app_id" content="281749461905114" />
+
 <link rel="shortcut icon" type="image/x-icon" href="[% config.sites.static %]/favicon.ico" />
 </head>
 <body>
