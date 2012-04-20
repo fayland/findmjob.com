@@ -55,7 +55,7 @@ sub run {
         ## we really don't want follow some industries, mainly I want to do the IT jobs I think
         ## and only when there is no tags we loved
         unless (@tags) {
-            my @bad_industries = ('Financial Services', 'Transportation/Trucking/Railroad', 'Hospital & Health Care', 'Pharmaceuticals', 'Biotechnology', 'Electrical/Electronic Manufacturing', 'Airlines/Aviation', 'Machinery', 'Chemicals', 'Industrial Automation', 'Food Production');
+            my @bad_industries = ('Financial Services', 'Transportation/Trucking/Railroad', 'Hospital & Health Care', 'Pharmaceuticals', 'Biotechnology', 'Electrical/Electronic Manufacturing', 'Airlines/Aviation', 'Machinery', 'Chemicals', 'Industrial Automation', 'Food Production', 'Accounting');
             my %bad_industries = map { $_ => 1 } @bad_industries;
             my @industries = map { $_->{name} } @{$r->{position}->{industries}->{values}};
             @industries = grep { not $bad_industries{$_} } @industries;
