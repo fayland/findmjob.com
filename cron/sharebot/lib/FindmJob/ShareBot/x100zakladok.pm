@@ -51,7 +51,7 @@ sub share {
         add_proc => '%C4%EE%E1%E0%E2%E8%F2%FC+%E7%E0%EA%EB%E0%E4%EA%F3',
     ] );
     my $job_id = $job->id;
-    my $st = ($resp->is_success and $resp->decoded_content =~ /$job_id/) ? 1 : 0;
+    my $st = ($resp->is_success and $resp->decoded_content =~ /\Q$job_id\E/) ? 1 : 0;
     $self->log_debug("# added " . $job->url . " $st");
     return $st;
 }
