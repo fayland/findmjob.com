@@ -39,7 +39,7 @@ sub run {
         $r = $r->{Job};
         next unless $r and $r->{BeginDate};
 
-        my @tags = split(/\,\s+/, delete $r->{Categories});
+        my @tags = split(/\,\s+/, $r->{Categories});
 
         my $desc = decode_entities(delete $r->{JobDescription});
         $desc = $self->format_text($desc);
