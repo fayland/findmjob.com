@@ -39,17 +39,27 @@ sub run {
         $r = $r->{Job};
         next unless $r and $r->{BeginDate};
 
-        my @tags = split(/\,\s+/, $r->{Categories});
-
         my $desc = decode_entities(delete $r->{JobDescription});
         $desc = $self->format_text($desc);
         my $JobRequirements = decode_entities(delete $r->{JobRequirements});
         $JobRequirements = $self->format_text($JobRequirements);
         $r->{JobRequirements} = $JobRequirements;
 
-        push @tags, $self->get_extra_tags_from_desc($r->{JobTitle});
+        my @tags = $self->get_extra_tags_from_desc($r->{JobTitle});
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, $self->get_extra_tags_from_desc($r->{JobRequirements});
+
+        ## we really don't want follow some industries, mainly I want to do the IT jobs I think
+        ## and only when there is no tags we loved
+        unless (@tags) {
+            my @bad_industries = ('Restaurant - Food Service', 'Retail');
+            my %bad_industries = map { $_ => 1 } @bad_industries;
+            my @categories = split(/\,\s*/, $r->{Categories});
+            @categories = grep { not $bad_industries{$_} } @categories;
+            next unless @categories;
+        }
+
+        push @tags, split(/\,\s*/, $r->{Categories});
 
         my $row = {
             source_url => $link,
