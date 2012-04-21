@@ -49,8 +49,10 @@ sub run {
         next if $is_inserted and not $self->opt_update;
 
         my $desc = $self->format_text(delete $r->{description});
+        $r->{skillsAndExperience} = $self->format_text($r->{skillsAndExperience});
         my @tags = $self->get_extra_tags_from_desc($r->{position}->{title});
         push @tags, $self->get_extra_tags_from_desc($desc);
+        push @tags, $self->get_extra_tags_from_desc($r->{skillsAndExperience});
 
         ## we really don't want follow some industries, mainly I want to do the IT jobs I think
         ## and only when there is no tags we loved
@@ -108,7 +110,6 @@ sub run {
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
         my $ed = delete $r->{expirationDate};
         my $expirationDate = sprintf('%04d-%02d-%02d', $ed->{year}, $ed->{month}, $ed->{day});
-        $r->{skillsAndExperience} = $self->format_text($r->{skillsAndExperience});
 
         my $row = {
             source_url => $link,
