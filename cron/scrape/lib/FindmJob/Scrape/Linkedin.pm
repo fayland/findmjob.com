@@ -108,6 +108,7 @@ sub run {
         my $postingDate = sprintf('%04d-%02d-%02d', $pd->{year}, $pd->{month}, $pd->{day});
         my $ed = delete $r->{expirationDate};
         my $expirationDate = sprintf('%04d-%02d-%02d', $ed->{year}, $ed->{month}, $ed->{day});
+        $r->{skillsAndExperience} = $self->format_text($r->{skillsAndExperience});
 
         my $row = {
             source_url => $link,
