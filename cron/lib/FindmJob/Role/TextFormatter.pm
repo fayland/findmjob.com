@@ -17,8 +17,6 @@ sub _build_formatter {
 sub format_tree_text {
     my ($self, $ele) = @_;
 
-    return unless defined $ele;
-
     my $txt = $self->formatter->format($ele);
 
     my $x100 = '-' x 100;
