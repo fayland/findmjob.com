@@ -10,12 +10,11 @@
 50 * * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
 10 * * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
+*/30 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
 
 # sharebot
 0 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Twitter
 10 */2 * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Delicious
-#20 */3 * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m x100zakladok
 30 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Plurk -n 5
 40 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Facebook
-50 */3 * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m GiveaLink
 20 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m LinkedIn

@@ -28,7 +28,7 @@ sub run {
         # (Budget: &#36;30-&#36;250 USD, Jobs: iPhone, Mobile Phone)
         my (undef, $max_budget) = ($description =~ /\(Budget\:(.*?)(\d+)\s+(\w{3})\,\s*Jobs/);
         die $item->{link} unless $max_budget;
-   #     next if $max_budget < 500;
+        next if $max_budget < 500;
 
         my $link = $item->{link};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
@@ -40,6 +40,8 @@ sub run {
         } else {
             $self->schema->resultset('Job')->create_job($row);
         }
+
+        last;
     }
 }
 
@@ -62,11 +64,7 @@ sub on_single_page {
             my $h = $$item_r;
             my $tag = $h->{_tag};
             if ($tag eq 'ul' and $h->attr('class') and $h->attr('class') eq 'ns_specifications') {
-                my $text = $h->as_trimmed_text;
-                print $text;
-                $text =~ s/\:\s+/\: /isg;
-                print "LLL $text\n";
-                $h->replace_with_content($text);
+                $h->replace_with_content( $h->as_trimmed_text );
             }
             if ($tag eq 'div' and $h->attr('class') and $h->attr('class') eq 'tags') {
                 $h->detach();
@@ -88,6 +86,9 @@ sub on_single_page {
         my @k = keys %skill_urls; @k = shuffle @k;
         my $cn = $k[0]; my $cw = $skill_urls{$cn};
 
+        ## better out
+        $desc =~ s/(ID|Type|Budget)\:\s+/$1\: /isg;
+
         my $row = {
             source_url => $link,
             title => $title,
@@ -103,11 +104,6 @@ sub on_single_page {
             extra => '',
             tags  => \@tags
         };
-
-        use Data::Dumper;
-        print Dumper(\$row);
-        exit;
-
 #    } catch {
 #        $self->log_fatal($_);
 #    }
