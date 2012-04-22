@@ -18,30 +18,32 @@ sub run {
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
-    my $resp = $self->get('http://www.freelancer.com/rss.xml');
-    my $data = XMLin($resp->decoded_content);
-    foreach my $item ( @{$data->{channel}->{item}} ) {
-        my $description = $item->{description};
-        next if $description =~ '^N/A'; # Deleted Project or Protected Project
+    my @urls = ('http://www.freelancer.com/rss.xml', 'http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml');
+    foreach my $url (@urls) {
+        my $resp = $self->get($url);
+        my $data = XMLin($resp->decoded_content);
+        foreach my $item ( @{$data->{channel}->{item}} ) {
+            my $description = $item->{description};
+            next if $description =~ '^N/A'; # Deleted Project or Protected Project
+            next if $item->{title} =~ /^Nonpublic project/; # Nonpublic project
 
-        # Check budget, don't insert if budget is too low b/c those are expired soon
-        # (Budget: &#36;30-&#36;250 USD, Jobs: iPhone, Mobile Phone)
-        my (undef, $max_budget) = ($description =~ /\(Budget\:(.*?)(\d+)\s+(\w{3})\,\s*Jobs/);
-        die $item->{link} unless $max_budget;
-        next if $max_budget < 500;
+            # Check budget, don't insert if budget is too low b/c those are expired soon
+            # (Budget: &#36;30-&#36;250 USD, Jobs: iPhone, Mobile Phone)
+            my (undef, $max_budget) = ($description =~ /\(Budget\:(.*?)(\d+)\s+(\w{3})\,\s*Jobs/);
+            die $item->{link} unless $max_budget;
+            next if $max_budget < 500;
 
-        my $link = $item->{link};
-        my $is_inserted = $job_rs->is_inserted_by_url($link);
-        next if $is_inserted and not $self->opt_update;
-        my $row = $self->on_single_page($item);
-        next unless $row;
-        if ( $is_inserted and $self->opt_update ) {
-            $self->schema->resultset('Job')->update_job($row);
-        } else {
-            $self->schema->resultset('Job')->create_job($row);
+            my $link = $item->{link};
+            my $is_inserted = $job_rs->is_inserted_by_url($link);
+            next if $is_inserted and not $self->opt_update;
+            my $row = $self->on_single_page($item);
+            next unless $row;
+            if ( $is_inserted and $self->opt_update ) {
+                $self->schema->resultset('Job')->update_job($row);
+            } else {
+                $self->schema->resultset('Job')->create_job($row);
+            }
         }
-
-        last;
     }
 }
 
