@@ -17,6 +17,8 @@ sub _build_formatter {
 sub format_tree_text {
     my ($self, $ele) = @_;
 
+    return unless defined $ele;
+
     my $txt = $self->formatter->format($ele);
 
     my $x100 = '-' x 100;
@@ -30,6 +32,8 @@ sub format_tree_text {
 
 sub format_text {
     my ($self, $text) = @_;
+
+    return unless defined $text and length $text;
 
     my $tree = HTML::TreeBuilder->new_from_content($text);
     my $txt  = $self->format_tree_text($tree);
