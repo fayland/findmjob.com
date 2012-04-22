@@ -104,7 +104,17 @@
 <li><p><b>Contact</b>: [% job.contact %]</p></li>
 [% END %]
 
-<li><p><b>Source URL</b>: <a href='[% job.source_url %]' target="_blank">[% job.source_url %]</a></p></li>
+[% out_url = job.source_url %]
+[% IF job.source_url.search('/www.freelancer.com/') %]
+[% # affiliates
+    projectid = job.description.match('Project ID:\s*(\d+)');
+    IF projectid.size;
+        out_url = 'http://www.freelancer.com/projects/findmjob_' _ projectid.0 _ '.html';
+    END;
+%]
+[% END %]
+
+<li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank">[% job.source_url %]</a></p></li>
 
 </ul>
 
