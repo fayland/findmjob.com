@@ -18,7 +18,14 @@ sub run {
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
-    my @urls = ('http://www.freelancer.com/rss.xml', 'http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml');
+    my @urls = ('http://www.freelancer.com/rss.xml');
+
+    # those urls just do it every hour, not on each 15 minutes
+    my @d = localtime();
+    if ($d[1] > 10 and $d[2] < 20) {
+        push @urls, ('http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml');
+    }
+
     foreach my $url (@urls) {
         $self->log_debug("# get $url");
         my $resp = $self->get($url);
