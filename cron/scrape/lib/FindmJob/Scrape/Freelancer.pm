@@ -20,6 +20,7 @@ sub run {
     my $job_rs = $schema->resultset('Job');
     my @urls = ('http://www.freelancer.com/rss.xml', 'http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml');
     foreach my $url (@urls) {
+        $self->log_debug("# get $url");
         my $resp = $self->get($url);
         my $data = XMLin($resp->decoded_content);
         foreach my $item ( @{$data->{channel}->{item}} ) {
@@ -51,7 +52,7 @@ sub on_single_page {
     my ($self, $item) = @_;
 
     my $link = $item->{link};
-    $self->log_debug("get $link");
+    $self->log_debug("# get $link");
     my $resp = $self->get($link); sleep 3;
     return unless $resp->is_success;
     my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
