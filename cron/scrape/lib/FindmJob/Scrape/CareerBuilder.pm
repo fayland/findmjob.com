@@ -52,7 +52,7 @@ sub run {
         ## we really don't want follow some industries, mainly I want to do the IT jobs I think
         ## and only when there is no tags we loved
         unless (@tags) {
-            my @bad_industries = ('Restaurant - Food Service', 'Retail');
+            my @bad_industries = ('Restaurant - Food Service', 'Retail', 'Real Estate', 'Automotive');
             my %bad_industries = map { $_ => 1 } @bad_industries;
             my @categories = split(/\,\s*/, $r->{Categories});
             @categories = grep { not $bad_industries{$_} } @categories;
