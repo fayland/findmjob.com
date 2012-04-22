@@ -48,6 +48,8 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
+        next if $r->{position}->{title} eq $r->{description}; # The job you're looking for is no longer active.
+
         my $desc = $self->format_text(delete $r->{description});
         $r->{skillsAndExperience} = $self->format_text($r->{skillsAndExperience});
         my @tags = $self->get_extra_tags_from_desc($r->{position}->{title});
