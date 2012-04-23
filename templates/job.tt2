@@ -87,7 +87,7 @@
         [% description = job.extra_data.descriptionSnippet %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
         <li><p><b>Desired Skills & Experience</b>:</p>
-            <div class="well">[% job.extra_data.skillsAndExperience %]</div>
+            <div class="well">[% job.extra_data.skillsAndExperience | html_line_break %]</div>
         </li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
