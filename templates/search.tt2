@@ -6,6 +6,25 @@
 <h1>[% title %][% IF jobs.size %] (Total: [% pager.total_entries %])[% END %]</h1>
 <hr class="soften">
 
+<div class="row">
+    [%  UNLESS base_url;
+            base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('_by_(\w+).html', '.html').replace('/$', '');
+        END;
+        IF base_url.search('.html');
+            sort_base_url = base_url.replace('.html', '_by__BY_.html');
+        ELSIF base_url.search('?');
+            sort_base_url = sort_base_url _ '&by=_BY_';
+        ELSE;
+            sort_base_url = sort_base_url _ '?by=_BY_';
+        END;
+    %]
+    <div class="span6"><b>Sort By</b>:
+        [% IF sort == 'relevance' %]<b>Relevance</b>[% ELSE %]<a href='[% sort_base_url.replace('_BY_', 'relevance') %]'>Relevance</a>[% END %] |
+        [% IF sort == 'date' %]<b>Date</b>[% ELSE %]<a href='[% sort_base_url.replace('_BY_', 'date') %]'>Date</a>[% END %]
+    </div>
+</div>
+<p />
+
 [% IF jobs.size %]
 [% FOREACH job IN jobs %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]

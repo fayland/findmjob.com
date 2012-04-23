@@ -146,26 +146,25 @@ get qr'/search.*?' => sub {
     my $rows = 12;
 
     my $q = params->{'q'};
-    my $loc = params->{loc};
-    if (vars->{html_filename}) {
-        if ( vars->{html_filename} =~ /^(\w+)\_in\_(\w+)$/ ) {
-            $q = $1;
-            $loc = $2;
-        } elsif ( vars->{html_filename} =~ /^in\_(\w+)$/ ) {
-            $loc = $1;
-        } else {
-            $q = vars->{html_filename};
-        }
+    my $loc = params->{loc} || '';
+    my $by  = params->{by} || 'relevance';
+    my $filename = vars->{html_filename};
+    if ($filename) {
+        $filename =~ s/\_by\_(date|relevance)$// and $by = $1;
+        $filename =~ s/(^|\_)in\_(\w+)$// and $loc = $2;
+        $q = $filename;
     }
-    var 'q' => $q;
-    var 'loc' => $loc;
+    var 'q'    => $q;
+    var 'loc'  => $loc;
+    var 'sort' => $by;
 
-    my $sort = params->{sort};
+    print STDERR "### ddd $q, $loc, $by\n";
+
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
         'q'  => $q,
         loc  => $loc,
-        sort => $sort,
+        sort => $by,
         rows => $rows,
         page => $p,
     } );

@@ -86,9 +86,11 @@
         [% job.source_url = job.extra_data.siteJobUrl %]
         [% description = job.extra_data.descriptionSnippet %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+        [% IF job.extra_data.skillsAndExperience %]
         <li><p><b>Desired Skills & Experience</b>:</p>
             <div class="well">[% job.extra_data.skillsAndExperience | html_line_break %]</div>
         </li>
+        [% END %]
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
