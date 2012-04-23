@@ -12,7 +12,7 @@
         END;
         IF base_url.search('.html');
             sort_base_url = base_url.replace('.html', '_by__BY_.html');
-        ELSIF base_url.search('?');
+        ELSIF base_url.search('\?');
             sort_base_url = sort_base_url _ '&by=_BY_';
         ELSE;
             sort_base_url = sort_base_url _ '?by=_BY_';
