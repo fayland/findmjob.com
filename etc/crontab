@@ -9,7 +9,7 @@
 40 * * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
 50 * * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
 10 * * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
-20 * * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
+20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
 
 # sharebot
