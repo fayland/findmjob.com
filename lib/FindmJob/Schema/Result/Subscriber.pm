@@ -38,6 +38,12 @@ __PACKAGE__->table("subscriber");
   is_nullable: 0
   size: 64
 
+=head2 loc
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 64
+
 =head2 frequency_days
 
   data_type: 'tinyint'
@@ -45,9 +51,23 @@ __PACKAGE__->table("subscriber");
   extra: {unsigned => 1}
   is_nullable: 0
 
+=head2 created_at
+
+  data_type: 'integer'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
 =head2 last_sent
 
   data_type: 'integer'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+=head2 is_active
+
+  data_type: 'tinyint'
   default_value: 0
   extra: {unsigned => 1}
   is_nullable: 1
@@ -59,6 +79,8 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 64 },
   "keyword",
   { data_type => "varchar", is_nullable => 0, size => 64 },
+  "loc",
+  { data_type => "varchar", is_nullable => 1, size => 64 },
   "frequency_days",
   {
     data_type => "tinyint",
@@ -66,9 +88,23 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 0,
   },
+  "created_at",
+  {
+    data_type => "integer",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
   "last_sent",
   {
     data_type => "integer",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  "is_active",
+  {
+    data_type => "tinyint",
     default_value => 0,
     extra => { unsigned => 1 },
     is_nullable => 1,
@@ -90,8 +126,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("email", "keyword");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-23 21:20:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S2XnCEZfx99MwKlTWBlPow
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-23 23:09:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0usA/TWdUQIEsH33KxiOQA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

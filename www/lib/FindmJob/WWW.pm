@@ -253,6 +253,31 @@ get '/tag/:tagid' => sub {
     template 'tag.tt2';
 };
 
+post '/subscribe' => sub {
+    my $keyword = params->{keyword};
+    my $loc = params->{loc} || '';
+    my $frequency_days = params->{frequency_days};
+    $frequency_days = 1 unless $frequency_days and $frequency_days eq '7';
+    my $email = params->{email};
+
+    # we do not validate email now, instead, we drop invalid email in cron when started
+    if ($email and $keyword) {
+        my $schema = FindmJob::Basic->schema;
+        my $r = $schema->resultset('Subscriber')->update_or_create( {
+            email => $email,
+            keyword => $keyword,
+            loc => $loc,
+            frequency_days => $frequency_days,
+            created_at => time(),
+            last_sent => 0,
+            is_active => 0,
+        } );
+        var subscriber => $r;
+    }
+
+    template 'subscribe.tt2';
+};
+
 any qr{.*} => sub {
     status 'not_found';
     template 'not_found.tt2';

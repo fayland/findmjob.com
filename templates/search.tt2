@@ -1,4 +1,5 @@
 [% title = q %]
+[% IF loc; title = title _ ' in ' _ loc; END; %]
 [% meta_keywords = q %]
 
 [% USE String %]
@@ -7,6 +8,12 @@
 <hr class="soften">
 
 <div class="row">
+
+[% IF jobs.size %]
+
+  <div class="span10">
+
+    <div class="row">
     [%  UNLESS base_url;
             base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('_by_(\w+).html', '.html').replace('/$', '');
         END;
@@ -22,25 +29,41 @@
         [% IF sort == 'relevance' %]<b>Relevance</b>[% ELSE %]<a href='[% sort_base_url.replace('_BY_', 'relevance') %]'>Relevance</a>[% END %] |
         [% IF sort == 'date' %]<b>Date</b>[% ELSE %]<a href='[% sort_base_url.replace('_BY_', 'date') %]'>Date</a>[% END %]
     </div>
-</div>
-<p />
-
-[% IF jobs.size %]
-[% FOREACH job IN jobs %]
-[% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="span6">
-        <div class="well">
-        <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
-        </div>
     </div>
-[% IF loop.count MOD 2 == 0 %]</div>[% END %]
-[% END %]
-[%# to close tag %]
-[% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
+    <p />
 
-[% INCLUDE pager.tt %]
+    [% FOREACH job IN jobs %]
+    [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
+        <div class="span5">
+            <div class="well">
+            <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
+            <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+            <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+            </div>
+        </div>
+    [% IF loop.count MOD 2 == 0 %]</div>[% END %]
+    [% END %]
+    [%# to close tag %]
+    [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
+
+    [% INCLUDE pager.tt %]
+  </div>
+  <div class="span2">
+    <div class="well">
+        <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
+        <form action='/subscribe' method='post'>
+            <input type='hidden' name='keyword' value='[% q.squote %]' />
+            <input type='hidden' name='loc' value='[% loc.squote %]' />
+            <select name="frequency_days" class="input-small">
+                <option value="1">Daily</option>
+                <option value="7">Weekly</option>
+            </select>
+            <input type="text" name="email" class="input-small" placeholder="Email"><br />
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+  </div>
+
 
 [% ELSE %]
     <div class="alert">
@@ -48,3 +71,5 @@
       Nothing here, please redefined your search terms.
     </div>
 [% END %]
+
+</div>
