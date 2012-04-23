@@ -158,8 +158,6 @@ get qr'/search.*?' => sub {
     var 'loc'  => $loc;
     var 'sort' => $by;
 
-    print STDERR "### ddd $q, $loc, $by\n";
-
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
         'q'  => $q,
