@@ -2,6 +2,9 @@
 0 */3 * * * bash /findmjob.com/cron/sphinx/indexer.sh
 0 0 * * * perl /findmjob.com/cron/stats/daily.pl
 
+# emails
+*/5 * * * * perl /findmjob.com/cron/emails/subscribe_confirm.pl
+
 # scrape
 10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Perl
 20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m Github
