@@ -7,9 +7,12 @@
 <h1>[% title %]</h1>
 <hr class="soften">
 
+<div class="row">
+  <div class="span10">
+
 [% FOREACH job IN objects %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="span6">
+    <div class="span5">
         <div class="well">
         <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
@@ -22,3 +25,21 @@
 [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
 [% INCLUDE pager.tt %]
+
+  </div>
+  <div class="span2">
+    <div class="well">
+        <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
+        <form action='/subscribe' method='post'>
+            <input type='hidden' name='keyword' value='[% tag.id %]' />
+            <input type='hidden' name='frm' value='tag' />
+            <select name="frequency_days" class="input-small">
+                <option value="1">Daily</option>
+                <option value="7">Weekly</option>
+            </select>
+            <input type="text" name="email" class="input-small" placeholder="Email"><br />
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+  </div>
+</div>
