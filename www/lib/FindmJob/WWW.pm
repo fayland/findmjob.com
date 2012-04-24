@@ -287,9 +287,11 @@ get '/subscribe/confirm' => sub {
     if ($id and $hash) {
         ## check cron/emails/subscribe_confirm.pl
         my $config = FindmJob::Basic->config;
-        my $sec = md5_hex($r->{id} . $config->{secret_hash});
+        my $sec = md5_hex($id . $config->{secret_hash});
         if ($hash eq $sec) {
             $suc = 1;
+            my $schema = FindmJob::Basic->schema;
+            $schema->resultset('Subscriber')->search( { id => $id } )->update( { is_active => 1 } );
         }
     }
     var suc => $suc;
