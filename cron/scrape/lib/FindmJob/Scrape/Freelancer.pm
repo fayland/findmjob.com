@@ -109,7 +109,7 @@ sub on_single_page {
             contact   => '',
             posted_at => human_to_db_datetime($item->{'pubDate'}),
             description => $desc,
-            location => '',
+            location => 'Anywhere',
             type  => '',
             extra => '',
             tags  => \@tags
