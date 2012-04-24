@@ -51,7 +51,7 @@ while (my $r = $sth->fetchrow_hashref) {
     my $msg = MIME::Lite->new(
         From    => $from,
         To      => $to,
-        Subject => $r->{subject},
+        Subject => $subject,
         Type    => 'multipart/mixed'
     );
     if ($text) {

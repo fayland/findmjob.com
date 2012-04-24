@@ -16,10 +16,8 @@ around 'create' => sub {
 
     my $tags = delete $attrs->{tags}; # all object will have tags
     my $table = $self->result_source->from;
-    print STDERR "TTTT $table\n";
     if (grep { $_ eq $table } @uuid_tables) {
         $attrs->{id} ||= uuid();
-        print STDERR "TTTT $attrs->{id}\n";
     }
 
     my $row = $self->$orig($attrs);

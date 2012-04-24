@@ -288,7 +288,6 @@ get '/subscribe/confirm' => sub {
         ## check cron/emails/subscribe_confirm.pl
         my $config = FindmJob::Basic->config;
         my $sec = md5_hex($id . $config->{secret_hash});
-        print STDERR "xx $id $config->{secret_hash} $sec vs $hash\n";
         if ($hash eq $sec) {
             $suc = 1;
             my $schema = FindmJob::Basic->schema;
