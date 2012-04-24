@@ -119,12 +119,9 @@ get '/jobs' => sub {
     template 'jobs.tt2';
 };
 
-get '/job/:jobid' => sub {
-    my $jobid = params->{jobid};
+get qr'/job/.+' => sub {
+    my ($jobid) = (request->uri =~ '/job/([^\/]+)');
     my $schema = FindmJob::Basic->schema;
-    # weird dancer behavior!
-    # jobid as 'muFKp3WE4RGPL8yCVyTbMg?utm_source=twitterfeed&utm_medium=twitter'
-    $jobid =~ s/\?(.*?)$//;
     my $job = $schema->resultset('Job')->find($jobid);
 
     unless ($job) {
