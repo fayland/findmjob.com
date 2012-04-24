@@ -24,6 +24,7 @@ while (my $r = $sth->fetchrow_hashref) {
     $r->{template} = 'subscribe_confirm';
     my $id = uuid();
     my $to = delete $r->{email};
+    $r->{subject} = "[FindmJob.com] Confirmation on subscription";
     $insert_email_sth->execute($id, $to, encode_json($r)) or die $dbh->errstr;
     $mark_as_sent_sth->execute(time(), $to, $r->{keyword});
 }
