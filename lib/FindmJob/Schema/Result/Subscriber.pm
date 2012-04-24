@@ -26,6 +26,12 @@ __PACKAGE__->table("subscriber");
 
 =head1 ACCESSORS
 
+=head2 id
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 22
+
 =head2 email
 
   data_type: 'varchar'
@@ -81,6 +87,8 @@ __PACKAGE__->table("subscriber");
 =cut
 
 __PACKAGE__->add_columns(
+  "id",
+  { data_type => "varchar", is_nullable => 0, size => 22 },
   "email",
   { data_type => "varchar", is_nullable => 0, size => 64 },
   "frm",
@@ -123,6 +131,20 @@ __PACKAGE__->add_columns(
 
 =over 4
 
+=item * L</id>
+
+=back
+
+=cut
+
+__PACKAGE__->set_primary_key("id");
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<ek>
+
+=over 4
+
 =item * L</email>
 
 =item * L</keyword>
@@ -131,11 +153,11 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->set_primary_key("email", "keyword");
+__PACKAGE__->add_unique_constraint("ek", ["email", "keyword"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-24 17:33:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lg+MIA6V8oy4UVjZvbxb2w
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-24 19:50:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:j5Mu3IzcKXZwwGy6R3nvTA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

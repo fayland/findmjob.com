@@ -7,7 +7,7 @@ extends qw/DBIx::Class::ResultSet/;
 
 use List::MoreUtils 'uniq';
 use FindmJob::Utils 'uuid';
-my @uuid_tables = ('job', 'tag', 'company');
+my @uuid_tables = ('job', 'tag', 'company', 'subscriber');
 my @tags_tables = ('job', 'company');
 
 around 'create' => sub {

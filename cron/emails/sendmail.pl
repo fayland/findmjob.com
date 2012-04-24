@@ -46,10 +46,11 @@ while (my $r = $sth->fetchrow_hashref) {
         $html = delete $data->{HTML};
     }
 
-    my $from = $data->{from} || 'findmjob.com@gmail.com';
+    my $from = $data->{from} || $config->{email}->{default_from};
+    my $to   = $r->{to} || $config->{email}->{default_to};
     my $msg = MIME::Lite->new(
         From    => $from,
-        To      => $r->{to},
+        To      => $to,
         Subject => $r->{subject},
         Type    => 'multipart/mixed'
     );
