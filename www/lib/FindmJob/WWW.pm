@@ -11,6 +11,7 @@ use JSON::XS ();
 use Dancer::Plugin::Feed;
 use Data::Page;
 use DateTime ();
+use Digest::MD5 'md5_hex';
 
 # different template dir than default one
 setting 'views'  => path( FindmJob::Basic->root, 'templates' );
@@ -276,6 +277,24 @@ post '/subscribe' => sub {
     }
 
     template 'subscribe.tt2';
+};
+
+get '/subscribe/confirm' => sub {
+    my $id   = params->{id};
+    my $hash = params->{hash};
+
+    my $suc = 0;
+    if ($id and $hash) {
+        ## check cron/emails/subscribe_confirm.pl
+        my $config = FindmJob::Basic->config;
+        my $sec = md5_hex($r->{id} . $config->{secret_hash});
+        if ($hash eq $sec) {
+            $suc = 1;
+        }
+    }
+    var suc => $suc;
+
+    template 'subscribe_confirm.tt2';
 };
 
 any qr{.*} => sub {
