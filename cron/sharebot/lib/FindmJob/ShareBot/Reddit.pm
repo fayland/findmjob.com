@@ -17,6 +17,9 @@ sub _build_reddit {
 sub share {
     my ($self, $job) = @_;
 
+    ## it's not working!
+    ## Reddit::_parse_link('Reddit=HASH(0x9821ed8)', '.error.BAD_CAPTCHA.field-captcha') called at /usr/local/share/perl/5.10.1/Reddit.pm line 186
+
     my $config = $self->config;
     my @subreddit = ('jobs');
     my ($id, $link) = $self->reddit->submit_link( $job->title, $config->{sites}->{main} . $job->url );
