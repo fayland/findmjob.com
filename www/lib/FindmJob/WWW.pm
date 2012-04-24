@@ -263,7 +263,7 @@ post '/subscribe' => sub {
     # we do not validate email now, instead, we drop invalid email in cron when started
     if ($email and $keyword) {
         my $schema = FindmJob::Basic->schema;
-        my $r = $schema->resultset('Subscriber')->update_or_create( {
+        my $r = $schema->resultset('Subscriber')->create( {
             email => $email,
             frm   => $frm,
             keyword => $keyword,
@@ -288,6 +288,7 @@ get '/subscribe/confirm' => sub {
         ## check cron/emails/subscribe_confirm.pl
         my $config = FindmJob::Basic->config;
         my $sec = md5_hex($id . $config->{secret_hash});
+        print STDERR "xx $id $config->{secret_hash} $sec vs $hash\n";
         if ($hash eq $sec) {
             $suc = 1;
             my $schema = FindmJob::Basic->schema;
