@@ -32,6 +32,12 @@ __PACKAGE__->table("subscriber");
   is_nullable: 0
   size: 64
 
+=head2 frm
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 12
+
 =head2 keyword
 
   data_type: 'varchar'
@@ -77,6 +83,8 @@ __PACKAGE__->table("subscriber");
 __PACKAGE__->add_columns(
   "email",
   { data_type => "varchar", is_nullable => 0, size => 64 },
+  "frm",
+  { data_type => "varchar", is_nullable => 0, size => 12 },
   "keyword",
   { data_type => "varchar", is_nullable => 0, size => 64 },
   "loc",
@@ -126,8 +134,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("email", "keyword");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-23 23:09:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0usA/TWdUQIEsH33KxiOQA
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-24 17:33:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lg+MIA6V8oy4UVjZvbxb2w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

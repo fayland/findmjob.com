@@ -54,6 +54,7 @@
         <form action='/subscribe' method='post'>
             <input type='hidden' name='keyword' value='[% q.squote %]' />
             <input type='hidden' name='loc' value='[% loc.squote %]' />
+            <input type='hidden' name='frm' value='search' />
             <select name="frequency_days" class="input-small">
                 <option value="1">Daily</option>
                 <option value="7">Weekly</option>

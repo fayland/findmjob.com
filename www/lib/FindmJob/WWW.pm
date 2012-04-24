@@ -252,6 +252,8 @@ get '/tag/:tagid' => sub {
 
 post '/subscribe' => sub {
     my $keyword = params->{keyword};
+    my $frm = params->{frm} || 'search';
+    $frm = 'search' unless grep { $_ eq $frm } ('search', 'tag', 'company');
     my $loc = params->{loc} || '';
     my $frequency_days = params->{frequency_days};
     $frequency_days = 1 unless $frequency_days and $frequency_days eq '7';
@@ -262,6 +264,7 @@ post '/subscribe' => sub {
         my $schema = FindmJob::Basic->schema;
         my $r = $schema->resultset('Subscriber')->update_or_create( {
             email => $email,
+            frm   => $frm,
             keyword => $keyword,
             loc => $loc,
             frequency_days => $frequency_days,
