@@ -62,6 +62,7 @@ sub on_single_page {
     $self->log_debug("# get $link");
     my $resp = $self->get($link); sleep 3;
     return unless $resp->is_success;
+    return unless $resp->decoded_content =~ /\<\/html\>/i;
     my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
  #   try {
         my $data;
