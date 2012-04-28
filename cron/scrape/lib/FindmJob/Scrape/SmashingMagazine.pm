@@ -88,6 +88,7 @@ sub on_single_page {
 
         my $desc = $self->format_tree_text($entry);
         $desc =~ s/\<img[^\>]+\>//isg; # no image
+        $desc =~ s/^\s+|\s+$//g; # remove space
 
         my @tags = $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
