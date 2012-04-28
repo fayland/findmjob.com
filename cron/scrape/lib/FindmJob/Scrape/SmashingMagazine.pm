@@ -18,7 +18,11 @@ sub run {
     my $job_rs = $schema->resultset('Job');
     my $resp = $self->get('http://jobs.smashingmagazine.com/rss/all/all');
     my $data = XMLin($resp->decoded_content);
+    my $i = 0;
     foreach my $item ( @{$data->{channel}->{item}} ) {
+        $i++;
+        last if $i > 30; # that RSS contains ALL, even 5 months old
+
         my $link = $item->{link};
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
