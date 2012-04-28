@@ -47,11 +47,13 @@
         <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
         <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
-        <li><p><b>job Poster:</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
+        <li><p><b>job Poster</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
-        <li><p><b>job Poster:</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
+        <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
-        <li><p><b>job Poster:</b>: [% job.extra_data.ContactInfoName %]</p></li>
+        <li><p><b>job Poster</b>: [% job.extra_data.ContactInfoName %]</p></li>
+    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
+        <li><p><b>Budget</b>: [% job.extra_data.Budget %]</p></li>
     [% END %]
 [% END %]
 
@@ -99,6 +101,8 @@
             <div class="well">[% job.extra_data.JobRequirements | html_line_break %]</div>
         </li>
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
+    <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
 
@@ -113,6 +117,10 @@
     IF projectid.size;
         out_url = 'http://www.freelancer.com/projects/findmjob_' _ projectid.0 _ '.html';
     END;
+%]
+[% ELSIF job.source_url.search('/www.scriptlance.com/') %]
+[% # affiliates
+    out_url = out_url _ '?ref=findmjob';
 %]
 [% END %]
 
