@@ -53,12 +53,22 @@ sub on_single_page {
             my $class = $li->attr('class');
             next unless $class;
             if ($class eq 'author') {
-                $data{company} = $li->look_down(_tag => 'a');
-                $data{company} = $data{company}->as_trimmed_text if $data{company};
-                unless ($data{company}) {
-                    ($data{company}) = ($li->as_trimmed_text =~ /^(.*?)\s+\(([^\)]+)\)$/);
+                foreach my $item_r ($li->content_refs_list) {
+                    next unless ref $$item_r; # we don't change plain text
+                    my $h = $$item_r;
+                    my $tag = $h->{_tag};
+                    if ($tag eq 'a') {
+                        $data{company} = $h->as_trimmed_text;
+                        $h->detach();
+                    }
                 }
-                ($data{location}) = ($li->as_trimmed_text =~ /\(([^\)]+)\)$/);
+                my $text = $li->as_trimmed_text;
+                if ($data{company}) {
+                    $data{location} = $text;
+                } else {
+                    ($data{company}, $data{location}) = ($text =~ /^([^\(]+)\s+(.*?)$/);
+                }
+                $data{location} =~ s/^\(|\)$//g;
             } elsif ($class eq 'tags') {
                 $data{type} = $li->as_trimmed_text;
             }
