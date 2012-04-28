@@ -24,4 +24,4 @@
 10 */2 * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Delicious
 30 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Plurk -n 5
 40 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Facebook
-20 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m LinkedIn
+*/20 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m LinkedIn -n 5
