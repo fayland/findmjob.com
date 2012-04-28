@@ -16,6 +16,7 @@
 20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
 40 * * * * perl /findmjob.com/cron/scrape/run.pl -m ScriptLance
+50 * * * * perl /findmjob.com/cron/scrape/run.pl -m 37Signals
 
 # sharebot
 0 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Twitter
