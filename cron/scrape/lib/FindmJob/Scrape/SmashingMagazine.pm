@@ -53,7 +53,11 @@ sub on_single_page {
             my $class = $li->attr('class');
             next unless $class;
             if ($class eq 'author') {
-                $data{company} = $li->look_down(_tag => 'a')->as_trimmed_text;
+                $data{company} = $li->look_down(_tag => 'a');
+                $data{company} = $data{company}->as_trimmed_text if $data{company};
+                unless ($data{company}) {
+                    ($data{company}) = ($li->as_trimmed_text =~ /^(.*?)\s+\(([^\)]+)\)$/);
+                }
                 ($data{location}) = ($li->as_trimmed_text =~ /\(([^\)]+)\)$/);
             } elsif ($class eq 'tags') {
                 $data{type} = $li->as_trimmed_text;
@@ -73,6 +77,7 @@ sub on_single_page {
         }
 
         my $desc = $self->format_tree_text($entry);
+        $desc =~ s/\<img[^\>]+\>//isg; # no image
 
         my @tags = $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
