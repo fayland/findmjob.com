@@ -73,7 +73,7 @@ sub on_single_page {
         push @tags, $self->get_extra_tags_from_desc($desc);
 
         my $type = '';
-        $desc =~ s/Work hours\:\s*(\N+)(\n|$)//is and $type = $1;
+        $desc =~ s/Work hours\:\s*(.*?)(\n|$)//is and $type = $1;
         push @tags, 'telecommute' if $desc =~ /Telecommute\:/;
 
         my $row = {
