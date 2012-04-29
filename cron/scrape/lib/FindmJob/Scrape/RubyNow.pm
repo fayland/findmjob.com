@@ -16,9 +16,6 @@ sub run {
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
-
-    $self->ua->proxy('http', 'socks://127.0.0.1:7070');
-
     my $resp = $self->get('http://feeds.feedburner.com/jobsrubynow?format=xml');
     my $data = XMLin($resp->decoded_content);
     foreach my $item ( @{$data->{channel}->{item}} ) {
