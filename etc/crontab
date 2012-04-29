@@ -18,6 +18,7 @@
 30 * * * * perl /findmjob.com/cron/scrape/run.pl -m SmashingMagazine
 40 * * * * perl /findmjob.com/cron/scrape/run.pl -m ScriptLance
 50 * * * * perl /findmjob.com/cron/scrape/run.pl -m 37Signals
+0 * * * * perl /findmjob.com/cron/scrape/run.pl -m RubyNow
 
 # sharebot
 0 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Twitter
