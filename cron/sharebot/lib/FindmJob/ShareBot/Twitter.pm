@@ -5,6 +5,7 @@ use namespace::autoclean;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
+use List::Util 'shuffle';
 use Net::Twitter::Lite;
 
 has 'twitter' => ( is => 'ro', isa => 'Net::Twitter::Lite', lazy_build => 1 );
@@ -29,12 +30,11 @@ sub share {
     my @tags = @{ $job->tags };
     @tags = map { $_->{text} } @tags;
     @tags = $self->remove_useless_tags(@tags);
-    @tags = sort { length($a) <=> length($b) } @tags;
-    @tags = splice(@tags, 0, 2);
-    @tags = map { s/\s+//g; $_ } @tags;
-    push @tags, 'jobs', 'hiring', 'careers';
-    @tags = map { s/[\&\#\+]//g; $_ } @tags; # no &, # in tags
     @tags = grep { $_ ne 'c' } @tags;
+    @tags = shuffle @tags; # shuffle should work better so every tag has the chance
+    @tags = splice(@tags, 0, 2);
+    push @tags, 'jobs', 'hiring', 'careers';
+    @tags = map { s/[\&\#\+\s\.]+//g; $_ } @tags; # no &, # in tags
     @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
 
