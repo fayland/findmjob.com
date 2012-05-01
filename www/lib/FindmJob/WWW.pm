@@ -162,9 +162,7 @@ get qr'/job/.+' => sub {
     unless ($job) {
         # check if it's inside freelance since we split it into two parts: jobs and freelance
         if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
-#            redirect "http://findmjob.com/freelance/$jobid", 301;
-#            return;
-            forward "/freelance/$jobid";
+            redirect "/freelance/$jobid", 301;
             return;
         }
 
@@ -182,7 +180,7 @@ get qr'/job/.+' => sub {
 };
 
 get qr'/freelance/.+' => sub {
-    my (undef, $jobid) = (request->uri =~ '/(freelance|job)/([^\/]+)');
+    my (undef, $jobid) = (request->uri =~ '/freelance/([^\/]+)');
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Freelance')->find($jobid);
 
