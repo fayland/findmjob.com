@@ -186,9 +186,6 @@ get qr'/freelance/.+' => sub {
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Freelance')->find($jobid);
 
-    print STDERR "blabla" . request->uri . "\n";
-    print STDERR "id: $jobid\n";
-
     unless ($job) {
         forward '/404';
     }
