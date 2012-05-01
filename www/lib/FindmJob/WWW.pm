@@ -162,9 +162,12 @@ get qr'/job/.+' => sub {
     unless ($job) {
         # check if it's inside freelance since we split it into two parts: jobs and freelance
         if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
-            redirect "/freelance/$jobid", 301;
+            redirect "http://findmjob.com/freelance/$jobid", 301;
             return;
         }
+
+        72.2.7.43 - - [01/May/2012:06:03:01 +0000] "GET /job/GK3bmm+P4RG+2MTa2fVHmw/Debt-Calculation-Software-Needed.html HTTP/1.1" 301 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:12.0) Gecko/20100101 Firefox/12.0"
+72.2.7.43 - - [01/May/2012:06:03:01 +0000] "GET /job/GK3bmm+P4RG+2MTa2fVHmw/.com/freelance/GK3bmm+P4RG+2MTa2fVHmw HTTP/1.1" 301 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:12.0) Gecko/20100101 Firefox/12.0"
 
         forward '/404';
     }
