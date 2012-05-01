@@ -15,7 +15,7 @@ sub run {
     my ($self) = @_;
 
     my $schema = $self->schema;
-    my $job_rs = $schema->resultset('Job');
+    my $job_rs = $schema->resultset('Freelance');
     my $json = JSON::XS->new->utf8;
 
     my $resp = $self->get('https://www.odesk.com/api/profiles/v1/search/jobs.json');
@@ -60,9 +60,9 @@ sub run {
             tags     => ['odesk', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
-            $self->schema->resultset('Job')->update_job($row);
+            $job_rs->update_job($row);
         } else {
-            $self->schema->resultset('Job')->create_job($row);
+            $job_rs->create_job($row);
         }
     }
 }

@@ -9,6 +9,7 @@ with 'MooseX::Getopt::Strict';
 has 'module' => (is => 'ro', isa => 'Str', required => 1, traits => [ 'Getopt' ], cmd_aliases => 'm');
 has 'num'    => (is => 'ro', isa => 'Int', default => 12, traits => [ 'Getopt' ], cmd_aliases => 'n');
 has 'debug'  => (is => 'ro', isa => 'Bool', default => 0, traits => [ 'Getopt' ], cmd_aliases => 'd');
+has 'type'   => (is => 'ro', isa => 'Str', default => 'Job', traits => [ 'Getopt' ], cmd_aliases => 't');
 
 sub run {
     my ($self) = @_;
@@ -22,7 +23,8 @@ sub run {
     }
 
     # random so that every job have the chance
-    my $job_rs = $self->schema->resultset('Job')->search( {
+    my $job_rs = $self->schema->resultset( $self->type );
+    my $job_rw = $job_rs->search( {
         inserted_at => { '>', time() - 86440 }, # today
     }, {
         order_by => 'RAND()',
@@ -35,7 +37,7 @@ sub run {
     my $insert_sth = $dbh_log->prepare("INSERT INTO `findmjob_log`.`sharebot` (id, site, time) VALUES (?, ?, ?)");
 
     my $posted_num = 0;
-    while (my $job = $job_rs->next) {
+    while (my $job = $job_rw->next) {
         $posted_num++;
         last if $posted_num > $self->num;
 

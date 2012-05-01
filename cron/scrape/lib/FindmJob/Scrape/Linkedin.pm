@@ -127,9 +127,9 @@ sub run {
             tags     => ['linkedin', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
-            $self->schema->resultset('Job')->update_job($row);
+            $job_rs->update_job($row);
         } else {
-            $self->schema->resultset('Job')->create_job($row);
+            $job_rs->create_job($row);
         }
     }
 }
