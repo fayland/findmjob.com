@@ -89,7 +89,7 @@ sub on_single_page {
 
         my $desc = $self->format_tree_text($ns_description);
 
-        my @tags = ('freelancer', 'telecommute');
+        my @tags = ('freelancer', 'freelance');
         push @tags, $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, keys %skill_urls;

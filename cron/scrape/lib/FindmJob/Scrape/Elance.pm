@@ -93,7 +93,7 @@ sub run {
             location => delete $r->{location} || delete $r->{clientCountry} || '',
             type     => '',
             extra    => $json->encode($r),
-            tags     => ['elance', @tags],
+            tags     => ['elance', 'freelance', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
             $job_rs->update_job($row);

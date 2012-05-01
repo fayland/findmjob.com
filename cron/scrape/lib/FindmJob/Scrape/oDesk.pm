@@ -54,7 +54,7 @@ sub run {
             location => delete $item->{op_country},
             type     => delete$item->{op_engagement},
             extra    => $json->encode($item),
-            tags     => ['odesk', @tags],
+            tags     => ['odesk', 'freelance', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
             $job_rs->update_job($row);

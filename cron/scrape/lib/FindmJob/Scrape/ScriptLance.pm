@@ -80,7 +80,7 @@ sub on_single_page {
         }
 
         my $desc = delete $data->{description};
-        my @tags = ('scriptlance', 'telecommute');
+        my @tags = ('scriptlance', 'freelance');
         push @tags, $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, @_tags;
