@@ -214,13 +214,27 @@ get qr'/search.*?' => sub {
         page => $p,
     } );
     if ($ret->{total}) {
-        my @jobids = map { $_->{id} } @{$ret->{matches}};
         my $schema = FindmJob::Basic->schema;
-        my @jobs   = $schema->resultset('Job')->search( {
-            id => { 'IN', \@jobids }
-        } )->all;
-        my %jobs = map { $_->id => $_ } @jobs;
-        @jobs = map { $jobs{$_} } @jobids;
+
+        my @ids    = map { $_->{id} } @{$ret->{matches}};
+        my @jobids = map { $_->{id} } grep { $_->{tbl} eq 'job' } @{$ret->{matches}};
+        my @freelance_ids = map { $_->{id} } grep { $_->{tbl} eq 'freelance' } @{$ret->{matches}};
+
+        my %ids;
+        if (@jobids) {
+            my @jobs   = $schema->resultset('Job')->search( {
+                id => { 'IN', \@jobids }
+            } )->all;
+            %ids = map { $_->id => $_ } @jobs;
+        }
+        if (@freelance_ids) {
+            my @jobs   = $schema->resultset('Freelance')->search( {
+                id => { 'IN', \@freelance_ids }
+            } )->all;
+            map { $ids{$_->id} = $_ } @jobs;
+        }
+
+        my @jobs = map { $ids{$_} } @ids;
         var jobs => \@jobs;
 
         # pager

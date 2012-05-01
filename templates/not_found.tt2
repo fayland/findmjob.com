@@ -7,6 +7,9 @@
             [% IF request.uri.search('/job') %]
             <li>Sorry, we couldn’t find that job. It might have expired or been removed.</li>
             <li>The job you're looking for is no longer active.</li>
+            [% ELSIF request.uri.search('/freelance') %]
+            <li>Sorry, we couldn’t find that freelance job. It might have expired or been removed.</li>
+            <li>The freelance job you're looking for is no longer active.</li>
             [% END %]
             <li>Have you misspelled the url?</li>
             <li>If you feel something is wrong, please <a href="mailto:findmjob.com@gmail.com">contact us</a>.</li>
