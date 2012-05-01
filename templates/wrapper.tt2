@@ -56,6 +56,7 @@
         <ul class="nav">
           <li[% IF request.uri == '/' %] class="active"[% END %]><a href='/'><i class="icon-home icon-white"></i></a></li>
           <li[% IF request.uri.search('/job') %] class="active"[% END %]><a href="/jobs">Jobs</a></li>
+          <li[% IF request.uri.search('/freelance') %] class="active"[% END %]><a href="/jobs">Freelances</a></li>
           <li[% IF request.uri == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html">How Does It Work?</a></li>
           <li[% IF request.uri == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html">Android App</a></li>
 
