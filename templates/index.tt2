@@ -11,8 +11,14 @@
 
 <div class="span10">
 
-[% FOREACH job IN jobs %]
-[% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
+<div class="row">
+    <div class="span5"><h3>Jobs</h3></div>
+    <div class="span5"><h3>Freelances</h3></div>
+</div>
+
+[% FOREACH i IN [0..5] %]
+<div class="row">
+    [% job = jobs.shift %]
     <div class="span5">
         <div class="well">
         <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
@@ -20,12 +26,25 @@
         <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
         </div>
     </div>
-[% IF loop.count MOD 2 == 0 %]</div>[% END %]
+    [% job = freelances.shift %]
+    <div class="span5">
+        <div class="well">
+        <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
+        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        </div>
+    </div>
+</div>
 [% END %]
-[%# to close tag %]
-[% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
-[% INCLUDE pager.tt base_url='/jobs' %]
+<div class="row">
+    <div class="span5">
+    [% INCLUDE pager.tt pager=jobs_pager base_url='/jobs' %]
+    </div>
+    <div class="span5">
+    [% INCLUDE pager.tt pager=freelances_pager base_url='/freelances' %]
+    </div>
+</div>
 
 </div> <!-- end for <div class="span10"> -->
 <div class="span2">

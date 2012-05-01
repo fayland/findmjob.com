@@ -82,12 +82,18 @@ any ['head', 'get', 'post'] => '/' => sub {
     my $schema = FindmJob::Basic->schema;
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
-        rows => 12,
+        rows => 6,
         page => 1,
     });
-    my @jobs = $job_rs->all;
-    var pager => $job_rs->pager;
-    var jobs  => \@jobs;
+    var jobs  => [$job_rs->all];
+    var jobs_pager => $job_rs->pager;
+    my $freelance_rs = $schema->resultset('Freelance')->search( undef, {
+        order_by => 'inserted_at DESC',
+        rows => 6,
+        page => 1,
+    });
+    var freelances => [$freelance_rs->all];
+    var freelances_pager => $freelance_rs->pager;
 
     template 'index.tt2';
 };
