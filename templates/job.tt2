@@ -77,13 +77,6 @@
             <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
         </li>
         [% END %]
-    [% ELSIF job.source_url.search('www.odesk.com') %]
-        [% IF job.extra_data.buyer.op_cny_description %]
-        <li><p><b>Buyer</b>:</p>
-            <div class="well">[% job.extra_data.buyer.op_cny_description %]</div>
-        </li>
-        [% END %]
-        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
         [% job.source_url = job.extra_data.siteJobUrl %]
         [% description = job.extra_data.descriptionSnippet %]
@@ -93,16 +86,12 @@
             <div class="well">[% job.extra_data.skillsAndExperience | html_line_break %]</div>
         </li>
         [% END %]
-    [% ELSIF job.source_url.search('/www.elance.com/') %]
-        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
         [% job.source_url = job.extra_data.PrinterFriendlyURL %]
         <li><p><b>Requirements</b>:</p>
             <div class="well">[% job.extra_data.JobRequirements | html_line_break %]</div>
         </li>
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
-    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-    <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
 
@@ -111,19 +100,6 @@
 [% END %]
 
 [% out_url = job.source_url %]
-[% IF job.source_url.search('/www.freelancer.com/') %]
-[% # affiliates
-    projectid = job.description.match('Project ID:\s*(\d+)');
-    IF projectid.size;
-        out_url = 'http://www.freelancer.com/projects/findmjob_' _ projectid.0 _ '.html';
-    END;
-%]
-[% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-[% # affiliates
-    out_url = out_url _ '?ref=findmjob';
-%]
-[% END %]
-
 <li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank">[% job.source_url %]</a></p></li>
 
 </ul>

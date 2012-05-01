@@ -20,11 +20,6 @@
 </p></li>
 [% END %]
 
-<li><p><b>Location</b>: [% job.location %]</p></li>
-[% IF job.type %]
-<li><p><b>Hours</b>: [% job.type %]</p></li>
-[% END %]
-
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
         [% IF job.extra_data.pay_rate %]
@@ -65,48 +60,18 @@
 </li>
 
 [% IF job.extra_data %]
-    [% IF job.source_url.search('jobs.perl.org') %]
-        [% IF job.extra_data.skills_required %]
-        <li><p><b>Required Skill</b>:</p>
-            <div class="well">[% job.extra_data.skills_required | html_line_break %]</div>
-        </li>
-        [% END %]
-        [% IF job.extra_data.skills_desired %]
-        <li><p><b>Desired  Skill</b>:</p>
-            <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
-        </li>
-        [% END %]
-    [% ELSIF job.source_url.search('www.odesk.com') %]
+    [% IF job.source_url.search('www.odesk.com') %]
         [% IF job.extra_data.buyer.op_cny_description %]
         <li><p><b>Buyer</b>:</p>
             <div class="well">[% job.extra_data.buyer.op_cny_description %]</div>
         </li>
         [% END %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
-    [% ELSIF job.source_url.search('/www.linkedin.com/') %]
-        [% job.source_url = job.extra_data.siteJobUrl %]
-        [% description = job.extra_data.descriptionSnippet %]
-        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
-        [% IF job.extra_data.skillsAndExperience %]
-        <li><p><b>Desired Skills & Experience</b>:</p>
-            <div class="well">[% job.extra_data.skillsAndExperience | html_line_break %]</div>
-        </li>
-        [% END %]
     [% ELSIF job.source_url.search('/www.elance.com/') %]
-        <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
-    [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
-        [% job.source_url = job.extra_data.PrinterFriendlyURL %]
-        <li><p><b>Requirements</b>:</p>
-            <div class="well">[% job.extra_data.JobRequirements | html_line_break %]</div>
-        </li>
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
     <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
-[% END %]
-
-[% IF job.contact %]
-<li><p><b>Contact</b>: [% job.contact %]</p></li>
 [% END %]
 
 [% out_url = job.source_url %]
