@@ -1,0 +1,23 @@
+[% title = 'Recent Jobs' %]
+[% has_feed = 1 %]
+
+[% USE String %]
+
+<h1>[% title %] (Total: [% pager.total_entries %])</h1>
+<hr class="soften">
+
+[% FOREACH job IN jobs %]
+[% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
+    <div class="span6">
+        <div class="well">
+        <h3><a href='[% job.url %]'>[% job.title %]</a></h3>
+        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        </div>
+    </div>
+[% IF loop.count MOD 2 == 0 %]</div>[% END %]
+[% END %]
+[%# to close tag %]
+[% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
+
+[% INCLUDE pager.tt %]

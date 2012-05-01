@@ -120,12 +120,45 @@ get '/jobs' => sub {
     template 'jobs.tt2';
 };
 
+get '/freelances' => sub {
+    my $schema = FindmJob::Basic->schema;
+
+    my $p = vars->{page} || 1; $p = 1 unless $p =~ /^\d+$/;
+    my $rows = 12;
+    if ( vars->{feed_format} ) {
+        $rows = 20; # more for feeds
+        $p = 1;
+    }
+
+    my $job_rs = $schema->resultset('Freelance')->search( undef, {
+        order_by => 'inserted_at DESC',
+        rows => $rows,
+        page => $p
+    });
+    my @jobs = $job_rs->all;
+    var pager => $job_rs->pager;
+    var jobs  => \@jobs;
+
+    if (vars->{feed_format}) {
+        var title => "Recent";
+        map { $_->{tbl} = 'freelance' } @jobs;
+        return _render_feed(@jobs);
+    }
+
+    template 'freelances.tt2';
+};
+
 get qr'/job/.+' => sub {
     my ($jobid) = (request->uri =~ '/job/([^\/]+)');
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Job')->find($jobid);
 
     unless ($job) {
+        # check if it's inside freelance since we split it into two parts: jobs and freelance
+        if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
+            redirect "/freelance/$jobid", 301;
+        }
+
         forward '/404';
     }
 
@@ -137,6 +170,21 @@ get qr'/job/.+' => sub {
     var job => $job;
 
     template 'job.tt2';
+};
+
+get qr'/freelance/.+' => sub {
+    my ($jobid) = (request->uri =~ '/freelance/([^\/]+)');
+    my $schema = FindmJob::Basic->schema;
+    my $job = $schema->resultset('Freelance')->find($jobid);
+
+    unless ($job) {
+        forward '/404';
+    }
+
+    $job->{extra_data} = JSON::XS->new->utf8->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
+    var job => $job;
+
+    template 'freelance.tt2';
 };
 
 get qr'/search.*?' => sub {
