@@ -34,7 +34,7 @@ while (my ($id, $tbl) = $sth->fetchrow_array) {
     next unless $obj; # it should be warned
     my $url = $config->{sites}->{main} . '/' . $tbl . '/' . $id;
     $url = $config->{sites}->{main} . $obj->url if $obj->can('url');
-    if ($tbl eq 'job') {
+    if ($tbl eq 'job' or $tbl eq 'freelance') {
         $map->add(
             loc => $url,
             priority => 0.7,
