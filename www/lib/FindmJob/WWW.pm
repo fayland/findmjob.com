@@ -390,7 +390,7 @@ sub _render_feed {
         if ($obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance') {
             $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->title;
-            $author = $obj->company->name;
+            $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
             $content = $obj->description;
             $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
         } elsif ($obj->{tbl} eq 'company') {
