@@ -94,19 +94,12 @@ sub on_single_page {
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, keys %skill_urls;
 
-        my @k = keys %skill_urls; @k = shuffle @k;
-        my $cn = $k[0]; my $cw = $skill_urls{$cn};
-
         ## better out
         $desc =~ s/(ID|Type|Budget)\:\s+/$1\: /isg;
 
         my $row = {
             source_url => $link,
             title => $title,
-            company => {
-                name => "$cn Freelancer",
-                website => "http://www.freelancer.com/jobs/$cw/",
-            },
             contact   => '',
             posted_at => human_to_db_datetime($item->{'pubDate'}),
             description => $desc,

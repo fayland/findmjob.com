@@ -86,9 +86,6 @@ sub run {
         my $row = {
             source_url => $link,
             title => delete $r->{name},
-            company => {
-                name => "Elance $r->{category}",
-            },
             contact   => '',
             posted_at  => human_to_db_datetime(delete $r->{postedDate}),
             expired_at => human_to_db_datetime(delete $r->{endDate}),

@@ -157,6 +157,7 @@ get qr'/job/.+' => sub {
         # check if it's inside freelance since we split it into two parts: jobs and freelance
         if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
             redirect "/freelance/$jobid", 301;
+            return;
         }
 
         forward '/404';

@@ -47,9 +47,6 @@ sub run {
         my $row = {
             source_url => $link,
             title => delete $item->{op_title},
-            company => {
-                name => "oDesk $item->{job_category_level_one}",
-            },
             contact   => '',
             posted_at  => human_to_db_date(delete $item->{date_posted}) . ' ' . $item->{op_time_posted},
             expired_at => human_to_db_date(delete $item->{op_job_expiration}) . ' ' . $item->{op_time_posted},

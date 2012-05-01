@@ -91,10 +91,6 @@ sub on_single_page {
         my $row = {
             source_url => $link,
             title => $title,
-            company => {
-                name => "ScriptLance",
-                website => "http://www.scriptlance.com/",
-            },
             contact   => '',
             posted_at  => human_to_db_datetime(delete $data->{'Posted'}),
             expired_at => human_to_db_datetime(delete $data->{'Bidding Ends'}),
