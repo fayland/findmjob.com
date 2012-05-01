@@ -180,7 +180,7 @@ get qr'/job/.+' => sub {
 };
 
 get qr'/freelance/.+' => sub {
-    my (undef, $jobid) = (request->uri =~ '/freelance/([^\/]+)');
+    my ($jobid) = (request->uri =~ '/freelance/([^\/]+)');
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Freelance')->find($jobid);
 
