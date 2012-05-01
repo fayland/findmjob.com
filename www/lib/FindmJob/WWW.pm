@@ -387,7 +387,7 @@ sub _render_feed {
     foreach my $obj (@obj) {
         my ($title, $content, $link, $author, $issued);
         # refer templates/object.tt2
-        if ($obj->{tbl} eq 'job') {
+        if ($obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance') {
             $link = $config->{sites}->{main} . $obj->url;
             $title = $obj->title;
             $author = $obj->company->name;
