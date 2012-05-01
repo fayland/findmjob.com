@@ -159,12 +159,14 @@ get qr'/job/.+' => sub {
     my $schema = FindmJob::Basic->schema;
     my $job = $schema->resultset('Job')->find($jobid);
 
+    $job ||= $schema->resultset('Freelance')->find($jobid);
+
     unless ($job) {
         # check if it's inside freelance since we split it into two parts: jobs and freelance
-        if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
-            redirect "http://findmjob.com/freelance/$jobid", 301;
-            return;
-        }
+#        if ($schema->resultset('Freelance')->count( { id => $jobid } )) {
+#            redirect "http://findmjob.com/freelance/$jobid", 301;
+#            return;
+#        }
 
         forward '/404';
     }
