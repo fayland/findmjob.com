@@ -44,12 +44,6 @@ __PACKAGE__->table("freelance");
   is_nullable: 0
   size: 128
 
-=head2 company_id
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 22
-
 =head2 posted_at
 
   data_type: 'datetime'
@@ -104,8 +98,6 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "title",
   { data_type => "varchar", is_nullable => 0, size => 128 },
-  "company_id",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
   "posted_at",
   {
     data_type => "datetime",
@@ -159,8 +151,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-05-01 11:45:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ihsPbRwPaPcCFwPdqK929w
+# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-05-01 13:04:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:p6mB4Y+t5oQh7R0vod2bPw
 
 __PACKAGE__->belongs_to(
     company => 'Company',
