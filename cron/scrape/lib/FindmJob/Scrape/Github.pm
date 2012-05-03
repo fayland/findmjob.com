@@ -18,6 +18,11 @@ sub run {
     my $job_rs = $schema->resultset('Job');
     my $json = JSON::XS->new->utf8;
 
+    # set socks proxy (Tor)
+    my $config = $self->config;
+    $self->ua->proxy(['http', 'https'], $config->{scrape}->{proxy})
+        if $config->{scrape}->{proxy};
+
     my $resp = $self->get('https://jobs.github.com/positions.json');
     my $data = $json->decode( decode('utf8', $resp->content) );
     foreach my $item (@$data) {
