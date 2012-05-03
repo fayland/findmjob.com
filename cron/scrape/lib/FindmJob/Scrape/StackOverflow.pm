@@ -16,6 +16,12 @@ sub run {
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Job');
+
+    # set socks proxy (Tor)
+    my $config = $self->config;
+    $self->ua->proxy(['http', 'https'], $config->{scrape}->{proxy})
+        if $config->{scrape}->{proxy};
+
     my $resp = $self->get('http://careers.stackoverflow.com/jobs/feed');
     my $data = XMLin($resp->decoded_content);
     foreach my $item ( @{$data->{channel}->{item}} ) {

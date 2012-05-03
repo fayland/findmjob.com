@@ -21,6 +21,10 @@ sub run {
     my $config = $self->config;
     my $api = $config->{api}->{elance};
 
+    # set socks proxy (Tor)
+    $self->ua->proxy(['http', 'https'], $config->{scrape}->{proxy})
+        if $config->{scrape}->{proxy};
+
     # read the token from script/oneoff/elance.token.txt
     my $root = $self->root;
     my $file = $root . "/script/oneoff/elance.token.txt";
