@@ -86,6 +86,10 @@
 [% # affiliates
     out_url = out_url _ '?ref=findmjob';
 %]
+[% ELSIF job.source_url.search('/www.elance.com/') %]
+[% # affiliates
+    out_url = out_url _ '?rid=2KIRG';
+%]
 [% END %]
 
 <li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank">[% job.source_url %]</a></p></li>
