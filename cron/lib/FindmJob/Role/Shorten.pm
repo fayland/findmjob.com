@@ -11,7 +11,12 @@ sub _build_bitly {
     my $self = shift;
     my $config = $self->config;
     my $t = $config->{share}->{bitly};
-    return WWW::Shorten::Bitly->new(USER => $t->{uid}, APIKEY => $t->{key});
+    my $bitly = WWW::Shorten::Bitly->new(USER => $t->{uid}, APIKEY => $t->{key});
+
+    # set socks proxy (Tor)
+    $bitly->{browser}->proxy('http', 'socks://127.0.0.1:7070');
+
+    return $bitly;
 }
 
 sub shorten {
