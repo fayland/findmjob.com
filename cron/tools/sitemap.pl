@@ -22,28 +22,12 @@ my $today = sprintf('%04d-%02d-%02d', $d[5] + 1900, $d[4] + 1, $d[3]);
 
 ## an index with 4 files, jobs, freelancer, tags and companies
 my $index = WWW::SitemapIndex::XML->new();
-$index->add(
-    loc => $config->{sites}->{main} . '/sitemap.jobs.xml.gz',
-    lastmod => $today,
-);
-$index->add(
-    loc => $config->{sites}->{main} . '/sitemap.freelances.xml.gz',
-    lastmod => $today,
-);
-$index->add(
-    loc => $config->{sites}->{main} . '/sitemap.tags.xml.gz',
-    lastmod => $today,
-);
-
-=pod
-
-$index->add(
-    loc => $config->{sites}->{main} . '/sitemap.companies.xml.gz',
-    lastmod => $today,
-);
-
-=cut
-
+foreach my $t ('jobs', 'freelances', 'tags', 'companies') {
+    $index->add(
+        loc => $config->{sites}->{main} . "/sitemap.$t.xml.gz",
+        lastmod => $today,
+    );
+}
 $index->write("$dir/sitemap.xml.gz");
 
 # sitemaps.jobs.xml.gz
@@ -104,6 +88,21 @@ while (my $r = $rs->next) {
     );
 }
 $map->write("$dir/sitemap.tags.xml.gz");
+
+# sitemap.companies.xml.gz
+$map = WWW::Sitemap::XML->new();
+$rs = $schema->resultset('Company')->search( undef, {
+    rows => 10000,
+    page => 1
+} );
+while (my $r = $rs->next) {
+    my $url = $config->{sites}->{main} . $r->url;
+    $map->add(
+        loc => $url,
+        priority => 0.5,
+    );
+}
+$map->write("$dir/sitemap.companies.xml.gz");
 
 # add ping
 LWP::UserAgent->new->get( "http://www.google.com/webmasters/tools/ping?sitemap=" . uri_escape($config->{sites}->{main} . '/sitemap.xml.gz') );
