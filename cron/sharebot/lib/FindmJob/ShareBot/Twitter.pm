@@ -34,7 +34,7 @@ sub share {
     @tags = shuffle @tags; # shuffle should work better so every tag has the chance
     @tags = splice(@tags, 0, 2);
     push @tags, 'jobs', 'hiring', 'careers';
-    @tags = map { s/[\&\#\+\s\.]+//g; $_ } @tags; # no &, # in tags
+    @tags = map { s/[\&\#\+\s\.\-]+//g; $_ } @tags; # no &, # in tags
     @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
 
