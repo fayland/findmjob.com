@@ -20,6 +20,11 @@ sub run {
     my $job_rs = $schema->resultset('Freelance');
     my @urls = ('http://www.freelancer.com/rss.xml');
 
+    # set socks proxy (Tor)
+    my $config = $self->config;
+    $self->ua->proxy('http', $config->{scrape}->{proxy})
+        if $config->{scrape}->{proxy};
+
     # those urls just do it every hour, not on each 15 minutes
     my @d = localtime();
     if ($d[1] > 10 and $d[2] < 20) {

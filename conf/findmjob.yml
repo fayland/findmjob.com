@@ -17,6 +17,9 @@ email:
 
 secret_hash: 'secret'
 
+scrape:
+  proxy: 'socks://127.0.0.1:9050'
+
 api:
   linkedin:
     key: 'e8dsod78mkwg'
