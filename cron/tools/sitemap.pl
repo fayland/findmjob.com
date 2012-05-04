@@ -81,7 +81,7 @@ $rs = $schema->resultset('Tag')->search( undef, {
     page => 1
 } );
 while (my $r = $rs->next) {
-    my $url = $config->{sites}->{main} . '/tag' . $r->id;
+    my $url = $config->{sites}->{main} . '/tag/' . $r->id;
     $map->add(
         loc => $url,
         priority => 0.5,
