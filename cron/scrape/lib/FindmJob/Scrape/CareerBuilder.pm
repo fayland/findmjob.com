@@ -53,7 +53,7 @@ sub run {
         ## and only when there is no tags we loved
         unless (@tags) {
             # 'Other' is usually bad as we found
-            my @bad_industries = ('Restaurant - Food Service', 'Retail', 'Real Estate', 'Automotive', 'Other', 'Skilled Labor - Trades', 'Transportation', 'Admin - Clerical', 'Health Care', 'Nurse', 'Professional Services', 'Accounting', 'Customer Service', 'Business Development', 'Banking', 'Executive', 'Legal', 'Construction', 'Hospitality - Hotel', 'Management', 'Manufacturing', 'Installation - Maint - Repair', 'Finance', 'Distribution - Shipping', 'General Business');
+            my @bad_industries = ('Restaurant - Food Service', 'Retail', 'Real Estate', 'Automotive', 'Other', 'Skilled Labor - Trades', 'Transportation', 'Admin - Clerical', 'Health Care', 'Nurse', 'Professional Services', 'Accounting', 'Customer Service', 'Business Development', 'Banking', 'Executive', 'Legal', 'Construction', 'Hospitality - Hotel', 'Management', 'Manufacturing', 'Installation - Maint - Repair', 'Finance', 'Distribution - Shipping', 'General Business', 'Consultant', 'General Labor');
             my %bad_industries = map { $_ => 1 } @bad_industries;
             my @categories = split(/\,\s*/, $r->{Categories});
             @categories = grep { not $bad_industries{$_} } @categories;
