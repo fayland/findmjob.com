@@ -26,6 +26,7 @@ sub run {
     my $job_rs = $self->schema->resultset( $self->type );
     my $job_rw = $job_rs->search( {
         inserted_at => { '>', time() - 86440 }, # today
+        source_url  => { 'NOT LIKE', '%careerbuilder.com%' }, # careerbuilder.com is not that good
     }, {
         order_by => 'RAND()',
         rows => $self->num * 2,
