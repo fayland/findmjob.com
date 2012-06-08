@@ -4,27 +4,35 @@ use Moose;
 use namespace::autoclean;
 with 'FindmJob::ShareBot::Role';
 
-use Reddit;
+use Reddit::Client;
 
-has 'reddit' => ( is => 'ro', isa => 'Reddit', lazy_build => 1 );
+has 'reddit' => ( is => 'ro', isa => 'Reddit::Client', lazy_build => 1 );
 sub _build_reddit {
     my $self = shift;
     my $config = $self->config;
     my $t = $config->{share}->{Reddit};
-    Reddit->new({ user_name => $t->{u}, password => $t->{p}, subreddit => 'jobs' }) #, debug => 1 });
+    my $session_file = '/tmp/.reddit';
+    my $reddit = Reddit::Client->new(session_file => $session_file);
+    unless ($reddit->is_logged_in) {
+        $reddit->login($t->{u}, $t->{p});
+        $reddit->save_session();
+    }
+    return $reddit;
 }
 
 sub share {
     my ($self, $job) = @_;
 
-    ## it's not working!
-    ## Reddit::_parse_link('Reddit=HASH(0x9821ed8)', '.error.BAD_CAPTCHA.field-captcha') called at /usr/local/share/perl/5.10.1/Reddit.pm line 186
-
     my $config = $self->config;
     my @subreddit = ('jobs');
-    my ($id, $link) = $self->reddit->submit_link( $job->title, $config->{sites}->{main} . $job->url );
-    my $st = $id ? 1 : 0;
-    $self->log_debug("# added " . $job->url . " $st as $link");
+
+    # Error(s): [BAD_CAPTCHA] care to try these again? at /findmjob.com/cron/sharebot/lib/FindmJob/ShareBot/Reddit.pm line 30
+    my $st = $self->reddit->submit_link(
+        subreddit => 'jobs',
+        title     => $job->title,
+        url       => $config->{sites}->{main} . $job->url
+    );
+    $self->log_debug("# added " . $job->url . " $st");
 
     return $st;
 }
