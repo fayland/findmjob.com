@@ -34,7 +34,7 @@ sub share {
        tags => $tags,
        url  => $url,
        name => $job->title,
-       source => $url,
+       source_url => $url,
     );
     my $st = 0;
     if ( $dispatch->is_success ) {
