@@ -53,3 +53,7 @@ share:
   Reddit:
     u: 'findmjob'
     p: 'secret'
+  Tumblr:
+    name: 'findmjob'
+    email: 'findmjob.com@gmail.com'
+    password: 'secret'
