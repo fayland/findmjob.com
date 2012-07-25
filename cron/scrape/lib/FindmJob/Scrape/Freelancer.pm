@@ -39,6 +39,7 @@ sub run {
             my $description = $item->{description};
             next if $description =~ '^N/A'; # Deleted Project or Protected Project
             next if $item->{title} =~ /^Nonpublic project/; # Nonpublic project
+            next if $item->{link} eq 'http://www.freelancer.com/projects/sl/1341869714.html';
 
             # Check budget, don't insert if budget is too low b/c those are expired soon
             # (Budget: &#36;30-&#36;250 USD, Jobs: iPhone, Mobile Phone)
