@@ -38,6 +38,7 @@ sub run {
         foreach my $item ( @{$data->{channel}->{item}} ) {
             my $description = $item->{description};
             next if $description =~ '^N/A'; # Deleted Project or Protected Project
+            next if $description =~ 'Budget: N/A';
             next if $item->{title} =~ /^Nonpublic project/; # Nonpublic project
             next if $item->{link} eq 'http://www.freelancer.com/projects/sl/1341869714.html';
 
