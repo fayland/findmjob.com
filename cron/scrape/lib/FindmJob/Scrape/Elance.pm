@@ -7,104 +7,82 @@ with 'FindmJob::Scrape::Role';
 
 use Try::Tiny;
 use Data::Dumper;
-use JSON::XS qw/encode_json decode_json/;
 use FindmJob::DateUtils 'human_to_db_datetime';
 use Encode;
+use XML::Simple 'XMLin';
+use HTML::TreeBuilder;
+use JSON::XS;
 
 sub run {
     my ($self) = @_;
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Freelance');
-    my $json = JSON::XS->new->utf8;
-
-    my $config = $self->config;
-    my $api = $config->{api}->{elance};
+    my @urls = ('https://www.elance.com/php/search/main/resultsproject.php?matchType=project&rss=1&sortBy=timelistedSort&sortOrder=1&statusFilter=10037');
 
     # set socks proxy (Tor)
+    my $config = $self->config;
     $self->ua->proxy(['http', 'https'], $config->{scrape}->{proxy})
         if $config->{scrape}->{proxy};
 
-    # read the token from script/oneoff/elance.token.txt
-    my $root = $self->root;
-    my $file = $root . "/script/oneoff/elance.token.txt";
-    open(my $fh, '<', $file) or die "Can't get $file";
-    my $line = <$fh>;
-    close($fh);
-    chomp($line);
-    my ($access_token, $expires_in, $token_type, $refresh_token) = split(/\,/, $line);
+    foreach my $url (@urls) {
+        my $resp = $self->get($url);
+        my $data = XMLin($resp->decoded_content);
+        foreach my $item ( @{$data->{channel}->{item}} ) {
+            my $description = $item->{description};
 
-    # refresh it if it's near expiry
-    if ($expires_in < time() - 86400) {
-        my $resp = $self->ua->post('https://www.elance.com/api2/oauth/token', [
-            refresh_token => $refresh_token,
-            grant_type => 'refresh_token',
-            client_id  => $api->{key},
-            client_secret => $api->{secret},
-        ]);
-        my $d = decode_json($resp->decoded_content);
-        if ($d->{errors}) {
-            die Dumper(\$d);
-        }
-        $d = $d->{data};
-        open(my $fh, '>', $file);
-        print $fh join(',', $d->{access_token}, $d->{expires_in}, $d->{token_type}, $d->{refresh_token}, $d->{scope});
-        close($fh);
-        $access_token = $d->{access_token};
-    }
-
-    my $url = "http://api.elance.com/api2/jobs?access_token=$access_token&sortCol=startDate&sortOrder=desc";
-    my $resp = $self->ua->get($url);
-    my $data = $json->decode( $resp->decoded_content );
-    foreach my $i (1 .. 25) {
-        my $item = $data->{data}->{pageResults}->[$i];
-        next unless ref $item eq 'HASH';
-        my $link = $item->{jobURL};
-        my $is_inserted = $job_rs->is_inserted_by_url($link);
-        next if $is_inserted and not $self->opt_update;
-
-        next unless $item->{budgetMin} and $item->{budgetMin} >= 500; # only scrape those more than 500$
-
-        # we need more stuff so we dig into it
-        my $jobId = $item->{jobId};
-        my $r;
-        $url = "http://api.elance.com/api2/jobs/$jobId?access_token=$access_token";
-        $resp = $self->ua->get($url);
-        if ($resp->is_success) {
-            $data = $json->decode($resp->decoded_content);
-            sleep 3;
-            $r = $data->{data}->{jobData};
-        } else {
-            $r = $item;
-        }
-
-        $r->{description} =~ s/\s*\(ID\:\s*(\d+)\)$//is;
-
-        my @tags;
-        push @tags, split(/\,\s+/, delete $r->{keywords})  if $r->{keywords};
-        push @tags, split(/\,\s+/, delete $r->{skillTags}) if $r->{skillTags};
-        push @tags, delete $r->{subcategory};
-        push @tags, $self->get_extra_tags_from_desc($r->{name});
-        push @tags, $self->get_extra_tags_from_desc($r->{description});
-
-        my $row = {
-            source_url => $link,
-            title => delete $r->{name},
-            contact   => '',
-            posted_at  => human_to_db_datetime(delete $r->{postedDate}),
-            expired_at => human_to_db_datetime(delete $r->{endDate}),
-            description => delete $r->{description},
-            location => 'Anywhere',
-            type     => '',
-            extra    => $json->encode($r),
-            tags     => ['elance', 'freelance', @tags],
-        };
-        if ( $is_inserted and $self->opt_update ) {
-            $job_rs->update_job($row);
-        } else {
-            $job_rs->create_job($row);
+            my $link = $item->{link};
+            my $is_inserted = $job_rs->is_inserted_by_url($link);
+            next if $is_inserted and not $self->opt_update;
+            my $row = $self->on_single_page($item);
+            next unless $row;
+            if ( $is_inserted and $self->opt_update ) {
+                $job_rs->update_job($row);
+            } else {
+                $job_rs->create_job($row);
+            }
         }
     }
+}
+
+sub on_single_page {
+    my ($self, $item) = @_;
+
+    my $link = $item->{link};
+    my $resp = $self->get($link); sleep 3;
+    return unless $resp->is_success;
+    return unless $resp->decoded_content =~ /\<\/html\>/i;
+    my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
+
+    my $title = $tree->look_down(_tag => 'h1')->look_down(_tag => 'div', class => 'left')->as_trimmed_text;
+    my $jobDescText = $tree->look_down(_tag => 'p', id => 'jobDescText');
+    my $desc = $self->format_tree_text($jobDescText);
+    $desc =~ s{\s*<a href="javascript:loginReturn.*?$}{}sg;
+
+    my @tags = ('elance', 'freelance');
+    my $jobDetailTags = $tree->look_down(_tag => 'div', id => 'jobDetailTags');
+    my @sets =  $jobDetailTags ? $jobDetailTags->look_down(_tag => 'a', href => qr'/r/contractors/') : ();
+    foreach my $h (@sets) {
+         push @tags, $h->as_trimmed_text;
+    }
+    push @tags, $self->get_extra_tags_from_desc($title);
+    push @tags, $self->get_extra_tags_from_desc($desc);
+    @tags = grep { length($_) } @tags;
+
+    my $row = {
+        source_url => $link,
+        title => $title,
+        contact   => '',
+        posted_at => human_to_db_datetime($item->{'pubDate'}),
+        description => $desc,
+        location => 'Anywhere',
+        type  => '',
+        extra => '',
+        tags  => \@tags
+    };
+
+    $tree = $tree->delete;
+    return $row;
 }
 
 __PACKAGE__->meta->make_immutable;

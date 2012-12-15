@@ -70,7 +70,6 @@ sub on_single_page {
     return unless $resp->decoded_content =~ /\<\/html\>/i;
     my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
  #   try {
-        my $data;
         my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
         my $ns_description = $tree->look_down(_tag => 'div', class => 'span8 margin-t20');
 
