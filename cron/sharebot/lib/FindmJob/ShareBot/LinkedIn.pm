@@ -69,6 +69,8 @@ sub share {
     $self->log_debug("# failed to add linkedin share: " . $resp->content) unless $st;
     $self->log_debug("# Linkedin added " . $job->url . " $st");
 
+    exit if $resp->content =~ /Throttle limit for calls to this resource is reached/i;
+
     return $st;
 }
 
