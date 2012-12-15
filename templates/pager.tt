@@ -1,4 +1,4 @@
-[% IF pager AND pager.last_page > 1 %]
+[% IF pager AND pager.entries_per_page AND pager.last_page > 1 %]
 [%  UNLESS base_url;
         base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
     END;

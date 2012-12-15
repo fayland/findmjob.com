@@ -72,9 +72,10 @@ sub on_single_page {
  #   try {
         my $data;
         my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
+        my $ns_description = $tree->look_down(_tag => 'div', class => 'span8 margin-t20');
 
         my %skill_urls;
-        my @sets =  $tree->look_down(_tag => 'a', href => qr'../jobs/');
+        my @sets =  $ns_description->look_down(_tag => 'a', href => qr'../jobs/');
         foreach my $h (@sets) {
              my ($cw) = ($h->attr('href') =~ '/jobs/([^\/]+)');
              $skill_urls{ $h->as_trimmed_text } = $cw;
@@ -86,7 +87,6 @@ sub on_single_page {
             $h->detach();
         }
 
-        my $ns_description = $tree->look_down(_tag => 'div', class => 'span8 margin-t20');
         my $desc = $self->format_tree_text($ns_description);
         $desc =~ s/^Project Description:\s*//s;
         $desc =~ s/See more\:[\s\,]+$//s;
