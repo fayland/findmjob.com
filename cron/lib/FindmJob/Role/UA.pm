@@ -24,12 +24,12 @@ sub get {
 
     my $ua = $self->ua;
     my $max_retries = 5; my $retries = 1;
-    $self->log_debug("get $url");
+    $self->log_debug("# get $url");
     my $resp = $ua->get($url);
     while (1) {
         sleep 2 * $retries;
         last if $resp->is_success;
-        $self->log_debug("get $url failed: " . $resp->status_line);
+        $self->log_debug("# get $url failed: " . $resp->status_line);
         $retries++;
         last if $retries > $max_retries;
         $resp = $ua->get($url);

@@ -32,7 +32,6 @@ sub run {
     }
 
     foreach my $url (@urls) {
-        $self->log_debug("# get $url");
         my $resp = $self->get($url);
         my $data = XMLin($resp->decoded_content);
         foreach my $item ( @{$data->{channel}->{item}} ) {
@@ -66,7 +65,6 @@ sub on_single_page {
     my ($self, $item) = @_;
 
     my $link = $item->{link};
-    $self->log_debug("# get $link");
     my $resp = $self->get($link); sleep 3;
     return unless $resp->is_success;
     return unless $resp->decoded_content =~ /\<\/html\>/i;
@@ -74,35 +72,29 @@ sub on_single_page {
  #   try {
         my $data;
         my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
-        my $ns_description = $tree->look_down(_tag => 'div', class => 'ns_description');
 
         my %skill_urls;
-        foreach my $item_r ($ns_description->content_refs_list) {
-            next unless ref $$item_r; # we don't change plain text
-            my $h = $$item_r;
-            my $tag = $h->{_tag};
-            if ($tag eq 'ul' and $h->attr('class') and $h->attr('class') eq 'ns_specifications') {
-                $h->replace_with_content( $h->as_trimmed_text );
-            }
-            if ($tag eq 'div' and $h->attr('class') and $h->attr('class') eq 'tags') {
-                $h->detach();
-            }
-            if ($tag eq 'a' and $h->attr('href') and $h->attr('href') =~ '../jobs/') {
-                 my ($cw) = ($h->attr('href') =~ '/jobs/([^\/]+)');
-                 $skill_urls{ $h->as_trimmed_text } = $cw;
-                 $h->replace_with_content( $h->as_trimmed_text );
-            }
+        my @sets =  $tree->look_down(_tag => 'a', href => qr'../jobs/');
+        foreach my $h (@sets) {
+             my ($cw) = ($h->attr('href') =~ '/jobs/([^\/]+)');
+             $skill_urls{ $h->as_trimmed_text } = $cw;
+             $h->replace_with_content( $h->as_trimmed_text );
         }
 
+        @sets =  $tree->look_down(_tag => 'a', class => 'tag');
+        foreach my $h (@sets) {
+            $h->detach();
+        }
+
+        my $ns_description = $tree->look_down(_tag => 'div', class => 'span8 margin-t20');
         my $desc = $self->format_tree_text($ns_description);
+        $desc =~ s/^Project Description:\s*//s;
+        $desc =~ s/See more\:[\s\,]+$//s;
 
         my @tags = ('freelancer', 'freelance');
         push @tags, $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, keys %skill_urls;
-
-        ## better out
-        $desc =~ s/(ID|Type|Budget)\:\s+/$1\: /isg;
 
         my $row = {
             source_url => $link,
