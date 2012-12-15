@@ -6,7 +6,7 @@ with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::Logger';
 
 has 'stop' => (is => 'rw', isa => 'Bool', default => 0);
-sub is_stopped { (shift)->stop } # alias
+sub should_stop { (shift)->stop } # alias
 
 sub remove_useless_tags {
     my ($self, @tags) = @_;
