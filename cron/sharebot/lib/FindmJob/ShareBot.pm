@@ -43,6 +43,7 @@ sub run {
         last if $posted_num > $self->num;
 
         foreach my $plugin ( @plugins ) {
+            next if $plugin->is_stopped; # stop
             my $pkg = ref $plugin; $pkg =~ s{FindmJob::ShareBot::}{};
 
             # check if we did it

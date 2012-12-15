@@ -49,6 +49,8 @@ sub share {
     $self->log_debug("# failed: " . Dumper(\$json)) unless $st;
     $self->log_debug("# plurk $content: $st");
 
+    $self->stop(1) if $json and $json->{error_text} eq 'anti-flood-same-content';
+
     return $st;
 }
 
