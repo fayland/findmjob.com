@@ -81,10 +81,6 @@
 </div>
 
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
-[%+ IF is_fb_app %]
-<div id="fb-root"></div>
-<script type="text/javascript" src="[% config.sites.static %]/js/facebook.js"></script>
-[% END +%]
 <script type="text/javascript" src="[% config.sites.static %]/js/findmjob.js"></script>
 
 <script type="text/javascript">

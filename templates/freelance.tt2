@@ -95,6 +95,3 @@
 <li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank">[% job.source_url %]</a></p></li>
 
 </ul>
-
-<h3>Comments</h3>
-[% INCLUDE include/fbcomment.tt2 %]
