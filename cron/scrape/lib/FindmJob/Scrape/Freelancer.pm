@@ -68,6 +68,7 @@ sub on_single_page {
     my $resp = $self->get($link); sleep 3;
     return unless $resp->is_success;
     return unless $resp->decoded_content =~ /\<\/html\>/i;
+    return if $resp->decoded_content =~ m{<h1>Project Deleted</h1>};
     my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
  #   try {
         my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
