@@ -166,7 +166,7 @@ get qr'/job/.+' => sub {
             return;
         }
 
-        forward '/404';
+        forward '/410', { status => 410 };
     }
 
     if ($job->source_url =~ 'jobs.github.com') {
@@ -185,7 +185,7 @@ get qr'/freelance/.+' => sub {
     my $job = $schema->resultset('Freelance')->find($jobid);
 
     unless ($job) {
-        forward '/404';
+        forward '/410', { status => 410 };
     }
 
     $job->{extra_data} = JSON::XS->new->utf8->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
@@ -369,8 +369,13 @@ get '/subscribe/confirm' => sub {
 };
 
 any qr{.*} => sub {
-    status 'not_found';
-    template 'not_found.tt2';
+    if (params->{status} and params->{status} eq '410') {
+        status 'gone';
+        template 'gone.tt2';
+    } else {
+        status 'not_found';
+        template 'not_found.tt2';
+    }
 };
 
 sub _render_feed {
