@@ -13,10 +13,7 @@ FindmJob::Schema::Result::Tag
 use strict;
 use warnings;
 
-use Moose;
-use MooseX::NonMoose;
-use MooseX::MarkAsMethods autoclean => 1;
-extends 'DBIx::Class::Core';
+use base 'DBIx::Class::Core';
 
 =head1 TABLE: C<tag>
 
@@ -82,10 +79,9 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("text", ["text"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-10 20:10:08
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6Gg64KGj/ya6dCa17Kc3cA
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:F5cO1DRFLSlE83jeacTCnw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
-__PACKAGE__->meta->make_immutable;
 1;

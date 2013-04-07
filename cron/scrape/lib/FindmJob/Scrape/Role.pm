@@ -1,16 +1,15 @@
 package FindmJob::Scrape::Role;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
 
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::UA';
 with 'FindmJob::Role::TextFormatter';
 with 'FindmJob::Role::Logger';
 
-has 'opt_update' => ( is => 'ro', isa => 'Bool', default => '0' );
+has 'opt_update' => ( is => 'ro', default => sub { '0' } );
 
-has 'language_regex' => ( is => 'ro', lazy_build => 1 );
+has 'language_regex' => ( is => 'lazy' );
 sub _build_language_regex {
     my $self = shift;
     my $schema = $self->schema;

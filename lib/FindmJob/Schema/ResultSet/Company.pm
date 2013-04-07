@@ -1,7 +1,6 @@
 package FindmJob::Schema::ResultSet::Company;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 extends 'FindmJob::Schema::ResultSet';
 
 sub get_or_create {
@@ -38,7 +37,5 @@ sub get_by_ref {
     my ($self, $ref) = @_;
     return $self->search( { ref => $ref } )->first;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

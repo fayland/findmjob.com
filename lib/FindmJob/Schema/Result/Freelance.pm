@@ -13,10 +13,7 @@ FindmJob::Schema::Result::Freelance
 use strict;
 use warnings;
 
-use Moose;
-use MooseX::NonMoose;
-use MooseX::MarkAsMethods autoclean => 1;
-extends 'DBIx::Class::Core';
+use base 'DBIx::Class::Core';
 
 =head1 TABLE: C<freelance>
 
@@ -151,8 +148,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-05-01 13:04:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:p6mB4Y+t5oQh7R0vod2bPw
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PJPj/+9gqaBK1AjlmuJcbg
 
 __PACKAGE__->belongs_to(
     company => 'Company',
@@ -160,20 +157,17 @@ __PACKAGE__->belongs_to(
 );
 
 use FindmJob::Utils 'seo_title';
-has 'url' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
-sub _build_url {
+sub url {
     my ($self) = @_;
 
     return "/freelance/" . $self->id . "/" . seo_title($self->title) . ".html";
 }
 
-has 'tags' => ( is => 'ro', isa => 'ArrayRef', lazy_build => 1 );
-sub _build_tags {
+sub tags {
     my ($self) = @_;
 
     my $schema = $self->result_source->schema;
     return [ $schema->resultset('ObjectTag')->get_tags_by_object($self->id) ];
 }
 
-__PACKAGE__->meta->make_immutable;
 1;

@@ -1,7 +1,6 @@
 package FindmJob::Schema::ResultSet::ObjectTag;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 extends 'FindmJob::Schema::ResultSet';
 
 sub get_tags_by_object {
@@ -21,7 +20,5 @@ sub get_tags_by_object {
     } } @all;
     return wantarray ? @tags : \@tags;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

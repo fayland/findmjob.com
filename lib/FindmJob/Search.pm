@@ -1,11 +1,10 @@
 package FindmJob::Search;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 use Sphinx::Search;
 use FindmJob::Basic;
 
-has 'sphinx' => (is => 'ro', isa => 'Sphinx::Search', lazy_build => 1);
+has 'sphinx' => (is => 'lazy');
 sub _build_sphinx {
     my $sph = Sphinx::Search->new;
     $sph->SetServer('localhost', 9312);
@@ -44,7 +43,5 @@ sub search_job {
     my $ret = $sph->Query(join(' & ', @query));
     return $ret;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

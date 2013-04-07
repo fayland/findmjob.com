@@ -1,11 +1,10 @@
 package FindmJob::ShareBot::Role;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::Logger';
 
-has 'stop' => (is => 'rw', isa => 'Bool', default => 0);
+has 'stop' => (is => 'rw', default => sub { 0 });
 sub should_stop { (shift)->stop } # alias
 
 sub remove_useless_tags {

@@ -1,16 +1,15 @@
 package FindmJob::ShareBot::LinkaGoGo;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::UA';
 
-has '+ua_args'  => (is => 'rw', isa => 'HashRef', default => sub { {
+has '+ua_args'  => (is => 'rw', default => sub { {
     agent => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)',
     cookie_jar => {},
 } });
 
-has 'login' => ( is => 'rw', isa => 'Bool', lazy_build => 1 );
+has 'login' => ( is => 'lazy' );
 sub _build_login {
     my $self = shift;
 
@@ -55,7 +54,5 @@ sub share {
     $self->log_debug("# added " . $job->url . " $st");
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

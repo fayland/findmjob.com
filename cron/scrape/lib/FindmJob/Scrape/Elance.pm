@@ -1,8 +1,6 @@
 package FindmJob::Scrape::Elance;
 
-use Moose;
-use namespace::autoclean;
-
+use Moo;
 with 'FindmJob::Scrape::Role';
 
 use Try::Tiny;
@@ -84,7 +82,5 @@ sub on_single_page {
     $tree = $tree->delete;
     return $row;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

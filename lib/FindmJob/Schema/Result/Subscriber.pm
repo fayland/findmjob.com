@@ -13,10 +13,7 @@ FindmJob::Schema::Result::Subscriber
 use strict;
 use warnings;
 
-use Moose;
-use MooseX::NonMoose;
-use MooseX::MarkAsMethods autoclean => 1;
-extends 'DBIx::Class::Core';
+use base 'DBIx::Class::Core';
 
 =head1 TABLE: C<subscriber>
 
@@ -140,10 +137,9 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-24 20:04:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DNGxQeRx2gOldKE53/f+uA
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SyVmiqwqkwZ38EQf6CAmrg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
-__PACKAGE__->meta->make_immutable;
 1;

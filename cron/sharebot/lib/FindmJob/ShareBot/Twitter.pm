@@ -1,14 +1,13 @@
 package FindmJob::ShareBot::Twitter;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
 use List::Util 'shuffle';
 use Net::Twitter::Lite;
 
-has 'twitter' => ( is => 'ro', isa => 'Net::Twitter::Lite', lazy_build => 1 );
+has 'twitter' => ( is => 'lazy' );
 sub _build_twitter {
     my $self = shift;
     my $config = $self->config;
@@ -54,7 +53,5 @@ sub share {
 
     return exists $st->{id} ? 1: 0;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -1,16 +1,15 @@
 package FindmJob::Role::UA;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
+use MooX::Types::MooseLike::Base qw(:all);
 use Class::Load 'load_class';
 
-has 'ua_class' => (is => 'rw', isa => 'Str', default => 'LWP::UserAgent');
-has 'ua_args'  => (is => 'rw', isa => 'HashRef', default => sub { {
+has 'ua_class' => (is => 'rw', isa => Str, default => sub { 'LWP::UserAgent' });
+has 'ua_args'  => (is => 'rw', isa => HashRef, default => sub { {
     agent   => 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)',
 } });
 has 'ua' => (
-    is => 'rw',
-    lazy_build => 1
+    is => 'lazy',
 );
 sub _build_ua {
     my $self = shift;

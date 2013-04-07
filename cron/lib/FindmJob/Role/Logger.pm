@@ -1,16 +1,44 @@
 package FindmJob::Role::Logger;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
+use Log::Dispatchouli;
+use File::Path 'make_path';
+use FindBin qw/$RealBin $RealScript/;
 
-with 'MooseX::Role::Loggable';
+requires 'root';
 
-has 'debug' => (is => 'rw', isa => 'Bool', default => 1);
-has 'log_to_stdout' => (is => 'ro', isa => 'Bool', default => 1);
-has 'log_to_stderr' => (is => 'ro', isa => 'Bool', default => 0);
-has 'logger_facility' => (is => 'ro', isa => 'Str', default => 'none');
-has 'logger_ident' => (is => 'ro', isa => 'Str', default => sub { 'findmjob' });
-has 'log_to_file' => (is => 'ro', isa => 'Bool', default => 1);
-has 'log_path' => (is => 'ro', isa => 'Str', predicate => 'has_log_path', default => '/tmp');
+has logger => (
+    is      => 'lazy',
+    handles => [ qw/
+        log log_fatal log_debug info debug fatal
+        set_debug clear_debug set_prefix clear_prefix set_muted clear_muted
+    / ],
+);
+sub _build_logger {
+    my $self     = shift;
+
+    my $ident = 'findmjob';
+
+    my $log_file = sprintf('%04u%02u%02u', ((localtime)[5] + 1900),
+        sprintf('%02d', (localtime)[4] + 1),
+        sprintf('%02d', (localtime)[3]),
+    ) . '.log';
+
+    my $logger = Log::Dispatchouli->new( {
+        debug       => 1,
+        ident       => $ident,
+        facility    => '',
+        to_file     => 1,
+        to_stdout   => 1,
+        to_stderr   => 0,
+        log_pid     => 1,
+        fail_fatal  => 1,
+        muted       => 0,
+        log_path    => '/tmp',
+        log_file    => $log_file,
+    } );
+
+    return $logger;
+}
 
 1;

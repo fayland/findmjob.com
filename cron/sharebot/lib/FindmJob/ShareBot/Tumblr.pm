@@ -1,13 +1,12 @@
 package FindmJob::ShareBot::Tumblr;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 use Data::Dumper;
 with 'FindmJob::ShareBot::Role';
 
 use WebService::Tumblr;
 
-has 'tumblr' => ( is => 'ro', isa => 'WebService::Tumblr', lazy_build => 1 );
+has 'tumblr' => ( is => 'lazy' );
 sub _build_tumblr {
     my $self = shift;
     my $t = $self->config->{share}->{Tumblr};
@@ -47,7 +46,5 @@ sub share {
 
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

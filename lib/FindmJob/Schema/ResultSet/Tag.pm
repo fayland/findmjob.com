@@ -1,7 +1,6 @@
 package FindmJob::Schema::ResultSet::Tag;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 extends 'FindmJob::Schema::ResultSet';
 
 use FindmJob::Utils 'uuid';
@@ -28,7 +27,5 @@ sub get_or_create_by_text {
     $row  ||= $self->create( { text => $text } );
     return $row;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

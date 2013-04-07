@@ -13,10 +13,7 @@ FindmJob::Schema::Result::Company
 use strict;
 use warnings;
 
-use Moose;
-use MooseX::NonMoose;
-use MooseX::MarkAsMethods autoclean => 1;
-extends 'DBIx::Class::Core';
+use base 'DBIx::Class::Core';
 
 =head1 TABLE: C<company>
 
@@ -83,21 +80,17 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07019 @ 2012-04-03 19:44:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GNKpnwme/7lx85Dc7narNw
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FvwKawRqGScTRaGOx9bi5A
 
 use FindmJob::Utils 'seo_title';
-has 'url' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
-sub _build_url {
+sub url {
     my ($self) = @_;
 
     return "/company/" . $self->id . "/" . seo_title($self->name) . ".html";
 }
 
 # alias title as name
-has 'title' => ( is => 'ro', isa => 'Str', lazy_build => 1 );
-sub _build_title { (shift)->name }
+sub title { (shift)->name }
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
-__PACKAGE__->meta->make_immutable;
 1;

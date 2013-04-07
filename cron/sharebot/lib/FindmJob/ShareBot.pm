@@ -1,15 +1,13 @@
 package FindmJob::ShareBot;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
+use MooX::Options;
 use Class::Load 'load_class';
 with 'FindmJob::ShareBot::Role';
-with 'MooseX::Getopt::Strict';
 
-has 'module' => (is => 'ro', isa => 'Str', required => 1, traits => [ 'Getopt' ], cmd_aliases => 'm');
-has 'num'    => (is => 'ro', isa => 'Int', default => 12, traits => [ 'Getopt' ], cmd_aliases => 'n');
-has 'debug'  => (is => 'ro', isa => 'Bool', default => 0, traits => [ 'Getopt' ], cmd_aliases => 'd');
-has 'type'   => (is => 'ro', isa => 'Str', default => 'Job', traits => [ 'Getopt' ], cmd_aliases => 't');
+option 'module' => (is => 'ro', format => 's', required => sub { 1 }, short => 'm');
+option 'num'    => (is => 'ro', format => 'i', default => sub { 12 }, short => 'n');
+option 'type'   => (is => 'ro', format => 's', default => sub { 'Job' }, short => 't');
 
 sub run {
     my ($self) = @_;
@@ -33,7 +31,7 @@ sub run {
         page => 1
     });
 
-    my $dbh_log = $self->basic->dbh_log;
+    my $dbh_log = $self->dbh_log;
     my $is_inserted_sth = $dbh_log->prepare("SELECT 1 FROM `findmjob_log`.`sharebot` WHERE id = ? AND site = ?");
     my $insert_sth = $dbh_log->prepare("INSERT INTO `findmjob_log`.`sharebot` (id, site, time) VALUES (?, ?, ?)");
 
@@ -56,11 +54,8 @@ sub run {
 
             $insert_sth->execute($job->id, $pkg, time()) if $st;
         }
-        last if $self->debug; # debug means test one job
         sleep 10;
     }
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

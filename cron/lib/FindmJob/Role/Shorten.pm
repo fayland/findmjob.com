@@ -1,12 +1,11 @@
 package FindmJob::Role::Shorten;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
 use WWW::Shorten::Bitly;
 
 requires 'config'; # from Role::Basic;
 
-has 'bitly' => ( is => 'ro', isa => 'WWW::Shorten::Bitly', lazy_build => 1 );
+has 'bitly' => ( is => 'lazy' );
 sub _build_bitly {
     my $self = shift;
     my $config = $self->config;

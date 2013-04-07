@@ -1,8 +1,6 @@
 package FindmJob::Scrape::37Signals;
 
-use Moose;
-use namespace::autoclean;
-
+use Moo;
 with 'FindmJob::Scrape::Role';
 
 use XML::Simple 'XMLin';
@@ -98,7 +96,5 @@ sub on_single_page {
 
     return $row;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

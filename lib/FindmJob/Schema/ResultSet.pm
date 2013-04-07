@@ -1,8 +1,6 @@
 package FindmJob::Schema::ResultSet;
 
-use Moose;
-use MooseX::NonMoose;
-use namespace::autoclean;
+use Moo;
 extends qw/DBIx::Class::ResultSet/;
 
 use List::MoreUtils 'uniq';
@@ -81,7 +79,5 @@ around 'update' => sub {
 
     return $st;
 };
-
-__PACKAGE__->meta->make_immutable;
 
 1;

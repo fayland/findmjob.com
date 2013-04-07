@@ -1,12 +1,11 @@
 package FindmJob::ShareBot::Delicious;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 
 use Net::Delicious;
 
-has 'delicious' => ( is => 'ro', isa => 'Net::Delicious', lazy_build => 1 );
+has 'delicious' => ( is => 'lazy' );
 sub _build_delicious {
     my $self = shift;
     my $config = $self->config;
@@ -34,7 +33,5 @@ sub share {
 
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -1,8 +1,6 @@
 package FindmJob::Scrape::oDesk;
 
-use Moose;
-use namespace::autoclean;
-
+use Moo;
 with 'FindmJob::Scrape::Role';
 
 use Try::Tiny;
@@ -63,7 +61,5 @@ sub run {
         }
     }
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

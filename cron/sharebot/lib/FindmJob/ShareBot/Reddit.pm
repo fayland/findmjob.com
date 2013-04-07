@@ -1,12 +1,11 @@
 package FindmJob::ShareBot::Reddit;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 
 use Reddit::Client;
 
-has 'reddit' => ( is => 'ro', isa => 'Reddit::Client', lazy_build => 1 );
+has 'reddit' => ( is => 'lazy' );
 sub _build_reddit {
     my $self = shift;
     my $config = $self->config;
@@ -36,7 +35,5 @@ sub share {
 
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

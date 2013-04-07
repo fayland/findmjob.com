@@ -1,14 +1,13 @@
 package FindmJob::ShareBot::Facebook;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 with 'FindmJob::Role::UA';
 
 use Facebook::Graph;
 
-has 'facebook' => ( is => 'ro', isa => 'Facebook::Graph', lazy_build => 1 );
+has 'facebook' => ( is => 'lazy' );
 sub _build_facebook {
     my $self = shift;
     my $config = $self->config;
@@ -77,7 +76,5 @@ sub share {
 
     return $st ? 1: 0;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

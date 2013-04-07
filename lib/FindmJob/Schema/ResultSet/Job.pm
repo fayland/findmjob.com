@@ -1,7 +1,6 @@
 package FindmJob::Schema::ResultSet::Job;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 extends 'FindmJob::Schema::ResultSet';
 
 sub is_inserted_by_url {
@@ -36,7 +35,5 @@ sub update_job {
     my $source_url = delete $row->{source_url};
     $self->search( { source_url => $source_url } )->update($row);
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

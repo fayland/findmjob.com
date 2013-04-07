@@ -1,14 +1,13 @@
 package FindmJob::ShareBot::LinkedIn;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
 use LWP::Authen::OAuth;
 use JSON::XS;
 
-has 'ua' => ( is => 'ro', isa => 'LWP::Authen::OAuth', lazy_build => 1 );
+has 'ua' => ( is => 'lazy' );
 sub _build_ua {
     my $self = shift;
     my $config = $self->config;
@@ -73,7 +72,5 @@ sub share {
 
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -1,14 +1,13 @@
 package FindmJob::ShareBot::Plurk;
 
-use Moose;
-use namespace::autoclean;
+use Moo;
 use Data::Dumper;
 with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
 use Net::Plurk;
 
-has 'plurk' => ( is => 'ro', isa => 'Net::Plurk', lazy_build => 1 );
+has 'plurk' => ( is => 'lazy' );
 sub _build_plurk {
     my $self = shift;
     my $config = $self->config;
@@ -53,7 +52,5 @@ sub share {
 
     return $st;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

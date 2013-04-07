@@ -1,17 +1,12 @@
 package FindmJob::Role::Basic;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
 
 use FindmJob::Basic;
-has 'basic' => (
-    is => 'ro',
-    lazy => 1,
-    isa => 'FindmJob::Basic',
-    default => sub {
-        FindmJob::Basic->instance;
-    },
-    handles => ['schema', 'config', 'root']
-);
+sub root { FindmJob::Basic->root }
+sub config { FindmJob::Basic->config }
+sub schema { FindmJob::Basic->schema }
+sub dbh { FindmJob::Basic->dbh }
+sub dbh_log { FindmJob::Basic->dbh_log }
 
 1;

@@ -1,13 +1,11 @@
 package FindmJob::Role::TextFormatter;
 
-use Moose::Role;
-use namespace::autoclean;
+use Moo::Role;
 use FindmJob::HTML::FormatText;
 use HTML::TreeBuilder;
 
 has 'formatter' => (
-    is => 'rw',
-    lazy_build => 1
+    is => 'lazy',
 );
 
 sub _build_formatter {
