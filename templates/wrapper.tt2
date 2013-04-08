@@ -20,10 +20,17 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="[% config.sites.main %][% request.uri %]" />
 <meta property="og:image" content="[% config.sites.static %]/Logo.png" />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@findmjob" />
+<meta name="twitter:creator" content="@findmjob" />
+<meta name="twitter:url" content="[% config.sites.main %][% request.uri %]" />
+<meta name="twitter:title" content="[% title.squote %]" />
 [% END %]
 [% IF description -%]
 [% description = description.replace("\n", ' ').squote %]
 <meta property="og:description" content="[% description %]" />
+<meta name="twitter:description" content="[% description %]" />
 <meta name="description" content="[% description %]" />
 [% END -%]
 [%- IF meta_keywords %]
