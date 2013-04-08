@@ -46,8 +46,6 @@
         <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.ContactInfoName %]</p></li>
-    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-        <li><p><b>Budget</b>: [% job.extra_data.Budget %]</p></li>
     [% END %]
 [% END %]
 
@@ -69,8 +67,6 @@
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
-    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-    <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
     [% END %]
 [% END %]
 
@@ -81,10 +77,6 @@
     IF projectid;
         out_url = 'http://www.freelancer.com/projects/findmjob_' _ projectid.0 _ '.html';
     END;
-%]
-[% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-[% # affiliates
-    out_url = out_url _ '?ref=findmjob';
 %]
 [% ELSIF job.source_url.search('/www.elance.com/') %]
 [% # affiliates

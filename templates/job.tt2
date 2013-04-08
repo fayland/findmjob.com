@@ -52,8 +52,6 @@
         <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.ContactInfoName %]</p></li>
-    [% ELSIF job.source_url.search('/www.scriptlance.com/') %]
-        <li><p><b>Budget</b>: [% job.extra_data.Budget %]</p></li>
     [% END %]
 [% END %]
 
