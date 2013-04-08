@@ -78,7 +78,7 @@
 [% IF job.source_url.search('/www.freelancer.com/') %]
 [% # affiliates
     projectid = job.description.match('Project ID:\s*(\d+)');
-    IF projectid.size;
+    IF projectid;
         out_url = 'http://www.freelancer.com/projects/findmjob_' _ projectid.0 _ '.html';
     END;
 %]

@@ -65,9 +65,10 @@ sub on_single_page {
     my $link = $item->{link};
     my $resp = $self->get($link); sleep 3;
     return unless $resp->is_success;
-    return unless $resp->decoded_content =~ /\<\/html\>/i;
-    return if $resp->decoded_content =~ m{<h1>Project Deleted</h1>};
-    my $tree = HTML::TreeBuilder->new_from_content($resp->decoded_content);
+    my $content = $resp->decoded_content;
+    return unless $content =~ /\<\/html\>/i;
+    return if $content =~ m{<h1>Project Deleted</h1>};
+    my $tree = HTML::TreeBuilder->new_from_content($content);
  #   try {
         my $title = $tree->look_down(_tag => 'h1')->as_trimmed_text;
         my $ns_description = $tree->look_down(_tag => 'div', class => 'span8 margin-t20');
@@ -88,6 +89,9 @@ sub on_single_page {
         my $desc = $self->format_tree_text($ns_description);
         $desc =~ s/^Project Description:\s*//s;
         $desc =~ s/See more\:[\s\,]+$//s;
+
+        my ($project_id) = ($content =~ /projectID="(\d+)"/);
+        $desc = "Project ID: $project_id\n\n$desc" if $project_id;
 
         my @tags = ('freelancer', 'freelance');
         push @tags, $self->get_extra_tags_from_desc($title);
