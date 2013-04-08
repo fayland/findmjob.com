@@ -31,7 +31,9 @@ sub run {
 
     foreach my $url (@urls) {
         my $resp = $self->get($url);
-        my $data = XMLin($resp->decoded_content);
+        my $content = $resp->decoded_content;
+        $content =~ s/ & / &amp; /g;
+        my $data = XMLin($content);
         foreach my $item ( @{$data->{channel}->{item}} ) {
             my $description = $item->{description};
             next if $description =~ '^N/A'; # Deleted Project or Protected Project
