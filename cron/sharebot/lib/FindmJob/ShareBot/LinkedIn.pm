@@ -13,7 +13,7 @@ sub _build_ua {
     my $config = $self->config;
     my $t = $config->{api}->{linkedin};
 
-    my $root = $self->basic->root;
+    my $root = $self->root;
     my $file = $root . "/script/oneoff/linkedin.token.txt";
     open(my $fh, '<', $file) or die "Can't get $file";
     my $line = <$fh>;

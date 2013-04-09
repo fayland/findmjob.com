@@ -20,7 +20,7 @@ sub _build_facebook {
     );
 
     # check the token
-    my $file = $self->basic->root . "/script/oneoff/facebook.token.txt";
+    my $file = $self->root . "/script/oneoff/facebook.token.txt";
     open(my $fh, '<', $file) or die "Can't open $file: $!\n";
     my $line = <$fh>; chomp($line);
     close($fh);
