@@ -47,10 +47,10 @@ sub run {
             title => delete $item->{op_title},
             contact   => '',
             posted_at  => human_to_db_date(delete $item->{date_posted}) . ' ' . $item->{op_time_posted},
-            expired_at => human_to_db_date(delete $item->{op_job_expiration}) . ' ' . $item->{op_time_posted},
+            ($item->{op_job_expiration}) ? (expired_at => human_to_db_date(delete $item->{op_job_expiration}) . ' ' . $item->{op_time_posted}) : (),
             description => $desc,
             location => 'Anywhere',
-            type     => delete$item->{op_engagement},
+            type     => delete $item->{op_engagement},
             extra    => $json->encode($item),
             tags     => ['odesk', 'freelance', @tags],
         };
