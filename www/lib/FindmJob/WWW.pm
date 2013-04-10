@@ -108,19 +108,23 @@ get '/jobs' => sub {
         $p = 1;
     }
 
-    my $job_rs = $schema->resultset('Job')->search( undef, {
-        order_by => 'inserted_at DESC',
-        rows => $rows,
-        page => $p
-    });
-    my @jobs = $job_rs->all;
-    var pager => $job_rs->pager;
-    var jobs  => \@jobs;
+    my $count = $schema->resultset('Job')->count();
+    # avoid slow 'LIMIT 96828, 12'
+    if ( $count > ($p - 1) * $rows ) {
+        my $job_rs = $schema->resultset('Job')->search( undef, {
+            order_by => 'inserted_at DESC',
+            rows => $rows,
+            page => $p
+        });
+        my @jobs = $job_rs->all;
+        var pager => $job_rs->pager;
+        var jobs  => \@jobs;
 
-    if (vars->{feed_format}) {
-        var title => "Recent";
-        map { $_->{tbl} = 'job' } @jobs;
-        return _render_feed(@jobs);
+        if (vars->{feed_format}) {
+            var title => "Recent";
+            map { $_->{tbl} = 'job' } @jobs;
+            return _render_feed(@jobs);
+        }
     }
 
     template 'jobs.tt2';
@@ -136,19 +140,22 @@ get '/freelances' => sub {
         $p = 1;
     }
 
-    my $job_rs = $schema->resultset('Freelance')->search( undef, {
-        order_by => 'inserted_at DESC',
-        rows => $rows,
-        page => $p
-    });
-    my @jobs = $job_rs->all;
-    var pager => $job_rs->pager;
-    var jobs  => \@jobs;
+    my $count = $schema->resultset('Freelance')->count();
+    if ( $count > ($p - 1) * $rows ) {
+        my $job_rs = $schema->resultset('Freelance')->search( undef, {
+            order_by => 'inserted_at DESC',
+            rows => $rows,
+            page => $p
+        });
+        my @jobs = $job_rs->all;
+        var pager => $job_rs->pager;
+        var jobs  => \@jobs;
 
-    if (vars->{feed_format}) {
-        var title => "Recent";
-        map { $_->{tbl} = 'freelance' } @jobs;
-        return _render_feed(@jobs);
+        if (vars->{feed_format}) {
+            var title => "Recent";
+            map { $_->{tbl} = 'freelance' } @jobs;
+            return _render_feed(@jobs);
+        }
     }
 
     template 'freelances.tt2';
