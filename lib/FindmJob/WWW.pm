@@ -15,7 +15,7 @@ sub startup {
 
     my $config = FindmJob::Basic->config;
     $self->secret($config->{secret_hash});
-    $self->helper(config => sub { return $config });
+    $self->helper(sconfig => sub { return $config });
     $self->helper(schema => sub { FindmJob::Basic->schema });
     unshift @{$self->static->paths}, catdir( FindmJob::Basic->root, 'static' );
 

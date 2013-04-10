@@ -42,7 +42,7 @@ sub confirm {
     my $suc = 0;
     if ($id and $hash) {
         ## check cron/emails/subscribe_confirm.pl
-        my $config = $self->config;
+        my $config = $self->sconfig;
         my $sec = md5_hex($id . $config->{secret_hash});
         if ($hash eq $sec) {
             $suc = 1;

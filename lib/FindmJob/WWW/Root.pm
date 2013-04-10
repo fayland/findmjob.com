@@ -208,8 +208,7 @@ sub tag {
 sub _render_feed {
     my ($self, @obj) = @_;
 
-    my $config = $self->config;
-
+    my $config = $self->sconfig;
     my $feed_format = $self->stash('is_feed');
 
     require DateTime;
