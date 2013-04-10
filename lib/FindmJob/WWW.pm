@@ -36,15 +36,12 @@ sub startup {
             $self->stash('page' => $1);
         }
         $self->req->url->path($p);
-    });
-	# config into stash
-    $self->hook(before_render => sub {
-        my $self = shift;
 
         if ($self->req->url->host =~ /fb/) { # fb.findmjob.com
             $self->stash(is_fb_app => 1);
         }
 
+        # config into stash
         $self->stash(config => $config);
     });
 
