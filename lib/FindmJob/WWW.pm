@@ -2,12 +2,6 @@ package FindmJob::WWW;
 
 use Mojo::Base 'Mojolicious';
 use FindmJob::Basic;
-use FindmJob::Search;
-use Encode;
-use JSON::XS ();
-use Data::Page;
-use DateTime ();
-use Digest::MD5 'md5_hex';
 use File::Spec::Functions 'catdir';
 
 sub startup {
