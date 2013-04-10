@@ -37,7 +37,7 @@ sub startup {
         }
         $self->req->url->path($p);
 
-        if ($self->req->url->host =~ /fb/) { # fb.findmjob.com
+        if ($self->req->url->to_abs->host =~ /fb/) { # fb.findmjob.com
             $self->stash(is_fb_app => 1);
         }
 
