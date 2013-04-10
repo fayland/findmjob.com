@@ -299,10 +299,8 @@ get '/tag/:tagid' => sub {
 
     my @obj;
     while (my $row = $rs->next) {
-        my $o = $schema->resultset('Object')->find($row->object);
-        next unless $o;
-        my $tbl = $o->tbl;
-        my $obj = $schema->resultset(ucfirst $tbl)->find($row->object);
+        my $tbl = $row->object->tbl;
+        my $obj = $schema->resultset(ucfirst $tbl)->find($row->object->id);
         $obj->{tbl} = $tbl;
         push @obj, $obj;
     }
