@@ -33,10 +33,16 @@ sub startup {
     $r->route('/jobs')->to(controller => 'Root', action => 'jobs');
     $r->route('/freelances')->to(controller => 'Root', action => 'freelances');
     $r->route('/job/:id')->to(controller => 'Root', action => 'job');
-    $r->route('/job/:id/:seo.html')->to(controller => 'Root', action => 'job');
+    $r->route('/job/:id/*seo')->to(controller => 'Root', action => 'job');
     $r->route('/freelance/:id')->to(controller => 'Root', action => 'freelance');
-    $r->route('/freelance/:id/:seo.html')->to(controller => 'Root', action => 'freelance');
+    $r->route('/freelance/:id/*seo')->to(controller => 'Root', action => 'freelance');
     $r->route('/search/*rest')->to(controller => 'Search', action => 'search');
+    $r->route('/company/:id')->to(controller => 'Root', action => 'company');
+    $r->route('/company/:id/*seo')->to(controller => 'Root', action => 'company');
+    $r->route('/tag/:id')->to(controller => 'Root', action => 'tag');
+    $r->route('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
+    $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
+    $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
 }
 
 1;

@@ -134,4 +134,73 @@ sub freelance {
     $self->render(template => 'freelance');
 }
 
+sub company {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $companyid = $self->stash('id');
+
+    my $company = $schema->resultset('Company')->find($companyid);
+    $self->stash(company => $company);
+
+    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    $p = 1 unless $p and $p =~ /^\d+$/;
+    my $job_rs = $schema->resultset('Job')->search( {
+        company_id => $companyid
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => $p
+    });
+    $self->stash(pager => $job_rs->pager);
+    $self->stash(jobs  => [ $job_rs->all ]);
+
+    $self->render(template => 'company');
+}
+
+sub tag {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $tagid = $self->stash('id');
+
+    my $tag;
+    if (length($tagid) == 22) {
+        $tag = $schema->resultset('Tag')->find($tagid);
+    }
+    unless ($tag) {
+        $tag = $schema->resultset('Tag')->get_row_by_text($tagid);
+        $tagid = $tag->id if $tag;
+    }
+    $self->stash(tag => $tag);
+
+    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    $p = 1 unless $p and $p =~ /^\d+$/;
+    my $rs = $schema->resultset('ObjectTag')->search( {
+        tag => $tagid
+    }, {
+        order_by => 'time DESC',
+        rows => 12,
+        page => $p
+    });
+
+    my @obj;
+    while (my $row = $rs->next) {
+        my $tbl = $row->object->tbl;
+        my $obj = $schema->resultset(ucfirst $tbl)->find($row->object->id);
+        $obj->{tbl} = $tbl;
+        push @obj, $obj;
+    }
+
+    $self->stash(pager => $rs->pager);
+    $self->stash(objects => \@obj);
+
+#    if (vars->{feed_format}) {
+#        var title => $tag->text;
+#        return _render_feed(@obj);
+#    }
+
+    $self->render(template => 'tag');
+}
+
 1;
