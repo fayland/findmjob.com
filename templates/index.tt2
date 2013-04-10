@@ -39,10 +39,10 @@
 
 <div class="row">
     <div class="span5">
-    [% INCLUDE pager.tt pager=jobs_pager base_url='/jobs' %]
+        <p class="btn pull-right"><a href='/jobs'>More Jobs</a></p>
     </div>
     <div class="span5">
-    [% INCLUDE pager.tt pager=freelances_pager base_url='/freelances' %]
+        <p class="btn pull-right"><a href='/freelances'>More Freelances</a></p>
     </div>
 </div>
 

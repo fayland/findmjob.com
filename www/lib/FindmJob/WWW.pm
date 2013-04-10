@@ -86,14 +86,12 @@ any ['head', 'get', 'post'] => '/' => sub {
         page => 1,
     });
     var jobs  => [$job_rs->all];
-    var jobs_pager => $job_rs->pager;
     my $freelance_rs = $schema->resultset('Freelance')->search( undef, {
         order_by => 'inserted_at DESC',
         rows => 6,
         page => 1,
     });
     var freelances => [$freelance_rs->all];
-    var freelances_pager => $freelance_rs->pager;
 
     template 'index.tt2';
 };
