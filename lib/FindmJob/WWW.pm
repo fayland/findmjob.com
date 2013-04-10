@@ -30,7 +30,7 @@ sub startup {
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);
 
-    # feed.(rss|atom)
+    # feed.(rss|atom) and /p.2/
     $self->hook( before_dispatch => sub {
 		my $self = shift;
 
@@ -43,23 +43,33 @@ sub startup {
 		}
 		$self->req->url->path($p);
 	});
+	# config into stash
+	$self->hook( before_render => sub {
+	    my $self = shift;
 
-    $r->route('/')->to(controller => 'Root', action => 'index');
+	    if ($self->req->url->host =~ /fb/) { # fb.findmjob.com
+            $self->stash(is_fb_app => 1);
+        }
+
+        $self->stash(config => $config);
+	});
+
+    $r->any('/')->to(controller => 'Root', action => 'index');
     $r->get('/jobs')->to(controller => 'Root', action => 'jobs');
-    $r->route('/freelances')->to(controller => 'Root', action => 'freelances');
-    $r->route('/job/:id')->to(controller => 'Root', action => 'job');
-    $r->route('/job/:id/*seo')->to(controller => 'Root', action => 'job');
-    $r->route('/freelance/:id')->to(controller => 'Root', action => 'freelance');
-    $r->route('/freelance/:id/*seo')->to(controller => 'Root', action => 'freelance');
-    $r->route('/search/*rest')->to(controller => 'Search', action => 'search');
-    $r->route('/company/:id')->to(controller => 'Root', action => 'company');
-    $r->route('/company/:id/*seo')->to(controller => 'Root', action => 'company');
-    $r->route('/tag/:id')->to(controller => 'Root', action => 'tag');
-    $r->route('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
+    $r->get('/freelances')->to(controller => 'Root', action => 'freelances');
+    $r->get('/job/:id')->to(controller => 'Root', action => 'job');
+    $r->get('/job/:id/*seo')->to(controller => 'Root', action => 'job');
+    $r->get('/freelance/:id')->to(controller => 'Root', action => 'freelance');
+    $r->get('/freelance/:id/*seo')->to(controller => 'Root', action => 'freelance');
+    $r->any('/search/*rest')->to(controller => 'Search', action => 'search');
+    $r->get('/company/:id')->to(controller => 'Root', action => 'company');
+    $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
+    $r->get('/tag/:id')->to(controller => 'Root', action => 'tag');
+    $r->get('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
     $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
     $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
 
-    ## html
+    ## html files
     $r->get('/:html.html' => sub {
         my $self = shift;
         my $html = $self->stash('html');
