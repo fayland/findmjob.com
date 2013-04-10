@@ -292,19 +292,17 @@ get '/tag/:tagid' => sub {
     my $rs = $schema->resultset('ObjectTag')->search( {
         tag => $tagid
     }, {
-        order_by => 'me.time DESC',
-        prefetch => ['object'],
-        '+select' => ['object.tbl', 'object.id'],
-        '+as'     => ['tbl', 'object_id'],
+        order_by => 'time DESC',
         rows => 12,
         page => $p
     });
 
     my @obj;
     while (my $row = $rs->next) {
-        my $tbl = $row->get_column('tbl');
-        my $id  = $row->get_column('object_id');
-        my $obj = $schema->resultset(ucfirst $tbl)->find($id);
+        my $o = $schema->resultset('Object')->find($row->object);
+        next unless $o;
+        my $tbl = $o->tbl;
+        my $obj = $schema->resultset(ucfirst $tbl)->find($row->object);
         $obj->{tbl} = $tbl;
         push @obj, $obj;
     }
