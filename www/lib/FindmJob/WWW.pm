@@ -264,7 +264,7 @@ get '/company/:companyid' => sub {
     my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {
-        order_by => 'posted_at DESC',
+        order_by => 'inserted_at DESC',
         rows => 12,
         page => $p
     });
