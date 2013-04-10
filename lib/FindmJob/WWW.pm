@@ -29,8 +29,23 @@ sub startup {
 
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);
+
+    # feed.(rss|atom)
+    $self->hook( before_dispatch => sub {
+		my $self = shift;
+
+        my $p = $self->req->url->path;
+		if ($p =~ s{/feed\.(rss|atom)$}{}) {
+		    $self->stash('is_feed' => $1);
+		}
+		if ($p =~ s{/p\.(\d+)(/|$)}{$2}) {
+		    $self->stash('page' => $1);
+		}
+		$self->req->url->path($p);
+	});
+
     $r->route('/')->to(controller => 'Root', action => 'index');
-    $r->route('/jobs')->to(controller => 'Root', action => 'jobs');
+    $r->get('/jobs')->to(controller => 'Root', action => 'jobs');
     $r->route('/freelances')->to(controller => 'Root', action => 'freelances');
     $r->route('/job/:id')->to(controller => 'Root', action => 'job');
     $r->route('/job/:id/*seo')->to(controller => 'Root', action => 'job');
@@ -43,6 +58,15 @@ sub startup {
     $r->route('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
     $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
     $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
+
+    ## html
+    $r->get('/:html.html' => sub {
+        my $self = shift;
+        my $html = $self->stash('html');
+        if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/" . $html . ".html.tt") {
+            $self->render(template => $html);
+        }
+    });
 }
 
 1;

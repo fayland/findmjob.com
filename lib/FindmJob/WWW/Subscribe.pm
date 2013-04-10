@@ -1,6 +1,7 @@
 package FindmJob::WWW::Subscribe;
 
 use Mojo::Base 'Mojolicious::Controller';
+use Digest::MD5 'md5_hex';
 
 sub subscribe {
     my $self = shift;

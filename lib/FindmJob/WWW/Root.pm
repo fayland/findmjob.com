@@ -29,14 +29,15 @@ sub jobs {
 
     my $schema = $self->schema;
 
-    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $rows = 12;
 
-#    if ( vars->{feed_format} ) {
-#        $rows = 20; # more for feeds
-#        $p = 1;
-#    }
+    my $is_feed = $self->stash('is_feed');
+    if ( $is_feed ) {
+        $rows = 20; # more for feeds
+        $p = 1;
+    }
 
     my $count = $schema->resultset('Job')->count();
     # avoid slow 'LIMIT 96828, 12'
@@ -50,11 +51,11 @@ sub jobs {
         $self->stash->{pager} = $job_rs->pager;
         $self->stash->{jobs}  = \@jobs;
 
-#        if (vars->{feed_format}) {
-#            var title => "Recent";
-#            map { $_->{tbl} = 'job' } @jobs;
-#            return _render_feed(@jobs);
-#        }
+        if ($is_feed) {
+            $self->stash(title => "Recent");
+            map { $_->{tbl} = 'job' } @jobs;
+            return $self->_render_feed(@jobs);
+        }
     }
 
     $self->render(template => 'jobs');
@@ -65,14 +66,15 @@ sub freelances {
 
     my $schema = $self->schema;
 
-    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $rows = 12;
 
-#    if ( vars->{feed_format} ) {
-#        $rows = 20; # more for feeds
-#        $p = 1;
-#    }
+    my $is_feed = $self->stash('is_feed');
+    if ($is_feed) {
+        $rows = 20; # more for feeds
+        $p = 1;
+    }
 
     my $count = $schema->resultset('Freelance')->count();
     # avoid slow 'LIMIT 96828, 12'
@@ -86,11 +88,11 @@ sub freelances {
         $self->stash->{pager} = $job_rs->pager;
         $self->stash->{jobs}  = \@jobs;
 
-#        if (vars->{feed_format}) {
-#            var title => "Recent";
-#            map { $_->{tbl} = 'job' } @jobs;
-#            return _render_feed(@jobs);
-#        }
+        if ($is_feed) {
+            $self->stash(title => "Recent");
+            map { $_->{tbl} = 'job' } @jobs;
+            return _render_feed(@jobs);
+        }
     }
 
     $self->render(template => 'freelances');
@@ -143,7 +145,7 @@ sub company {
     my $company = $schema->resultset('Company')->find($companyid);
     $self->stash(company => $company);
 
-    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
@@ -174,7 +176,7 @@ sub tag {
     }
     $self->stash(tag => $tag);
 
-    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $rs = $schema->resultset('ObjectTag')->search( {
         tag => $tagid
@@ -195,12 +197,75 @@ sub tag {
     $self->stash(pager => $rs->pager);
     $self->stash(objects => \@obj);
 
-#    if (vars->{feed_format}) {
-#        var title => $tag->text;
-#        return _render_feed(@obj);
-#    }
+    if ($self->stash('is_feed')) {
+        $self->stash(title => $tag->text);
+        return _render_feed(@obj);
+    }
 
     $self->render(template => 'tag');
+}
+
+sub _render_feed {
+    my ($self, @obj) = @_;
+
+    my $config = $self->config;
+
+    my $feed_format = $self->stash('is_feed');
+
+    require DateTime;
+    require XML::Feed;
+
+    my @entries;
+    foreach my $obj (@obj) {
+        my ($title, $content, $link, $author, $issued);
+        # refer templates/object.tt2
+        if ($obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance') {
+            $link = $config->{sites}->{main} . $obj->url;
+            $title = $obj->title;
+            $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
+            $content = $obj->description;
+            $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
+        } elsif ($obj->{tbl} eq 'company') {
+            $link = $config->{sites}->{main} . $obj->url;
+            $title = $obj->name;
+        }
+
+        push @entries, {
+            id => $link,
+            link => $link,
+            title => $title,
+            $issued ? (issued => $issued, modified => $issued) : (),
+            $author ? (author => $author) : (),
+            $content ? (content => $content) : (),
+        };
+    }
+
+    my $mime = ("atom" eq $feed_format) ? "application/atom+xml" : "application/rss+xml";
+    $self->res->headers->content_type($mime);
+
+    my $format = ("atom" eq $feed_format) ? 'Atom' : 'RSS';
+    my $feed = XML::Feed->new($format);
+
+    my %feed_properties = (
+        title   => $self->stash('title') . " Jobs - FindmJob.com",
+        description => 'Find My Job Today',
+        id      => $config->{sites}->{main},
+        modified => DateTime->now,
+        entries  => \@entries,
+    );
+    foreach my $x (keys %feed_properties) {
+        $feed->$x($feed_properties{$x});
+    }
+
+    foreach my $entry (@entries) {
+        my $e = XML::Feed::Entry->new($format);
+        foreach my $x (keys %$entry) {
+            $e->$x($entry->{$x});
+        }
+        $feed->add_entry($e);
+    }
+
+    $self->render(text => $feed->as_xml);
 }
 
 1;

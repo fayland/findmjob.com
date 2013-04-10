@@ -2,13 +2,14 @@ package FindmJob::WWW::Search;
 
 use Mojo::Base 'Mojolicious::Controller';
 use FindmJob::Search;
+use Data::Page;
 
 sub search {
     my $self = shift;
 
     my $schema = $self->schema;
 
-    my ($p) = ($self->req->url->path =~ m{/p\.(\d+)(/|$)});
+    my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $rows = 12;
 
