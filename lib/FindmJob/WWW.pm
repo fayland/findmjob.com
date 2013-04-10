@@ -36,6 +36,7 @@ sub startup {
     $r->route('/job/:id/:seo.html')->to(controller => 'Root', action => 'job');
     $r->route('/freelance/:id')->to(controller => 'Root', action => 'freelance');
     $r->route('/freelance/:id/:seo.html')->to(controller => 'Root', action => 'freelance');
+    $r->route('/search/*rest')->to(controller => 'Search', action => 'search');
 }
 
 1;

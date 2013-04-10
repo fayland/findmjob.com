@@ -1,1 +1,10 @@
-blabla
+<div class="row">
+    <div class="span8 offset2 alert">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <h3>Something Went Wrong!</h3>
+        <p />
+        <ul>
+            <li>Sorry, we couldn’t handle the request right now.</li>
+        </ul>
+    </div>
+</div>
