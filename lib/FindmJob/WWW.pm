@@ -31,28 +31,28 @@ sub startup {
     $r->namespaces(['FindmJob::WWW']);
 
     # feed.(rss|atom) and /p.2/
-    $self->hook( before_dispatch => sub {
-		my $self = shift;
+    $self->hook(before_dispatch => sub {
+        my $self = shift;
 
         my $p = $self->req->url->path;
-		if ($p =~ s{/feed\.(rss|atom)$}{}) {
-		    $self->stash('is_feed' => $1);
-		}
-		if ($p =~ s{/p\.(\d+)(/|$)}{$2}) {
-		    $self->stash('page' => $1);
-		}
-		$self->req->url->path($p);
-	});
+        if ($p =~ s{/feed\.(rss|atom)$}{}) {
+            $self->stash('is_feed' => $1);
+        }
+        if ($p =~ s{/p\.(\d+)(/|$)}{$2}) {
+            $self->stash('page' => $1);
+        }
+        $self->req->url->path($p);
+    });
 	# config into stash
-	$self->hook( before_render => sub {
-	    my $self = shift;
+    $self->hook(before_render => sub {
+        my $self = shift;
 
-	    if ($self->req->url->host =~ /fb/) { # fb.findmjob.com
+        if ($self->req->url->host =~ /fb/) { # fb.findmjob.com
             $self->stash(is_fb_app => 1);
         }
 
         $self->stash(config => $config);
-	});
+    });
 
     $r->any('/')->to(controller => 'Root', action => 'index');
     $r->get('/jobs')->to(controller => 'Root', action => 'jobs');
