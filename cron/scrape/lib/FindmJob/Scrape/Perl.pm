@@ -21,6 +21,7 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
         my $row = $self->on_single_page($item);
+        $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};
         if ( $is_inserted and $self->opt_update ) {
             $job_rs->update_job($row);
         } else {

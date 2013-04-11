@@ -1,6 +1,8 @@
 package FindmJob::Scrape::Role;
 
 use Moo::Role;
+use FindmJob::Utils 'uuid';
+use Locale::Codes::Country;
 
 with 'FindmJob::Role::Basic';
 with 'FindmJob::Role::UA';
@@ -27,6 +29,45 @@ sub get_extra_tags_from_desc {
     my @tags = ($desc =~ /(?:^|[\s\,\/\(\)]+)($language_regex)(?:[\s\,\/\(\)\.]+|$)/isg);
 
     return @tags;
+}
+
+## Location related
+has 'countries_regex' => (is => 'lazy');
+sub _build_countries_regex {
+    my $self = shift;
+
+    my @names = all_country_names();
+    push @names, 'USA';
+    return join('|', @names);
+}
+
+sub get_location_id_from_text {
+    my ($self, $text) = @_;
+
+    return unless $text;
+    return unless length($text) > 2;
+
+    my $schema = $self->schema;
+    my $row = $schema->resultset('Location')->search( { text => $text } )->first;
+    return $row->id if $row and $row->country;
+
+    my $countries_regex = $self->countries_regex;
+    # parse country
+    my $o_text = $text;
+    ($text =~ s{(^|\,\s*|\s+)($countries_regex)$}{}) and my $country = $2;
+    $country = 'United States' if $country and $country eq 'USA';
+    if ($row) {
+        $row->update({ city => $text, country => $country }) if $country;
+        return $row->id;
+    } else {
+        my $id = uuid();
+        $schema->resultset('Location')->create({
+            id => $id,
+            text => $o_text,
+            ($country) ? (country => $country, city => $text) : ()
+        });
+        return $id;
+    }
 }
 
 1;

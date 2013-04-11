@@ -22,6 +22,7 @@ sub run {
         next if $is_inserted and not $self->opt_update;
         my $row = $self->on_single_page($item);
         next unless $row;
+        $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};
         if ( $is_inserted and $self->opt_update ) {
             $job_rs->update_job($row);
         } else {

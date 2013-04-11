@@ -70,6 +70,12 @@ __PACKAGE__->table("job");
   is_nullable: 0
   size: 64
 
+=head2 location_id
+
+  data_type: 'char'
+  is_nullable: 0
+  size: 22
+
 =head2 type
 
   data_type: 'varchar'
@@ -119,6 +125,8 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "location",
   { data_type => "varchar", is_nullable => 0, size => 64 },
+  "location_id",
+  { data_type => "char", is_nullable => 0, size => 22 },
   "type",
   { data_type => "varchar", is_nullable => 0, size => 64 },
   "contact",
@@ -156,8 +164,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3oB/eb0zvcJYtfTxaaqsEA
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 20:57:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EcN1barUdUaH4Xua/NmWBg
 
 __PACKAGE__->belongs_to(
     company => 'Company',
