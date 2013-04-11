@@ -160,6 +160,30 @@ sub company {
     $self->render(template => 'company');
 }
 
+sub location {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $location_id = $self->stash('id');
+
+    my $location = $schema->resultset('Location')->find($location_id);
+    $self->stash(location => $location);
+
+    my $p = $self->stash('page');
+    $p = 1 unless $p and $p =~ /^\d+$/;
+    my $job_rs = $schema->resultset('Job')->search( {
+        location_id => $location_id
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => $p
+    });
+    $self->stash(pager => $job_rs->pager);
+    $self->stash(jobs  => [ $job_rs->all ]);
+
+    $self->render(template => 'location');
+}
+
 sub tag {
     my $self = shift;
 

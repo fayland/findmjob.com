@@ -21,7 +21,7 @@
 [% END %]
 
 <li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a></p></li>
-<li><p><b>Location</b>: [% job.location %]</p></li>
+<li><p><b>Location</b>: <a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location %]</a></p></li>
 [% IF job.type %]
 <li><p><b>Hours</b>: [% job.type %]</p></li>
 [% END %]

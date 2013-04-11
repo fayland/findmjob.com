@@ -60,6 +60,8 @@ sub startup {
     $r->any('/search/*rest')->to(controller => 'Search', action => 'search');
     $r->get('/company/:id')->to(controller => 'Root', action => 'company');
     $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
+    $r->get('/location/:id')->to(controller => 'Root', action => 'location');
+    $r->get('/location/:id/*seo')->to(controller => 'Root', action => 'location');
     $r->get('/tag/:id')->to(controller => 'Root', action => 'tag');
     $r->get('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
     $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
