@@ -21,6 +21,12 @@ sub index {
     });
     $self->stash->{freelances} = [$freelance_rs->all];
 
+    # popular locations
+    $self->stash->{popular_locations} = [ $schema->resultset('Location')->search(undef, {
+        order_by => 'job_num DESC',
+        rows => 10, page => 1
+    })->all ];
+
     $self->render(template => 'index');
 }
 

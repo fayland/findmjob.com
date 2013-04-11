@@ -3,53 +3,15 @@
 [% USE String %]
 
 [% INCLUDE include/addthis.tt2 %]
-<h2>Recent Jobs</h2>
-<hr class="soften">
+<br />
 
-<div class="container">
-<div class="row">
+<hr class='soften' />
 
-<div class="span10">
+<div class='row'>
 
-<div class="row">
-    <div class="span5"><h3>Jobs</h3></div>
-    <div class="span5"><h3>Freelances</h3></div>
-</div>
-
-[% FOREACH i IN [0..5] %]
-<div class="row">
-    [% job = jobs.shift %]
-    <div class="span5">
-        <div class="well">
-        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
-        </div>
-    </div>
-    [% job = freelances.shift %]
-    <div class="span5">
-        <div class="well">
-        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
-        </div>
-    </div>
-</div>
-[% END %]
-
-<div class="row">
-    <div class="span5">
-        <p class="btn pull-right"><a href='/jobs'>More Jobs</a></p>
-    </div>
-    <div class="span5">
-        <p class="btn pull-right"><a href='/freelances'>More Freelances</a></p>
-    </div>
-</div>
-
-</div> <!-- end for <div class="span10"> -->
-<div class="span2">
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
+  <div class="span6">
+    <h3>Popular Tags</h3>
+    <ul>
     [%# hardcode for now %]
     [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
     <li><a href='/tag/Perl'>Perl</a></li>
@@ -61,9 +23,51 @@
     <li><a href='/tag/Javascript'>Javascript</a></li>
     <li><a href='/tag/MySQL'>MySQL</a></li>
     <li><a href='/tag/jQuery'>jQuery</a></li>
-
+    </ul>
+  </div>
+  <div class='span6'>
+    <h3>Popular Locations</h3>
+    <ul>
+        [% FOREACH location IN popular_locations %]
+        <li><a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
+        [% END %]
     </ul>
   </div>
 </div>
 
-</div></div>
+<hr class="soften">
+
+[% FOREACH i IN [0..5] %]
+<div class="row">
+    [% IF loop.first %]
+    <div class="span6"><h3>Jobs</h3></div>
+    <div class="span6"><h3>Freelances</h3></div>
+    [% END %]
+
+    [% job = jobs.shift %]
+    <div class="span6">
+        <div class="well">
+        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
+        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        </div>
+    </div>
+    [% job = freelances.shift %]
+    <div class="span6">
+        <div class="well">
+        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
+        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        </div>
+    </div>
+</div>
+[% END %]
+
+<div class="row">
+    <div class="span6">
+        <p class="btn pull-right"><a href='/jobs'>More Jobs</a></p>
+    </div>
+    <div class="span6">
+        <p class="btn pull-right"><a href='/freelances'>More Freelances</a></p>
+    </div>
+</div>
