@@ -11,7 +11,7 @@
 
   <div class="span6">
     <h3>Popular Tags</h3>
-    <ul>
+    <ul class='inline'>
     [%# hardcode for now %]
     [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
     <li><a href='/tag/Perl'>Perl</a></li>
@@ -27,7 +27,7 @@
   </div>
   <div class='span6'>
     <h3>Popular Locations</h3>
-    <ul>
+    <ul class='inline'>
         [% FOREACH location IN popular_locations %]
         <li><a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
         [% END %]
