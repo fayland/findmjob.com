@@ -54,6 +54,13 @@ __PACKAGE__->table("location");
   extra: {unsigned => 1}
   is_nullable: 0
 
+=head2 job_num
+
+  data_type: 'mediumint'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -68,6 +75,13 @@ __PACKAGE__->add_columns(
   "is_verified",
   {
     data_type => "tinyint",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
+  "job_num",
+  {
+    data_type => "mediumint",
     default_value => 0,
     extra => { unsigned => 1 },
     is_nullable => 0,
@@ -101,8 +115,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("text", ["text"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 21:53:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CWr9QS3uhJjPNQ+pYyqE1g
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 22:15:20
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iUrQi15GDTMRX/s7/7UjYA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
