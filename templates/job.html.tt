@@ -43,15 +43,14 @@
         [% IF job.extra_data.onsite %]
         <li><p><b>Onsite</b>: [% job.extra_data.onsite %]</p></li>
         [% END %]
-    [% ELSIF job.source_url.search('www.odesk.com') %]
-        <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
-        <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
+        <li><p><b>Expiry Date</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.ContactInfoName %]</p></li>
+        <li><p><b>Expiry Date</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
     [% ELSIF job.source_url.search('/www.crunchboard.com/') %]
         [% FOREACH k IN job.extra_data.keys %]
             <li><p><b>[% k %]</b> [% job.extra_data.$k %]</p></li>
@@ -59,8 +58,6 @@
     [% END %]
     <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
 [% END %]
-
-<li><p><b>Expiry Date</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
 
 <li><p><b>Description</b>:</p>
 <div class="well">

@@ -21,35 +21,14 @@
 [% END %]
 
 [% IF job.extra_data %]
-    [% IF job.source_url.search('jobs.perl.org') %]
-        [% IF job.extra_data.pay_rate %]
-        <li><p><b>Pay Rate</b>: [% job.extra_data.pay_rate %]</p></li>
-        [% END %]
-        [% IF job.extra_data.represents %]
-        <li><p><b>Poster represents</b>: [% job.extra_data.represents %]</p></li>
-        [% END %]
-        [% IF job.extra_data.employment_terms %]
-        <li><p><b>Terms of employment</b>: [% job.extra_data.employment_terms %]</p></li>
-        [% END %]
-        [% IF job.extra_data.employment_length %]
-        <li><p><b>Length of employment</b>: [% job.extra_data.employment_length %]</p></li>
-        [% END %]
-        [% IF job.extra_data.onsite %]
-        <li><p><b>Onsite</b>: [% job.extra_data.onsite %]</p></li>
-        [% END %]
-    [% ELSIF job.source_url.search('www.odesk.com') %]
+    [% IF job.source_url.search('www.odesk.com') %]
         <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
         <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
-    [% ELSIF job.source_url.search('/www.linkedin.com/') %]
-        <li><p><b>job Poster</b>: [% job.extra_data.jobPoster.firstName %] ([% job.extra_data.jobPoster.headline %])</p></li>
+        <li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
-    [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
-        <li><p><b>job Poster</b>: [% job.extra_data.ContactInfoName %]</p></li>
     [% END %]
 [% END %]
-
-<li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
 
 <li><p><b>Description</b>:</p>
 <div class="well">
