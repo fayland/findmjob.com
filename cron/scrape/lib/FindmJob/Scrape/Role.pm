@@ -48,6 +48,10 @@ sub get_location_id_from_text {
     return unless length($text) > 2;
 
     my $schema = $self->schema;
+
+    my ($id) = $schema->storage->dbh->selectrow_array("SELECT id FROM location_alias WHERE text = ?", undef, $text);
+    return $id;
+
     my $row = $schema->resultset('Location')->search( { text => $text } )->first;
     return $row->id if $row and $row->country;
 
