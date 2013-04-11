@@ -7,13 +7,14 @@
 */5 * * * * perl /findmjob.com/cron/emails/sendmail.pl
 
 # scrape
-10 */4 * * * perl /findmjob.com/cron/scrape/run.pl -m Perl
+10 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m Perl
 20 * * * * perl /findmjob.com/cron/scrape/run.pl -m Github
 30 * * * * perl /findmjob.com/cron/scrape/run.pl -m StackOverflow
 50 * * * * perl /findmjob.com/cron/scrape/run.pl -m Linkedin
 30 * * * * perl /findmjob.com/cron/scrape/run.pl -m SmashingMagazine
 50 * * * * perl /findmjob.com/cron/scrape/run.pl -m 37Signals
 0 * * * * perl /findmjob.com/cron/scrape/run.pl -m RubyNow
+10 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m CrunchBoard
 20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
