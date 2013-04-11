@@ -9,6 +9,7 @@ use WWW::SitemapIndex::XML;
 use WWW::Sitemap::XML;
 use LWP::UserAgent;
 use URI::Escape;
+use FindmJob::Utils 'seo_title';
 
 my $root = FindmJob::Basic->root;
 my $dir = "$root/static/";
@@ -81,7 +82,7 @@ $rs = $schema->resultset('Tag')->search( undef, {
     page => 1
 } );
 while (my $r = $rs->next) {
-    my $url = $config->{sites}->{main} . '/tag/' . $r->id;
+    my $url = $config->{sites}->{main} . '/tag/' . $r->id . '/' . seo_title($r->text) . '.html';
     $map->add(
         loc => $url,
         priority => 0.5,
