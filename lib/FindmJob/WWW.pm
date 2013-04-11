@@ -43,6 +43,7 @@ sub startup {
 
         # config into stash
         $self->stash(config => $config);
+        $self->stash(base_url => $self->req->url->path->to_string);
     });
 
     $r->any('/')->to(controller => 'Root', action => 'index');

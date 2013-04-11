@@ -1,7 +1,7 @@
 <div class="row pull-right">
 
 [% IF is_fb_app %]
-<div class="fb-like" data-href="[% config.sites.main %][% request.uri %]" data-send="true" data-layout="button_count" data-width="200" data-show-faces="true"></div>
+<div class="fb-like" data-href="[% config.sites.main %][% base_url %]" data-send="true" data-layout="button_count" data-width="200" data-show-faces="true"></div>
 [% ELSE %]
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style ">

@@ -14,9 +14,7 @@
   <div class="span10">
 
     <div class="row">
-    [%  UNLESS base_url;
-            base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('_by_(\w+).html', '.html').replace('/$', '');
-        END;
+    [%  base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('_by_(\w+).html', '.html').replace('/$', '');
         IF base_url.search('.html');
             sort_base_url = base_url.replace('.html', '_by__BY_.html');
         ELSIF base_url.search('\?');

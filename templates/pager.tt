@@ -1,7 +1,5 @@
 [% IF pager AND pager.entries_per_page AND pager.last_page > 1 %]
-[%  UNLESS base_url;
-        base_url = request.uri.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
-    END;
+[%  base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
     IF base_url.search('.html');
         pmatches = base_url.match('^(.*)/([^\/]+)$');
     ELSE;
