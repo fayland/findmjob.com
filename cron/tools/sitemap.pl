@@ -21,9 +21,9 @@ my $dbh = FindmJob::Basic->dbh;
 my @d = localtime();
 my $today = sprintf('%04d-%02d-%02d', $d[5] + 1900, $d[4] + 1, $d[3]);
 
-## an index with 4 files, jobs, freelancer, tags and companies
+## an index with 5 files, jobs, freelancer, tags, companies and location
 my $index = WWW::SitemapIndex::XML->new();
-foreach my $t ('jobs', 'freelances', 'tags', 'companies') {
+foreach my $t ('jobs', 'freelances', 'tags', 'companies', 'location') {
     $index->add(
         loc => $config->{sites}->{main} . "/sitemap.$t.xml.gz",
         lastmod => $today,
@@ -104,6 +104,23 @@ while (my $r = $rs->next) {
     );
 }
 $map->write("$dir/sitemap.companies.xml.gz");
+
+# sitemap.location.xml.gz
+$map = WWW::Sitemap::XML->new();
+$rs = $schema->resultset('Location')->search( undef, {
+    rows => 10000,
+    page => 1
+} );
+while (my $r = $rs->next) {
+    my $url = $config->{sites}->{main} . '/location/' . $r->id . '/' . seo_title($r->text) . '.html';
+    $map->add(
+        loc => $url,
+        priority => 0.5,
+    );
+}
+$map->write("$dir/sitemap.location.xml.gz");
+
+exit;
 
 # add ping
 LWP::UserAgent->new->get( "http://www.google.com/webmasters/tools/ping?sitemap=" . uri_escape($config->{sites}->{main} . '/sitemap.xml.gz') );
