@@ -39,14 +39,17 @@ foreach my $d (sort { $b cmp $a } keys %sharebot_stats) {
 }
 
 # jobs scraped
-$sql = "select DATE(FROM_UNIXTIME(inserted_at)) d, source_url from job WHERE inserted_at > $daysago";
-$sth = $dbh_log->prepare($sql);
-$sth->execute();
-$text .= "Daily Scrape Stats:\n";
 my %scrape_stats;
-while (my ($d, $url) = $sth->fetchrow_array) {
-    my $host = URI->new($url)->host;
-    $scrape_stats{$d}{$host}++;
+$text .= "Daily Scrape Stats:\n";
+
+foreach my $table ('job', 'freelance') {
+    $sql = "select DATE(FROM_UNIXTIME(inserted_at)) d, source_url from $table WHERE inserted_at > $daysago";
+    $sth = $dbh_log->prepare($sql);
+    $sth->execute();
+    while (my ($d, $url) = $sth->fetchrow_array) {
+        my $host = URI->new($url)->host;
+        $scrape_stats{$d}{$host}++;
+    }
 }
 
 foreach my $d (sort { $b cmp $a } keys %scrape_stats) {
