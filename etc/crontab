@@ -1,6 +1,7 @@
 0 */12 * * * perl /findmjob.com/cron/tools/sitemap.pl
 0 */3 * * * bash /findmjob.com/cron/sphinx/indexer.sh
 0 0 * * * perl /findmjob.com/cron/stats/daily.pl
+0 10 * * * perl /findmjob.com/cron/stats/location_job_num.pl
 
 # emails
 */5 * * * * perl /findmjob.com/cron/emails/subscribe_confirm.pl
