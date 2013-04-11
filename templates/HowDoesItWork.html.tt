@@ -7,7 +7,7 @@
 
 <div class="row">
   <div class="span4">
-    <h2>Feed</h2>
+    <h3>Feed</h3>
     <p>
         If you use any Feed Reader like Google Reader or software, you can always subscribe our tag feed: eg:
         <a href='/tag/Perl/feed.rss'>http://findmjob.com/tag/Perl/feed.rss</a> or <a href='/tag/Ruby/feed.atom'>http://findmjob.com/tag/Ruby/feed.atom</a>
@@ -17,7 +17,7 @@
     </p>
   </div>
   <div class="span4">
-    <h2>Twitter/Facebook/LinkedIn</h2>
+    <h3>Twitter/Facebook/LinkedIn</h3>
     <p>
       <ul class="unstyled">
         <li><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
@@ -28,7 +28,7 @@
     </p>
   </div>
   <div class="span4">
-    <h2>Email Subscription</h2>
+    <h3>Email Subscription</h3>
     <p>Next to search/tag section, we have Subscription Box there, you can use email to get updates!</p>
   </div>
 </div>
@@ -39,7 +39,7 @@
 
 <div class="row">
   <div class="span6">
-    <h2>Job sites</h2>
+    <h3>Job sites</h3>
     <ul class="unstyled">
         <li><a href='http://careers.stackoverflow.com/' target='_blank'>http://careers.stackoverflow.com/</a></li>
         <li><a href='http://www.linkedin.com/jobs' target='_blank'>http://www.linkedin.com/jobs</a></li>
@@ -52,7 +52,7 @@
     </ul>
   </div>
   <div class="span6">
-    <h2>Freelancer sites</h2>
+    <h3>Freelancer sites</h3>
     <p>
       <ul class="unstyled">
         <li><a href='http://www.odesk.com/' target='_blank'>http://www.odesk.com/</a></li>
