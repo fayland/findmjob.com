@@ -48,8 +48,9 @@ sub get_location_id_from_text {
     return unless length($text) > 2;
 
     my $schema = $self->schema;
+    my $dbh = $schema->storage->dbh;
 
-    my ($id) = $schema->storage->dbh->selectrow_array("SELECT id FROM location_alias WHERE text = ?", undef, $text);
+    my ($id) = $dbh->selectrow_array("SELECT id FROM location_alias WHERE text = ?", undef, $text);
     return $id;
 
     my $row = $schema->resultset('Location')->search( { text => $text } )->first;
@@ -70,6 +71,7 @@ sub get_location_id_from_text {
             text => $o_text,
             ($country) ? (country => $country, city => $text) : ()
         });
+        $dbh->do("INSERT IGNORE INTO location_alias (text, id) VALUES (?, ?)", undef, $o_text, $id);
         return $id;
     }
 }
