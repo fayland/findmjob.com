@@ -59,7 +59,7 @@
 
 <div class="subnav">
     <ul class="nav nav-pills">
-      <li[% IF base_url == '' %] class="active"[% END %]><a href='/'><i class="icon-home"></i></a></li>
+      <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="icon-home"></i></a></li>
       <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs">Jobs</a></li>
       <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances">Freelances</a></li>
       <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html">How Does It Work?</a></li>

@@ -2,6 +2,7 @@ package FindmJob::WWW;
 
 use Mojo::Base 'Mojolicious';
 use FindmJob::Basic;
+use FindmJob::Utils 'seo_title';
 use File::Spec::Functions 'catdir';
 
 sub startup {
@@ -16,7 +17,10 @@ sub startup {
     $self->plugin('charset' => {charset => 'UTF-8'});
     $self->plugin('tt_renderer' => {
         template_options => {
-            WRAPPER => 'wrapper.tt2'
+            WRAPPER => 'wrapper.tt2',
+            FILTERS => {
+                seo_title => \&seo_title,
+            }
         }
     });
     $self->renderer->default_handler( 'tt' );
