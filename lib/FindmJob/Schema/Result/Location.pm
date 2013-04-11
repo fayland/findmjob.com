@@ -54,12 +54,6 @@ __PACKAGE__->table("location");
   extra: {unsigned => 1}
   is_nullable: 0
 
-=head2 normalized_text
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 128
-
 =cut
 
 __PACKAGE__->add_columns(
@@ -78,8 +72,6 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 0,
   },
-  "normalized_text",
-  { data_type => "varchar", is_nullable => 1, size => 128 },
 );
 
 =head1 PRIMARY KEY
@@ -109,8 +101,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("text", ["text"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 20:39:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yzCEkOGiAjmRmQeGOwh+dQ
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 21:53:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CWr9QS3uhJjPNQ+pYyqE1g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
