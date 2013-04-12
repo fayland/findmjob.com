@@ -37,15 +37,7 @@ sub run {
         foreach my $item ( @{$data->{channel}->{item}} ) {
             my $description = $item->{description};
             next if $description =~ '^N/A'; # Deleted Project or Protected Project
-            next if $description =~ 'Budget: N/A';
             next if $item->{title} =~ /^Nonpublic project/; # Nonpublic project
-            next if $item->{link} eq 'http://www.freelancer.com/projects/sl/1341869714.html';
-
-            # Check budget, don't insert if budget is too low b/c those are expired soon
-            # (Budget: &#36;30-&#36;250 USD, Jobs: iPhone, Mobile Phone)
-            my (undef, $max_budget) = ($description =~ /\(Budget\:(.*?)(\d+)\s+(\w{3})\,\s*Jobs/);
-            die $item->{link} unless $max_budget;
-            next if $max_budget < 500;
 
             my $link = $item->{link};
             my $is_inserted = $job_rs->is_inserted_by_url($link);

@@ -19,8 +19,6 @@ sub run {
     my $resp = $self->get('https://www.odesk.com/api/profiles/v1/search/jobs.json');
     my $data = $json->decode( decode('utf8', $resp->content) );
     foreach my $item (@{$data->{jobs}->{job}}) {
-        # engagement_weeks must be more than "Ongoing / More than 6 months" or "3 to 6 months"
-        next unless ( $item->{engagement_weeks} =~ /6 month/ or $item->{engagement_weeks} =~ /Ongoing/ );
         next unless $item->{op_comm_status} =~ /Active/;
         next unless $item->{op_is_viewable} == 1;
 
