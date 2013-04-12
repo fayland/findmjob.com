@@ -112,6 +112,7 @@ sub job {
     my $job = $schema->resultset('Job')->find($jobid);
 
     unless ($job) {
+        $self->res->code(410); # Gone
         return $self->render(template => 'gone');
     }
 
@@ -133,6 +134,7 @@ sub freelance {
     my $job = $schema->resultset('Freelance')->find($jobid);
 
     unless ($job) {
+        $self->res->code(410); # Gone
         return $self->render(template => 'gone');
     }
 
