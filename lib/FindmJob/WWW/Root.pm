@@ -223,30 +223,57 @@ sub tag {
     }
     $self->stash(tag => $tag);
 
+    my ($view_tab) = ($self->req->url->path =~ m{/\+(freelance|job)/});
+    $view_tab ||= '';
+    $self->stash(view_tab => $view_tab);
+
     my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
+
     my $rs = $schema->resultset('ObjectTag')->search( {
-        tag => $tagid
+        tag => $tagid,
+        ($view_tab) ? (tbl => $view_tab) : (),
     }, {
-        order_by => 'time DESC',
+        order_by => 'me.time DESC',
+        prefetch => ['object'],
+        '+select' => ['object.tbl', 'object.id'],
+        '+as'     => ['tbl', 'object_id'],
         rows => 12,
         page => $p
     });
 
     my @obj;
     while (my $row = $rs->next) {
-        my $tbl = $row->object->tbl;
-        my $obj = $schema->resultset(ucfirst $tbl)->find($row->object->id);
+        my $tbl = $row->get_column('tbl');
+        my $id  = $row->get_column('object_id');
+        my $obj = $schema->resultset(ucfirst $tbl)->find($id);
         $obj->{tbl} = $tbl;
         push @obj, $obj;
     }
 
-    $self->stash(pager => $rs->pager);
-    $self->stash(objects => \@obj);
-
     if ($self->stash('is_feed')) {
         $self->stash(title => $tag->text);
         return $self->_render_feed(@obj);
+    } else {
+        my $pager = $rs->pager;
+        $self->stash(pager => $pager);
+        $self->stash(objects => \@obj);
+
+        # count number in tab
+        my %count;
+        if ($view_tab) {
+            $count{$view_tab} = $pager->total_entries;
+        }
+        foreach my $tbl ('job', 'freelance') {
+            next if $count{$tbl};
+            $count{$tbl} = $schema->resultset('ObjectTag')->count( {
+                tag => $tagid,
+                'object.tbl' => $tbl,
+            }, {
+                prefetch => ['object']
+            } );
+        }
+        $self->stash(count => \%count);
     }
 
     $self->render(template => 'tag');

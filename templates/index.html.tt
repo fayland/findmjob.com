@@ -1,4 +1,4 @@
-[% title = 'Find My Job Today!' %]
+[% title = 'Find My Job' %]
 
 [% USE String %]
 
