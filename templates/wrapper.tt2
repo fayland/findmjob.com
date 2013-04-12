@@ -73,7 +73,7 @@
 
 <footer class="footer">
     [% IF has_feed %]
-    [% base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '') %]
+    [% base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/([^/]+).html$', '').replace('/$', '') %]
     [% IF base_url == ''; base_url = '/jobs'; END %]
     <p class="pull-right"><img src='[% config.sites.static %]/images/rss.png' /> <a href='[% base_url %]/feed.rss'>RSS</a> | <a href='[% base_url %]/feed.atom'>Atom</a></p>
     <link rel="alternate" type="application/rss+xml" href="[% base_url %]/feed.rss" title="RSS 2.0">
