@@ -41,6 +41,12 @@ __PACKAGE__->table("location");
   is_nullable: 1
   size: 128
 
+=head2 state
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 32
+
 =head2 country
 
   data_type: 'varchar'
@@ -70,6 +76,8 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "city",
   { data_type => "varchar", is_nullable => 1, size => 128 },
+  "state",
+  { data_type => "varchar", is_nullable => 1, size => 32 },
   "country",
   { data_type => "varchar", is_nullable => 1, size => 32 },
   "is_verified",
@@ -115,8 +123,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("text", ["text"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 22:15:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iUrQi15GDTMRX/s7/7UjYA
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-12 22:58:27
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FLhIT21uMil+E6i2EDovvg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
