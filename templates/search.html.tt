@@ -11,6 +11,23 @@
 
 [% IF jobs.size %]
 
+  <div class="span2 pull-right">
+    <div class="well">
+        <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
+        <form action='/subscribe' method='post'>
+            <input type='hidden' name='keyword' value='[% q.squote %]' />
+            <input type='hidden' name='loc' value='[% loc.squote %]' />
+            <input type='hidden' name='frm' value='search' />
+            <select name="frequency_days" class="input-small">
+                <option value="1">Daily</option>
+                <option value="7">Weekly</option>
+            </select>
+            <input type="text" name="email" class="input-small" placeholder="Email"><br />
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+  </div>
+
   <div class="span10">
 
     <div class="row">
@@ -45,22 +62,6 @@
     [% IF jobs.size AND jobs.size MOD 2 == 1 %]</div>[% END %]
 
     [% INCLUDE pager.tt %]
-  </div>
-  <div class="span2">
-    <div class="well">
-        <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
-        <form action='/subscribe' method='post'>
-            <input type='hidden' name='keyword' value='[% q.squote %]' />
-            <input type='hidden' name='loc' value='[% loc.squote %]' />
-            <input type='hidden' name='frm' value='search' />
-            <select name="frequency_days" class="input-small">
-                <option value="1">Daily</option>
-                <option value="7">Weekly</option>
-            </select>
-            <input type="text" name="email" class="input-small" placeholder="Email"><br />
-            <button type="submit" class="btn">Subscribe</button>
-        </form>
-    </div>
   </div>
 
 
