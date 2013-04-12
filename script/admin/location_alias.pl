@@ -76,7 +76,7 @@ if ($want_edit =~ /^y/) {
 
     my $confirm_save = prompt "Save $picked->{text} with City($to_city), State($to_state) and Country($to_country)? [yn]", -yesno;
     if ($confirm_save =~ /^y/) {
-        $dbh->do("UPDATE location SET text = ?, city = ?, country = ?, is_verified=1 WHERE id = ?", undef, $to_text, $to_city, $to_country, $id);
+        $dbh->do("UPDATE location SET text = ?, city = ?, state = ?, country = ?, is_verified=1 WHERE id = ?", undef, $to_text, $to_city, $to_state, $to_country, $id);
     }
 }
 
