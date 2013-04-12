@@ -58,7 +58,7 @@ sub jobs {
         $self->stash->{jobs}  = \@jobs;
 
         if ($is_feed) {
-            $self->stash(title => "Recent");
+            $self->stash(title => "Recent Jobs");
             map { $_->{tbl} = 'job' } @jobs;
             return $self->_render_feed(@jobs);
         }
@@ -95,9 +95,9 @@ sub freelances {
         $self->stash->{jobs}  = \@jobs;
 
         if ($is_feed) {
-            $self->stash(title => "Recent");
+            $self->stash(title => "Recent Freelances");
             map { $_->{tbl} = 'job' } @jobs;
-            return _render_feed(@jobs);
+            return $self->_render_feed(@jobs);
         }
     }
 
@@ -179,15 +179,30 @@ sub location {
 
     my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
+    my $rows = 12;
+
+    my $is_feed = $self->stash('is_feed');
+    if ($is_feed) {
+        $rows = 20; # more for feeds
+        $p = 1;
+    }
+
     my $job_rs = $schema->resultset('Job')->search( {
         location_id => $location_id
     }, {
         order_by => 'inserted_at DESC',
-        rows => 12,
+        rows => $rows,
         page => $p
     });
+    my @jobs = $job_rs->all;
     $self->stash(pager => $job_rs->pager);
-    $self->stash(jobs  => [ $job_rs->all ]);
+    $self->stash(jobs  => [@jobs]);
+
+    if ($is_feed) {
+        $self->stash(title => "Jobs in " . $location->text);
+        map { $_->{tbl} = 'job' } @jobs;
+        return $self->_render_feed(@jobs);
+    }
 
     $self->render(template => 'location');
 }
@@ -231,7 +246,7 @@ sub tag {
 
     if ($self->stash('is_feed')) {
         $self->stash(title => $tag->text);
-        return _render_feed(@obj);
+        return $self->_render_feed(@obj);
     }
 
     $self->render(template => 'tag');

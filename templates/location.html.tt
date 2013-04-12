@@ -1,6 +1,7 @@
-[% title = location.text %]
-[% description = 'Jobs at ' _ location.text %]
+[% title = 'Jobs in ' _ location.text %]
+[% description = 'Jobs in ' _ location.text %]
 [% meta_keywords = location.text %]
+[% has_feed = 1 %]
 
 [% USE String %]
 
