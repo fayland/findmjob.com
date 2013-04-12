@@ -12,17 +12,12 @@
   <div class="span6">
     <h3>Popular Tags</h3>
     <ul class='inline'>
-    [%# hardcode for now %]
-    [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
-    <li><a href='/tag/Perl'>Perl</a></li>
-    <li><a href='/tag/Python'>Python</a></li>
-    <li><a href='/tag/Ruby'>Ruby</a></li>
-    <li><a href='/tag/PHP'>PHP</a></li>
-    <li><a href='/tag/Java'>Java</a></li>
-    <li><a href='/tag/ruby-on-rails'>ruby-on-rails</a></li>
-    <li><a href='/tag/Javascript'>Javascript</a></li>
-    <li><a href='/tag/MySQL'>MySQL</a></li>
-    <li><a href='/tag/jQuery'>jQuery</a></li>
+        [%# hardcode for now %]
+        [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
+        [% tags = ['Perl', 'Python', 'Ruby', 'PHP', 'Java', 'ruby-on-rails', 'Javascript', 'MySQL', 'jQuery', 'AWS', 'iOS', 'Django', 'WordPress', 'Joomla', 'ASP.Net', 'iPhone', 'Android', 'HTML5'] %]
+        [% FOREACH tag IN tags %]
+        <li><a href='/tag/[% tag %]'>[% tag %]</a></li>
+        [% END %]
     </ul>
   </div>
   <div class='span6'>
