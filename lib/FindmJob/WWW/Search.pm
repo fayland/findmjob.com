@@ -16,7 +16,7 @@ sub search {
     my $q = $self->param('q');
     my $loc = $self->param('loc') || '';
     my $by  = $self->param('by') || 'relevance';
-    my $rest_url = $self->stash('rest');
+    my $rest_url = $self->stash('rest') || '';
     my ($filename) = ($rest_url =~ m{/([^/]+).html$});
     if ($filename) {
         $filename =~ s/\_by\_(date|relevance)$// and $by = $1;
