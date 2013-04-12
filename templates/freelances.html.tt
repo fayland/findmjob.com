@@ -1,4 +1,4 @@
-[% title = 'Recent Jobs' %]
+[% title = 'Recent Freelances' %]
 [% has_feed = 1 %]
 
 [% USE String %]
