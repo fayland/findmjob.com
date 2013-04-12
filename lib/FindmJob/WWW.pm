@@ -57,6 +57,7 @@ sub startup {
     $r->get('/job/:id/*seo')->to(controller => 'Root', action => 'job');
     $r->get('/freelance/:id')->to(controller => 'Root', action => 'freelance');
     $r->get('/freelance/:id/*seo')->to(controller => 'Root', action => 'freelance');
+    $r->any('/search')->to(controller => 'Search', action => 'search');
     $r->any('/search/*rest')->to(controller => 'Search', action => 'search');
     $r->get('/company/:id')->to(controller => 'Root', action => 'company');
     $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
