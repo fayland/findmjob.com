@@ -13,7 +13,7 @@
 <li><p><b>Tags</b>:
 [% tags_text = [] %]
 [% FOREACH tag IN job.tags %]
-<a href='/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html'>[% tag.text %]</a>[% UNLESS loop.last %], [%+ END %]
+<i class="icon-tag"></i><a href='/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html'>[% tag.text %]</a>[% UNLESS loop.last %], [%+ END %]
 [% tags_text.push(tag.text) %]
 [% END %]
 [% meta_keywords = tags_text.join(', ') %]

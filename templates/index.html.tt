@@ -16,7 +16,7 @@
         [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
         [% tags = ['Perl', 'Python', 'Ruby', 'PHP', 'Java', 'ruby-on-rails', 'Javascript', 'MySQL', 'jQuery', 'AWS', 'iOS', 'Django', 'WordPress', 'Joomla', 'ASP.Net', 'iPhone', 'Android', 'HTML5'] %]
         [% FOREACH tag IN tags %]
-        <li><a href='/tag/[% tag %]'>[% tag %]</a></li>
+        <li><i class="icon-tag"></i><a href='/tag/[% tag %]'>[% tag %]</a></li>
         [% END %]
     </ul>
   </div>
