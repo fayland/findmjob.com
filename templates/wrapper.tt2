@@ -4,7 +4,8 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <link href="[% config.sites.static %]/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="[% config.sites.static %]/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="[% config.sites.static %]/css/findmjob.css" rel="stylesheet">
+<link href="[% config.sites.static %]/assets/css/font-awesome.min.css" rel="stylesheet" />
+<link href="[% config.sites.static %]/assets/css/findmjob.css" rel="stylesheet">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
 
