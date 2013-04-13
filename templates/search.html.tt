@@ -77,8 +77,7 @@
 
 
 [% ELSE %]
-    <div class="alert">
-      <a class="close" data-dismiss="alert">×</a>
+    <div class="alert span6 offset3">
       Nothing here, please redefined your search terms.
     </div>
 [% END %]
