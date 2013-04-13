@@ -20,6 +20,7 @@ sub search_job {
     $page = 1 unless $page and $page =~ /^\d+$/;
     my $q    = $args{'q'};
     my $loc  = $args{'loc'};
+    my $tbl  = $args{'tbl'};
 
     my $sph = $self->sphinx;
     $sph->SetLimits(($page - 1) * $rows, $rows, 800);
@@ -39,6 +40,9 @@ sub search_job {
     }
     if ($loc) {
         push @query, '@location "' . $sph->EscapeString($loc) . '"';
+    }
+    if ($tbl and ($tbl eq 'job' or $tbl eq 'freelance')) {
+        push @query, '@tbl ' . "'$tbl'";
     }
     my $ret = $sph->Query(join(' & ', @query));
     return $ret;

@@ -27,6 +27,10 @@ sub search {
     $self->stash('loc'  => $loc);
     $self->stash('sort' => $by);
 
+    my ($view_tab) = ($self->req->url->path =~ m{/\+(freelance|job)/});
+    $view_tab ||= '';
+    $self->stash(view_tab => $view_tab);
+
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
         'q'  => $q,
@@ -34,6 +38,7 @@ sub search {
         sort => $by,
         rows => $rows,
         page => $p,
+        tbl  => $view_tab,
     } );
     if ($ret->{total}) {
         my $schema = FindmJob::Basic->schema;
