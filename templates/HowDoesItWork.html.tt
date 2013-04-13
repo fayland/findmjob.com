@@ -20,10 +20,10 @@
     <h3>Twitter/Facebook/LinkedIn</h3>
     <p>
       <ul class="unstyled">
-        <li><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
-        <li><a href='https://apps.facebook.com/findmjob/' target='_blank'>https://apps.facebook.com/findmjob/</a></li>
-        <li><a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
-        <li><a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
+        <li><i class='icon-twitter-sign'></i><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
+        <li><i class='icon-facebook-sign'></i><a href='https://apps.facebook.com/findmjob/' target='_blank'>https://apps.facebook.com/findmjob/</a></li>
+        <li><i class='icon-facebook-sign'></i><a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
+        <li><i class='icon-linkedin-sign'></i><a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
       </ul>
     </p>
   </div>

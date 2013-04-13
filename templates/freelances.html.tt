@@ -12,7 +12,7 @@
         <div class="well">
         <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]

@@ -24,7 +24,7 @@
     <h3>Popular Locations</h3>
     <ul class='inline'>
         [% FOREACH location IN popular_locations %]
-        <li><a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
+        <li><i class='icon-flag'></i><a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
         [% END %]
     </ul>
   </div>
@@ -44,7 +44,7 @@
         <div class="well">
         <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
     </div>
     [% job = freelances.shift %]
@@ -52,7 +52,7 @@
         <div class="well">
         <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More</a></p>
+        <p class="btn pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
     </div>
 </div>
@@ -60,9 +60,9 @@
 
 <div class="row">
     <div class="span6">
-        <p class="btn pull-right"><a href='/jobs'>More Jobs</a></p>
+        <p class="btn pull-right"><a href='/jobs'>More Jobs <i class='icon-circle-arrow-right'></i></a></p>
     </div>
     <div class="span6">
-        <p class="btn pull-right"><a href='/freelances'>More Freelances</a></p>
+        <p class="btn pull-right"><a href='/freelances'>More Freelances <i class='icon-circle-arrow-right'></i></a></p>
     </div>
 </div>
