@@ -4,7 +4,7 @@
 
 [% USE String %]
 
-<h2>[% title %][% IF jobs.size %] (Total: [% pager.total_entries %])[% END %]</h2>
+<h2>[% title %]</h2>
 <hr class="soften">
 
 [% tab_base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/\+(job|freelance)/', '/').replace('/$', '') %]
@@ -41,8 +41,9 @@
   <div class="span10">
 
     <div class="row">
-    [%  base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('_by_(\w+).html', '.html').replace('/$', '');
+    [%  base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/$', '');
         IF base_url.search('.html');
+            sort_base_url = sort_base_url.replace('_by_(\w+).html', '.html');
             sort_base_url = base_url.replace('.html', '_by__BY_.html');
         ELSIF base_url.search('\?');
             sort_base_url = base_url _ '&by=_BY_';
