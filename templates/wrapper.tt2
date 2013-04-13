@@ -57,10 +57,10 @@
 <div class="subnav">
     <ul class="nav nav-pills">
       <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="icon-home icon-large"></i></a></li>
-      <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs">Jobs</a></li>
-      <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances">Freelances</a></li>
-      <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html">How Does It Work?</a></li>
-      <li[% IF base_url == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html">Android App</a></li>
+      <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='icon-group'></i> Jobs</a></li>
+      <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='icon-user-md'></i>  Freelances</a></li>
+      <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html"><i class='icon-question-sign'></i> How Does It Work?</a></li>
+      <li[% IF base_url == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html"><i class='icon-mobile-phone'></i> Android App</a></li>
     </ul>
 </div>
 

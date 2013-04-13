@@ -63,6 +63,6 @@
 %]
 [% END %]
 
-<li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank">[% job.source_url %]</a></p></li>
+<li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank"><i class='icon-external-link'></i> [% job.source_url %]</a></p></li>
 
 </ul>
