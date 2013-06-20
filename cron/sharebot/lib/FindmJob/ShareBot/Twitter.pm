@@ -5,7 +5,7 @@ with 'FindmJob::ShareBot::Role';
 with 'FindmJob::Role::Shorten';
 
 use List::Util 'shuffle';
-use Net::Twitter::Lite;
+use Net::Twitter::Lite::WithAPIv1_1;
 
 has 'twitter' => ( is => 'lazy' );
 sub _build_twitter {
@@ -13,12 +13,12 @@ sub _build_twitter {
     my $config = $self->config;
     my $t = $config->{share}->{Twitter};
 
-    my $nt = Net::Twitter::Lite->new(
+    my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
         consumer_key    => $t->{consumer_key},
         consumer_secret => $t->{consumer_secret},
+        access_token        => $t->{access_token},
+        access_token_secret => $t->{access_token_secret},
     );
-    $nt->access_token($t->{access_token});
-    $nt->access_token_secret($t->{access_token_secret});
 
     return $nt;
 }
