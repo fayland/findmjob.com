@@ -21,7 +21,7 @@ my $file = "$Bin/facebook.token.txt";
 if (@ARGV) {
     $fb->request_access_token(shift @ARGV);
     open(my $fh, '>', "$Bin/facebook.token.txt");
-    print $fh $fb->access_token;
+    print $fh $fb->access_token . ',' . time();
     close($fh);
 } else {
     my $uri = $fb
