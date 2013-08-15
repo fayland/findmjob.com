@@ -64,11 +64,11 @@
 
 span.stars, span.stars span {
   display: block;
-  background: url(images/stars.png) 0 -16px repeat-x;
+  background: url(../jquery.raty/img/star-off.png);
   width: 80px;
   height: 16px;
 }
 
 span.stars span {
-  background-position: 0 0;
+  background: url(../jquery.raty/img/star-on.png);
 }
