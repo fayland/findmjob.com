@@ -1,0 +1,32 @@
+[% title = review.title | html %]
+[% description = review.pros | html %]
+[% meta_keywords = company.name %]
+
+[% USE date %]
+
+[% INCLUDE include/addthis.tt2 %]
+<h2>[% title %]</h2>
+
+<hr class="soften">
+
+<ul class="unstyled">
+
+<li><b>Company</b>: <a href='[% company.url %]'>[% company.name %]</a></li>
+
+<li><b>Role</b>: [% review.role %]</li>
+<li><b>Rating</b>: [% review.rating %]</li>
+<li><b>Posted at</b>: <span class="timeago" title="[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]">[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]</span></li>
+
+<li><p><b>Pros</b>:</p>
+    <div class="well">
+    [% review.pros | html | html_line_break %]
+    </div>
+</li>
+
+<li><p><b>Cons</b>:</p>
+    <div class="well">
+    [% review.cons | html | html_line_break %]
+    </div>
+</li>
+
+</ul>

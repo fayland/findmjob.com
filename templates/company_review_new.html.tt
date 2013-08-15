@@ -39,19 +39,19 @@
 	<div class="control-group">
 		<label class="control-label">Title:</label>
 		<div class="controls">
-			<input name="title" type="text" required="required" />
+			<input name="title" type="text" class="input-xxlarge" required="required" placeholder='In one sentence, describe your experience at [%+ company.name.squote %].' />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label">Pros:</label>
 		<div class="controls">
-			<textarea name="pros" required="required"></textarea>
+			<textarea name="pros" class="input-xxlarge" required="required" placeholder='Share some of the best reasons to work at [%+ company.name.squote %].'></textarea>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label">Cons:</label>
 		<div class="controls">
-			<textarea name="cons" required="required"></textarea>
+			<textarea name="cons" class="input-xxlarge" required="required" placeholder='Share some of the downsides of working at [%+ company.name.squote %].'></textarea>
 		</div>
 	</div>
 	<div class="control-group">
@@ -69,6 +69,7 @@
 
 	<div class="form-actions">
 		<button class="btn btn-primary save">Write Review</button>
+		<a href='/company/[% company.id %]' class='btn'>Back to [% company.name %]</a>
 	</div>
 </form>
 [% END %]

@@ -3,6 +3,45 @@ package FindmJob::WWW::Review;
 use Mojo::Base 'Mojolicious::Controller';
 use Mojo::JSON;
 
+sub review {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $companyid = $self->stash('cid');
+    my $reviewid = $self->stash('rid');
+
+    my $review = $schema->resultset('CompanyReview')->find($reviewid);
+    my $company = $schema->resultset('Company')->find($companyid);
+    $self->stash(company => $company);
+    $self->stash(review  => $review);
+
+    $self->render(template => 'review');
+}
+
+sub company_reviews {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $companyid = $self->stash('id');
+
+    my $company = $schema->resultset('Company')->find($companyid);
+    $self->stash(company => $company);
+
+    my $p = $self->stash('page');
+    $p = 1 unless $p and $p =~ /^\d+$/;
+    my $review_rs = $schema->resultset('CompanyReview')->search( {
+        company_id => $companyid
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => $p
+    });
+    $self->stash(pager => $review_rs->pager);
+    $self->stash(reviews => [ $review_rs->all ]);
+
+    $self->render(template => 'company_reviews');
+}
+
 sub company_review_new {
     my $self = shift;
 

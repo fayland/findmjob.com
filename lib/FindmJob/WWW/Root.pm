@@ -153,6 +153,36 @@ sub company {
     my $company = $schema->resultset('Company')->find($companyid);
     $self->stash(company => $company);
 
+    my $job_rs = $schema->resultset('Job')->search( {
+        company_id => $companyid
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => 1
+    });
+    $self->stash(jobs => [ $job_rs->all ]);
+
+    my $review_rs = $schema->resultset('CompanyReview')->search( {
+        company_id => $companyid
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 12,
+        page => 1
+    });
+    $self->stash(reviews => [ $review_rs->all ]);
+
+    $self->render(template => 'company');
+}
+
+sub company_jobs {
+    my $self = shift;
+
+    my $schema = $self->schema;
+    my $companyid = $self->stash('id');
+
+    my $company = $schema->resultset('Company')->find($companyid);
+    $self->stash(company => $company);
+
     my $p = $self->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( {
@@ -165,7 +195,7 @@ sub company {
     $self->stash(pager => $job_rs->pager);
     $self->stash(jobs  => [ $job_rs->all ]);
 
-    $self->render(template => 'company');
+    $self->render(template => 'company_jobs');
 }
 
 sub location {
