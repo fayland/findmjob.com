@@ -29,6 +29,9 @@ api:
     secret: 'secret'
   CareerBuilder:
     key: 'secret'
+  recaptcha:
+    pub: '6LcPIeYSAAAAALmzUGAxyXLDKVDTmTzJWhAyv12s'
+    pri: 'secret'
 
 share:
   bitly:

@@ -24,6 +24,10 @@ sub startup {
         }
     });
     $self->renderer->default_handler( 'tt' );
+    $self->plugin(recaptcha => {
+        public_key  => $config->{api}->{recaptcha}->{pub},
+        private_key => $config->{api}->{recaptcha}->{pri},
+    });
 
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);
@@ -59,14 +63,15 @@ sub startup {
     $r->get('/freelance/:id/*seo')->to(controller => 'Root', action => 'freelance');
     $r->any('/search')->to(controller => 'Search', action => 'search');
     $r->any('/search/*rest')->to(controller => 'Search', action => 'search');
-    $r->get('/company/:id')->to(controller => 'Root', action => 'company');
-    $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
     $r->get('/location/:id')->to(controller => 'Root', action => 'location');
     $r->get('/location/:id/*seo')->to(controller => 'Root', action => 'location');
     $r->get('/tag/:id')->to(controller => 'Root', action => 'tag');
     $r->get('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
     $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
     $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
+    $r->get('/company/:id')->to(controller => 'Root', action => 'company');
+    $r->any('/company/:id/reviews/new')->to(controller => 'Review', action => 'company_review_new');
+    $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
 
     ## html files
     $r->get('/:html.html' => sub {

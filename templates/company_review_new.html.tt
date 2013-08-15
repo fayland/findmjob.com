@@ -1,0 +1,83 @@
+[% title = company.name _ ' Reviews' %]
+[% description = title %]
+[% meta_keywords = title %]
+
+<script src="[% config.sites.static %]/assets/jquery.raty/jquery.raty.min.js"></script>
+
+[% USE String %]
+
+[% INCLUDE include/addthis.tt2 %]
+<h2>[% title %]</h2>
+[% IF company.website %]
+[% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
+<p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
+[% END %]
+
+<hr class="soften">
+
+[% IF errors.size %]
+<ul class='unstyled alert alert-error'>
+	[% FOREACH err IN errors %]
+	<li>[% err %]</li>
+	[% END %]
+</ul>
+[% END %]
+
+[% USE FillInForm %]
+[% FILTER fillinform fobject => c %]
+<form class="form-horizontal" method="POST">
+	<div class="control-group">
+		<label class="control-label">Role:</label>
+		<div class="controls">
+			<select name='role'>
+			[% FOREACH role IN ['Current Employee', 'Former Employee', 'Business Partner', 'Passer-by'] %]
+			<option value="[% role %]">[% role %]</option>
+			[% END %]
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Title:</label>
+		<div class="controls">
+			<input name="title" type="text" required="required" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Pros:</label>
+		<div class="controls">
+			<textarea name="pros" required="required"></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Cons:</label>
+		<div class="controls">
+			<textarea name="cons" required="required"></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Rating:</label>
+		<div class="controls">
+			<div id="star"></div>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">reCaptcha:</label>
+		<div class="controls">
+			[% h.recaptcha_html %]
+		</div>
+	</div>
+
+	<div class="form-actions">
+		<button class="btn btn-primary save">Write Review</button>
+	</div>
+</form>
+[% END %]
+
+<script>
+$(document).ready(function () {
+	$('#star').raty({
+		[% IF c.param('score') %]score: [% c.param('score') %],[% END %]
+		path: '[% config.sites.static %]/assets/jquery.raty/img/'
+	});
+});
+</script>

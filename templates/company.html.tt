@@ -10,6 +10,9 @@
 [% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
+
+<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn'>Write anonymous review</a></p>
+
 <hr class="soften">
 
 [% FOREACH job IN jobs %]
