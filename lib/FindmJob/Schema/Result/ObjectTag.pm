@@ -25,13 +25,13 @@ __PACKAGE__->table("object_tag");
 
 =head2 object
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
 =head2 tag
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
@@ -45,9 +45,9 @@ __PACKAGE__->table("object_tag");
 
 __PACKAGE__->add_columns(
   "object",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "tag",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "time",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
 );
@@ -67,8 +67,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("object", "tag");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/QVnO2vwrCnJyJCfrZLwUg
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:56:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IBT6fRtBI7804IWTQCj2lw
 
 __PACKAGE__->belongs_to(
     tag => 'Tag',

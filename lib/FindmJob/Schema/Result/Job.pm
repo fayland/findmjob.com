@@ -25,7 +25,7 @@ __PACKAGE__->table("job");
 
 =head2 id
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
@@ -43,7 +43,7 @@ __PACKAGE__->table("job");
 
 =head2 company_id
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
@@ -102,13 +102,13 @@ __PACKAGE__->table("job");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "source_url",
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "title",
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "company_id",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "posted_at",
   {
     data_type => "datetime",
@@ -164,8 +164,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("source_url", ["source_url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-11 20:57:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EcN1barUdUaH4Xua/NmWBg
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:56:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Cns8cXkiNVd4RgEA6Bswaw
 
 __PACKAGE__->belongs_to(
     company => 'Company',

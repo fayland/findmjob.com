@@ -25,7 +25,7 @@ __PACKAGE__->table("company");
 
 =head2 id
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
@@ -56,7 +56,7 @@ __PACKAGE__->table("company");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "name",
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "website",
@@ -80,8 +80,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FvwKawRqGScTRaGOx9bi5A
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:56:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iTHWzl5mceJKPlVq6fhNaw
 
 use FindmJob::Utils 'seo_title';
 sub url {

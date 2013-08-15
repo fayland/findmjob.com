@@ -25,7 +25,7 @@ __PACKAGE__->table("object");
 
 =head2 id
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
   size: 22
 
@@ -45,7 +45,7 @@ __PACKAGE__->table("object");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "varchar", is_nullable => 0, size => 22 },
+  { data_type => "char", is_nullable => 0, size => 22 },
   "tbl",
   { data_type => "varchar", is_nullable => 0, size => 12 },
   "time",
@@ -65,8 +65,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-04-07 09:59:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rv4m8baP9bXuX7veRPSjBQ
+# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:56:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zWaMCJtMawKRgsMFOlrvhg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
