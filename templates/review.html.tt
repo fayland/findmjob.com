@@ -14,7 +14,7 @@
 <li><b>Company</b>: <a href='[% company.url %]'>[% company.name %]</a></li>
 
 <li><b>Role</b>: [% review.role %]</li>
-<li><b>Rating</b>: [% review.rating %]</li>
+<li><b>Rating</b>: <span class='stars' title="[% review.rating %] stars"><span style="width: [% review.rating * 20 %]%"></span></span></li>
 <li><b>Posted at</b>: <span class="timeago" title="[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]">[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]</span></li>
 
 <li><p><b>Pros</b>:</p>
