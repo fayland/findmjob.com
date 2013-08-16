@@ -68,7 +68,6 @@ span.stars, span.stars span {
   width: 80px;
   height: 16px;
 }
-
 span.stars span {
   background: url(../jquery.raty/img/star-on.png);
 }

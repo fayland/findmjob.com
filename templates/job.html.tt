@@ -20,7 +20,7 @@
 </p></li>
 [% END %]
 
-<li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a></p></li>
+<li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a> (<a href="/company/[% job.company.id %]/reviews/new" class='btn'>write anonymous review</a>)</p></li>
 [% IF job.location %]
 <li><p><b>Location</b>: <i class='icon-flag'></i><a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location %]</a></p></li>
 [% END %]
