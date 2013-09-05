@@ -13,6 +13,7 @@
     <li[% IF view_tab == 'freelance' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/+freelance/[% tag.text | seo_title %].html">Freelance ([% count.freelance %])</a></li>
 </ul>
 <div class="tab-pane fade in active">
+<p />
 
 <div class="row">
     <div class="col-md-2 pull-right">
