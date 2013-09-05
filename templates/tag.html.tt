@@ -7,14 +7,12 @@
 <h2>[% title %]</h2>
 <hr class="soften">
 
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li[% IF view_tab == '' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/[% tag.text | seo_title %].html">All ([% count.job + count.freelance %])</a></li>
-        <li[% IF view_tab == 'job' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html">Job ([% count.job %])</a></li>
-        <li[% IF view_tab == 'freelance' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/+freelance/[% tag.text | seo_title %].html">Freelance ([% count.freelance %])</a></li>
-    </ul>
-    <div class="tab-content">
-    <div class="tab-pane fade in active">
+<ul class="nav nav-tabs">
+    <li[% IF view_tab == '' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/[% tag.text | seo_title %].html">All ([% count.job + count.freelance %])</a></li>
+    <li[% IF view_tab == 'job' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html">Job ([% count.job %])</a></li>
+    <li[% IF view_tab == 'freelance' +%] class='active'[% END %]><a href="/tag/[% tag.id %]/+freelance/[% tag.text | seo_title %].html">Freelance ([% count.freelance %])</a></li>
+</ul>
+<div class="tab-pane fade in active">
 
 <div class="row">
     <div class="col-md-2 pull-right">
@@ -63,6 +61,4 @@
   </div>
 </div> <!-- <div class="row"> -->
 
-    </div>
-    </div>
 </div>

@@ -8,14 +8,12 @@
 <hr class="soften">
 
 [% tab_base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/\+(job|freelance)/', '/').replace('/$', '') %]
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li[% IF view_tab == '' +%] class='active'[% END %]><a href="[% tab_base_url %]">All</a></li>
-        <li[% IF view_tab == 'job' +%] class='active'[% END %]><a href="[% tab_base_url.replace('/search/', '/search/+job/') %]">Job</a></li>
-        <li[% IF view_tab == 'freelance' +%] class='active'[% END %]><a href="[% tab_base_url.replace('/search/', '/search/+freelance/') %]">Freelance</a></li>
-    </ul>
-    <div class="tab-content">
-    <div class="tab-pane fade in active">
+<ul class="nav nav-tabs">
+    <li[% IF view_tab == '' +%] class='active'[% END %]><a href="[% tab_base_url %]">All</a></li>
+    <li[% IF view_tab == 'job' +%] class='active'[% END %]><a href="[% tab_base_url.replace('/search/', '/search/+job/') %]">Job</a></li>
+    <li[% IF view_tab == 'freelance' +%] class='active'[% END %]><a href="[% tab_base_url.replace('/search/', '/search/+freelance/') %]">Freelance</a></li>
+</ul>
+<div class="tab-pane fade in active">
 
 <div class="row">
 
@@ -93,6 +91,4 @@
 
 </div>
 
-    </div> <!-- <div class="tab-pane fade in active"> -->
-    </div>
-</div>
+</div> <!-- <div class="tab-pane fade in active"> -->
