@@ -17,15 +17,25 @@
 <li><b>Rating</b>: <span class='stars' title="[% review.rating %] stars"><span style="width: [% review.rating * 20 %]%"></span></span></li>
 <li><b>Posted at</b>: <span class="timeago" title="[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]">[% date.format(review.inserted_at, format => '%Y-%m-%d %H:%M:%S') %]</span></li>
 
-<li><p><b>Pros</b>:</p>
-    <div class="well">
-    [% review.pros | html | html_line_break %]
+<li>
+	<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Pros</h3>
+        </div>
+        <div class="panel-body">
+            [% review.pros | html | html_line_break %]
+        </div>
     </div>
 </li>
 
-<li><p><b>Cons</b>:</p>
-    <div class="well">
-    [% review.cons | html | html_line_break %]
+<li>
+	<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Cons</h3>
+        </div>
+        <div class="panel-body">
+            [% review.cons | html | html_line_break %]
+        </div>
     </div>
 </li>
 

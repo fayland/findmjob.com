@@ -24,24 +24,30 @@
     [% END %]
 
     [% review = reviews.shift %]
-    <div class="col-md-6">
-    	[% IF review %]
-        <div class="well">
-        <h4><a href='/company/[% company.id %]/review/[% review.id %]'>[% review.title | html %]</a></h4>
-        <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+    <div class='col-md-6'>
+        [% IF review %]
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href='/company/[% company.id %]/review/[% review.id %]'>[% review.title | html %]</a></h3>
+            </div>
+            <div class="panel-body">
+                <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
         </div>
         [% END %]
     </div>
     [% job = jobs.shift %]
-    <div class="col-md-6">
-    	[% IF job %]
-        <div class="well">
-        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+    <div class='col-md-6'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
+            </div>
+            <div class="panel-body">
+                <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
         </div>
-        [% END %]
     </div>
 </div>
 [% END %]

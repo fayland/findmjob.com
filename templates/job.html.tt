@@ -58,39 +58,72 @@
             <li><p><b>[% k %]</b> [% job.extra_data.$k %]</p></li>
         [% END %]
     [% END %]
-    <!-- <div class="well">[% USE Dumper; Dumper.dump(job.extra_data) %]</div> -->
+    <!-- [% USE Dumper; Dumper.dump(job.extra_data) %] -->
 [% END %]
 
-<li><p><b>Description</b>:</p>
-<div class="well">
-[% job.description | html_line_break %]
-</div>
+<li>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Description</h3>
+        </div>
+        <div class="panel-body">
+            [% job.description | html_line_break %]
+        </div>
+    </div>
 </li>
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('jobs.perl.org') %]
         [% IF job.extra_data.skills_required %]
-        <li><p><b>Required Skill</b>:</p>
-            <div class="well">[% job.extra_data.skills_required | html_line_break %]</div>
+        <li>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Required Skill</h3>
+                </div>
+                <div class="panel-body">
+                    [% job.extra_data.skills_required | html_line_break %]
+                </div>
+            </div>
         </li>
         [% END %]
         [% IF job.extra_data.skills_desired %]
-        <li><p><b>Desired  Skill</b>:</p>
-            <div class="well">[% job.extra_data.skills_desired | html_line_break %]</div>
+        <li>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Desired Skill</h3>
+                </div>
+                <div class="panel-body">
+                    [% job.extra_data.skills_desired | html_line_break %]
+                </div>
+            </div>
         </li>
         [% END %]
     [% ELSIF job.source_url.search('/www.linkedin.com/') %]
         [% job.source_url = job.extra_data.siteJobUrl %]
         [% description = job.extra_data.descriptionSnippet %]
         [% IF job.extra_data.skillsAndExperience %]
-        <li><p><b>Desired Skills & Experience</b>:</p>
-            <div class="well">[% job.extra_data.skillsAndExperience | html_line_break %]</div>
+        <li>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Desired Skills & Experience</h3>
+                </div>
+                <div class="panel-body">
+                    [% job.extra_data.skillsAndExperience | html_line_break %]
+                </div>
+            </div>
         </li>
         [% END %]
     [% ELSIF job.source_url.search('/www.careerbuilder.com/') %]
         [% job.source_url = job.extra_data.PrinterFriendlyURL %]
-        <li><p><b>Requirements</b>:</p>
-            <div class="well">[% job.extra_data.JobRequirements | html_line_break %]</div>
+        <li>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Requirements</h3>
+                </div>
+                <div class="panel-body">
+                    [% job.extra_data.JobRequirements | html_line_break %]
+                </div>
+            </div>
         </li>
     [% END %]
 [% END %]

@@ -11,11 +11,15 @@
 
 [% FOREACH job IN jobs %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="col-md-6">
-        <div class="well">
-        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+	<div class='col-md-6'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
+            </div>
+            <div class="panel-body">
+                <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
         </div>
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]

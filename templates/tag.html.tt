@@ -17,31 +17,40 @@
     <div class="tab-pane fade in active">
 
 <div class="row">
-  <div class="col-md-2 pull-right">
-    <div class="well">
-        <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
-        <form action='/subscribe' method='post'>
-            <input type='hidden' name='keyword' value='[% tag.id %]' />
-            <input type='hidden' name='frm' value='tag' />
-            <div class="form-group"><select name="frequency_days" class="form-control input-sm">
-                <option value="1">Daily</option>
-                <option value="7">Weekly</option>
-            </select></div>
-            <div class="form-group"><input type="text" name="email" class="form-control input-sm" placeholder="Email"></div>
-            <button type="submit" class="btn btn-default">Subscribe</button>
-        </form>
+    <div class="col-md-2 pull-right">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Subscribe</h3>
+            </div>
+            <div class="panel-body">
+                <p>Do <b>NOT</b> want to miss any <b>[% q %]</b> job? subscribe now!</p>
+                <form action='/subscribe' method='post'>
+                    <input type='hidden' name='keyword' value='[% tag.id %]' />
+                    <input type='hidden' name='frm' value='tag' />
+                    <div class="form-group"><select name="frequency_days" class="form-control input-sm">
+                        <option value="1">Daily</option>
+                        <option value="7">Weekly</option>
+                    </select></div>
+                    <div class="form-group"><input type="text" name="email" class="form-control input-sm" placeholder="Email"></div>
+                    <button type="submit" class="btn btn-default">Subscribe</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 
   <div class="col-md-10">
 
 [% FOREACH job IN objects %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="col-md-6">
-        <div class="well">
-        <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
-        <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+    <div class='col-md-6'>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
+            </div>
+            <div class="panel-body">
+                <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
         </div>
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]

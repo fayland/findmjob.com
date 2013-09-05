@@ -17,11 +17,13 @@
 
 [% FOREACH review IN reviews %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="col-md-6">
-        <div class="well">
-        <h4><a href='/company/[% company.id %]/review/[% review.id %]'>[% review.title | html %]</a></h4>
-        <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+	<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href='/company/[% company.id %]/review/[% review.id %]'>[% review.title | html %]</a></h3>
+        </div>
+        <div class="panel-body">
+            <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+            <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]
