@@ -3,7 +3,7 @@ $(document).ready ->
     $.timeago.settings.allowFuture = true
     $('.timeago').timeago()
 
-    $('.search-form').submit ->
+    $('#search_form').submit ->
         q = $.trim $(this).find('input[name="q"]').val()
         loc = $.trim $(this).find('input[name="loc"]').val()
         return false unless q.length or loc.length
