@@ -32,22 +32,28 @@
             </div>
             <div class="panel-body">
                 <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-                <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
+            <div class="panel-footer text-right">
+                <a href='/company/[% company.id %]/review/[% review.id %]/[% review.title | seo_title %].html' class='btn btn-default'>View More <i class='icon-circle-arrow-right'></i></a>
             </div>
         </div>
         [% END %]
     </div>
     [% job = jobs.shift %]
     <div class='col-md-6'>
+        [% IF job %]
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
             </div>
             <div class="panel-body">
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
+            <div class="panel-footer text-right">
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='icon-circle-arrow-right'></i></a>
             </div>
         </div>
+        [% END %]
     </div>
 </div>
 [% END %]

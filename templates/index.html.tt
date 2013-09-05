@@ -59,7 +59,9 @@
             </div>
             <div class="panel-body">
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
+            <div class="panel-footer text-right">
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='icon-circle-arrow-right'></i></a>
             </div>
         </div>
     </div>
@@ -72,7 +74,9 @@
             </div>
             <div class="panel-body">
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-                <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+            </div>
+            <div class="panel-footer text-right">
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='icon-circle-arrow-right'></i></a>
             </div>
         </div>
     </div>
