@@ -9,7 +9,7 @@
 
 <hr class="soften">
 
-<ul class="unstyled">
+<ul class="list-unstyled">
 
 <li><b>Company</b>: <a href='[% company.url %]'>[% company.name %]</a></li>
 

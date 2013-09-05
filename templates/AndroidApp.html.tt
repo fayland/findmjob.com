@@ -6,15 +6,15 @@
 </div>
 
 <div class="row">
-  <div class="span4">
+  <div class="col-md-4">
     <h2>Changes</h2>
     <ul>
         <li>beta: very limited function, but suggestions are welcome.</li>
     </ul>
   </div>
 
-  <div class="offset2 span4">
-    <a href="[% config.sites.static %]/FindmJob.apk" class="btn btn-large">Download Android App <small>(beta)</small></a>
+  <div class="col-md-4 col-md-offset-2">
+    <a href="[% config.sites.static %]/FindmJob.apk" class="btn btn-default btn-lg">Download Android App <small>(beta)</small></a>
   </div>
 
 </div>

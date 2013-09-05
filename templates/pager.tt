@@ -6,8 +6,8 @@
         pmatches = [base_url, ''];
     END;
 %]
-<div class="pagination pull-right">
-  <ul>
+<div class="pull-right">
+  <ul class="pagination">
     [% IF pager.previous_page %]
     <li><a href="[% pmatches.0 %]/[% pmatches.1 %]">First</a></li>
     <li><a href="[% pmatches.0 %]/p.[% pager.previous_page %]/[% pmatches.1 %]">Prev</a></li>

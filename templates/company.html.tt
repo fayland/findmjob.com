@@ -16,30 +16,30 @@
 [% FOREACH i IN [0..5] %]
 <div class="row">
     [% IF loop.first %]
-    <div class="span6">
-    	<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn'>Write anonymous review</a></p>
+    <div class="col-md-6">
+    	<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn btn-default'>Write anonymous review</a></p>
     	<h3>Reviews</h3>
     </div>
-    <div class="span6"><h3>Jobs</h3></div>
+    <div class="col-md-6"><h3>Jobs</h3></div>
     [% END %]
 
     [% review = reviews.shift %]
-    <div class="span6">
+    <div class="col-md-6">
     	[% IF review %]
         <div class="well">
         <h4><a href='/company/[% company.id %]/review/[% review.id %]'>[% review.title | html %]</a></h4>
         <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/review/[% review.id %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
         [% END %]
     </div>
     [% job = jobs.shift %]
-    <div class="span6">
+    <div class="col-md-6">
     	[% IF job %]
         <div class="well">
         <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
         [% END %]
     </div>
@@ -47,10 +47,10 @@
 [% END %]
 
 <div class="row">
-	<div class="span6">
-        <p class="btn pull-right"><a href='/company/[% company.id %]/reviews'>More Reviews <i class='icon-circle-arrow-right'></i></a></p>
+	<div class="col-md-6">
+        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/reviews'>More Reviews <i class='icon-circle-arrow-right'></i></a></p>
     </div>
-    <div class="span6">
-        <p class="btn pull-right"><a href='/company/[% company.id %]/jobs'>More Jobs <i class='icon-circle-arrow-right'></i></a></p>
+    <div class="col-md-6">
+        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/jobs'>More Jobs <i class='icon-circle-arrow-right'></i></a></p>
     </div>
 </div>

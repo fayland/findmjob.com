@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="span8 offset2 alert alert-success">
+    <div class="col-md-8 col-md-offset-2 alert alert-success">
         <h3>Thanks for the subscription!</h3>
         <p />
         <p>Please check your mail inbox and verify your email!</p>

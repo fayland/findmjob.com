@@ -6,7 +6,7 @@
 <h2>[% title %]</h2>
 <hr class="soften">
 
-<ul class="unstyled">
+<ul class="list-unstyled">
 <li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</span></p></li>
 
 [% IF job.tags.size %]

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="span8 offset2 alert[% IF suc +%] alert-success[% END %]">
+    <div class="col-md-8 col-md-offset-2 alert[% IF suc +%] alert-success[% END %]">
         <h3>Thanks for the subscription!</h3>
         <p />
         [% IF suc %]

@@ -16,7 +16,7 @@
 <hr class="soften">
 
 [% IF errors.size %]
-<ul class='unstyled alert alert-error'>
+<ul class='list-unstyled alert alert-error'>
 	[% FOREACH err IN errors %]
 	<li>[% err %]</li>
 	[% END %]
@@ -25,51 +25,53 @@
 
 [% USE FillInForm %]
 [% FILTER fillinform fobject => c %]
-<form class="form-horizontal" method="POST">
-	<div class="control-group">
-		<label class="control-label">Role:</label>
-		<div class="controls">
-			<select name='role'>
+<form class="form-horizontal" method="POST" role="form">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Role:</label>
+		<div class="col-lg-6">
+			<select name='role' class='form-control'>
 			[% FOREACH role IN ['Current Employee', 'Former Employee', 'Business Partner', 'Passer-by'] %]
 			<option value="[% role %]">[% role %]</option>
 			[% END %]
 			</select>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label">Title:</label>
-		<div class="controls">
-			<input name="title" type="text" class="input-xxlarge" required="required" placeholder='In one sentence, describe your experience at [%+ company.name.squote %].' />
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Title:</label>
+		<div class="col-lg-6">
+			<input name="title" type="text" class="form-control" required="required" placeholder='In one sentence, describe your experience at [%+ company.name.squote %].' />
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label">Pros:</label>
-		<div class="controls">
-			<textarea name="pros" class="input-xxlarge" required="required" placeholder='Share some of the best reasons to work at [%+ company.name.squote %].'></textarea>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Pros:</label>
+		<div class="col-lg-6">
+			<textarea name="pros" class="form-control" required="required" placeholder='Share some of the best reasons to work at [%+ company.name.squote %].'></textarea>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label">Cons:</label>
-		<div class="controls">
-			<textarea name="cons" class="input-xxlarge" required="required" placeholder='Share some of the downsides of working at [%+ company.name.squote %].'></textarea>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Cons:</label>
+		<div class="col-lg-6">
+			<textarea name="cons" class="form-control" required="required" placeholder='Share some of the downsides of working at [%+ company.name.squote %].'></textarea>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label">Rating:</label>
-		<div class="controls">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Rating:</label>
+		<div class="col-lg-6">
 			<div id="star"></div>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label">reCaptcha:</label>
-		<div class="controls">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">reCaptcha:</label>
+		<div class="col-lg-6">
 			[% h.recaptcha_html %]
 		</div>
 	</div>
 
-	<div class="form-actions">
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-6">
 		<button class="btn btn-primary save">Write Review</button>
-		<a href='/company/[% company.id %]' class='btn'>Back to [% company.name %]</a>
+		<a href='/company/[% company.id %]' class='btn btn-default'>Back to [% company.name %]</a>
+		</div>
 	</div>
 </form>
 [% END %]

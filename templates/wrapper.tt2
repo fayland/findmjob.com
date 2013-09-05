@@ -3,11 +3,9 @@
 <title>[% IF title; title _ ' - '; END; -%]FindmJob.com</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <link href="[% config.sites.static %]/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="[% config.sites.static %]/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="[% config.sites.static %]/assets/css/font-awesome.min.css" rel="stylesheet" />
 <link href="[% config.sites.static %]/assets/css/findmjob.css" rel="stylesheet">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -42,20 +40,20 @@
 
 <div class="container[% IF is_fb_app +%] canvas[% END %]" style="margin-top: 10px">
 
-<header class="subhead">
+<header>
 <div class="row">
-  <div class="span4"><a href='/'><img src="[% config.sites.static %]/Logo.png" /></a></div>
-  <div class="span6 offset2" style="margin-top: 20px">
-    <form action='/search' id="search" class="search-form">
-        <input type="text" class="search-query span2" name="q" placeholder="Keyword ...">
-        <input type="text" class="search-query span2" name="loc" placeholder="Location ...">
+  <div class="col-md-4"><a href='/'><img src="[% config.sites.static %]/Logo.png" /></a></div>
+  <div class="col-md-6 col-md-offset-2" style="margin-top: 20px">
+    <form action='/search' id="search" role="form" class="form-inline">
+        <div class="form-group"><input type="text" class="form-control col-md-2" name="q" placeholder="Keyword ..."></div>
+        <div class="form-group"><input type="text" class="form-control col-md-2" name="loc" placeholder="Location ..."></div>
         <button type='submit' class="btn btn-primary" value="Search" /><i class="icon-search"></i> Search</button>
     </form>
   </div>
 </div>
 
-<div class="subnav">
-    <ul class="nav nav-pills">
+<div class="navbar navbar-default">
+    <ul class="nav navbar-nav">
       <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="icon-home icon-large"></i></a></li>
       <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='icon-user'></i> Jobs</a></li>
       <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='icon-globe'></i>  Freelances</a></li>
@@ -85,9 +83,9 @@
 
 </div>
 
+<script type="text/javascript" src="[% config.sites.static %]/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/js/jquery.timeago.js"></script>
 <script type="text/javascript" src="[% config.sites.static %]/js/findmjob.js"></script>
-
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-30546285-1']);

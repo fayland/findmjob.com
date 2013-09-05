@@ -11,17 +11,17 @@
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
 
-<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn'>Write anonymous review</a></p>
+<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn btn-default'>Write anonymous review</a></p>
 
 <hr class="soften">
 
 [% FOREACH job IN jobs %]
 [% IF loop.count MOD 2 == 1 %]<div class="row">[% END %]
-    <div class="span6">
+    <div class="col-md-6">
         <div class="well">
         <h4><a href='[% job.url %]'>[% job.title %]</a></h4>
         <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
-        <p class="btn pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='[% job.url %]'>View More <i class='icon-circle-arrow-right'></i></a></p>
         </div>
     </div>
 [% IF loop.count MOD 2 == 0 %]</div>[% END %]
