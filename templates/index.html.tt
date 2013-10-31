@@ -2,7 +2,7 @@
 
 [% USE String %]
 
-[% INCLUDE include/addthis.tt2 %]
+[% PROCESS include/addthis.tt2 %]
 <br />
 
 <hr class='soften' />

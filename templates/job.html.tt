@@ -2,9 +2,19 @@
 [% title = job.title %]
 [% description = String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]
 
-[% INCLUDE include/addthis.tt2 %]
+[% page_image = '' %]
+[% IF job.extra_data AND job.extra_data.company_logo;
+    page_image = job.extra_data.company_logo;
+   END;
+%]
+
+[% PROCESS include/addthis.tt2 %]
 <h1>[% title %]</h1>
 <hr class="soften">
+
+[% IF page_image %]
+<div class='pull-right company_logo'><img src='[% page_image %]' /></div>
+[% END %]
 
 <ul class="list-unstyled">
 <li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</span></p></li>

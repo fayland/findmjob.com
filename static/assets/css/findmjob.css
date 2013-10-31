@@ -7,3 +7,17 @@ span.stars, span.stars span {
 span.stars span {
   background: url(../jquery.raty/img/star-on.png);
 }
+
+.company_logo {
+  text-align:center;
+  background:#fff;
+  padding:5px;
+  border:1px solid #f5f5f5;
+  border-top:1px solid #eee;
+  -webkit-border-radius:2px;
+  -moz-border-radius:2px;
+}
+
+.company_logo img{
+  max-width: 100px;
+}
