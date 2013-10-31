@@ -8,17 +8,19 @@ sub root {
     return abs_path( File::Spec->catdir( $path, '..', '..' ) );
 }
 
-use YAML::Any ();
+use Mojo::Util 'slurp';
+use Mojo::JSON;
 my $__config;
 sub config {
     return $__config if $__config;
 
     my $root = root();
 
-    $__config = YAML::Any::LoadFile( File::Spec->catfile($root, 'conf', 'findmjob.yml') );
-    my $local_config_file = File::Spec->catfile($root, 'conf', 'findmjob_local.yml');
+    my $json  = Mojo::JSON->new;
+    $__config = $json->decode( slurp( File::Spec->catfile($root, 'conf', 'findmjob.json') ) );
+    my $local_config_file = File::Spec->catfile($root, 'conf', 'findmjob_local.json');
     if (-e $local_config_file) {
-        my $local_config = YAML::Any::LoadFile($local_config_file);
+        my $local_config = $json->decode( slurp($local_config_file) );
         $__config = { %$__config, %$local_config }; # simple hash merge
     }
     return $__config;
