@@ -3,6 +3,8 @@ package FindmJob::Schema::ResultSet::Company;
 use Moo;
 extends 'FindmJob::Schema::ResultSet';
 
+use Mojo::JSON;
+
 sub get_or_create {
     my ($self, $row) = @_;
 
@@ -17,11 +19,13 @@ sub get_or_create {
 
     if ($r) {
         if ($row->{extra}) {
+            my $json = Mojo::JSON->new;
+
             # merge extra
             my $extra_data = $r->extra_data;
-            $row->{extra} = { %{$row->{extra}}, %$extra_data };
+            $row->{extra} = { %{ $json->decode($row->{extra}) }, %$extra_data };
 
-            $r->extra($row->{extra});
+            $r->extra( $json->encode($row->{extra}) );
             $r->update();
             die "updated " . Dumper(\$row->{extra}) . $r->id . "\n"; use Data::Dumper;
         }
