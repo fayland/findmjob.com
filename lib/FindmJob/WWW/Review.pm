@@ -1,7 +1,6 @@
 package FindmJob::WWW::Review;
 
 use Mojo::Base 'Mojolicious::Controller';
-use Mojo::JSON;
 
 sub review {
     my $self = shift;

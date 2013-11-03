@@ -1,7 +1,6 @@
 package FindmJob::WWW::Root;
 
 use Mojo::Base 'Mojolicious::Controller';
-use Mojo::JSON;
 use Encode;
 
 sub index {

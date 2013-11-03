@@ -9,14 +9,14 @@ sub root {
 }
 
 use Mojo::Util 'slurp';
-use Mojo::JSON;
+use JSON::XS;
 my $__config;
 sub config {
     return $__config if $__config;
 
     my $root = root();
 
-    my $json  = Mojo::JSON->new;
+    my $json  = JSON::XS->new;
     $__config = $json->decode( slurp( File::Spec->catfile($root, 'conf', 'findmjob.json') ) );
     my $local_config_file = File::Spec->catfile($root, 'conf', 'findmjob_local.json');
     if (-e $local_config_file) {

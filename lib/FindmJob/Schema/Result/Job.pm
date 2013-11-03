@@ -187,10 +187,10 @@ sub tags {
 }
 
 # extra data
-use Mojo::JSON;
+use JSON::XS;
 sub extra_data {
     my $extra = (shift)->extra;
-    return ($extra and $extra =~ /^\{/) ? Mojo::JSON->new->decode($extra) : {};
+    return ($extra and $extra =~ /^\{/) ? JSON::XS->new->utf8->decode($extra) : {};
 }
 
 1;
