@@ -40,7 +40,7 @@ if (@ARGV and -e $file) {
     open(my $fh, '>', $file);
     print $fh $token->{token} . '|' . $token->{secret};
     close($fh);
-    print $token->{url};
+    print $token->{url} . "\n";
 }
 
 1;

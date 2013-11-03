@@ -1,4 +1,4 @@
-*_local.yml
+*_local.json
 etc/htpasswd
 */tmp/*
 script/oneoff/*.token.txt
