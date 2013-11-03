@@ -2,14 +2,30 @@
 [% description = 'Jobs at ' _ company.name %]
 [% meta_keywords = company.name %]
 
+[% page_image = '' %]
+[%
+    IF company.extra_data AND company.extra_data.logo;
+        page_image = company.extra_data.logo;
+    END;
+%]
+
 [% USE String %]
 
 [% PROCESS include/addthis.tt2 %]
+
+<div class="row">
+
+[% IF page_image %]
+<div class='company_logo pull-left' style='margin-right: 20px'><a href='[% job.company.url %]'><img src='[% page_image %]' /></a></div>
+[% END %]
+
 <h2>[% title %]</h2>
 [% IF company.website %]
 [% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
+
+</div>
 
 <hr class="soften">
 

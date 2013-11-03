@@ -120,7 +120,6 @@ sub job {
         $job->title( decode_utf8($job->title) );
         $job->description( decode_utf8($job->description) );
     }
-    $job->{extra_data} = Mojo::JSON->new->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
     $self->stash(job => $job);
 
     $self->render(template => 'job');
@@ -138,7 +137,6 @@ sub freelance {
         return $self->render(template => 'gone');
     }
 
-    $job->{extra_data} = Mojo::JSON->new->decode( encode_utf8($job->extra) ) if $job->extra =~ /^\{/;
     $self->stash(job => $job);
 
     $self->render(template => 'freelance');

@@ -186,4 +186,11 @@ sub tags {
     return [ $schema->resultset('ObjectTag')->get_tags_by_object($self->id) ];
 }
 
+# extra data
+use Mojo::JSON;
+sub extra_data {
+    my $extra = (shift)->extra;
+    return ($extra and $extra =~ /^\{/) ? Mojo::JSON->new->decode($extra) : {};
+}
+
 1;

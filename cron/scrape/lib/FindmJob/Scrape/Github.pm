@@ -41,7 +41,7 @@ sub run {
                 name => $item->{company},
                 website => $item->{company_url},
                 extra    => $json->encode({
-                    company_logo => $item->{company_logo},
+                    logo => $item->{company_logo},
                 }),
             },
             contact   => $item->{how_to_apply},

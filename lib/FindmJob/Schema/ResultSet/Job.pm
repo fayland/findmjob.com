@@ -19,6 +19,7 @@ sub create_job {
     }
     $row->{expired_at} ||= \"DATE_ADD(NOW(), INTERVAL 1 MONTH)"; #" default to expired after 1 month
     $row->{inserted_at} = time();
+    $row->{location_id} ||= '';
     $self->create($row);
 }
 

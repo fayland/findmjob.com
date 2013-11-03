@@ -3,9 +3,12 @@
 [% description = String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]
 
 [% page_image = '' %]
-[% IF job.extra_data AND job.extra_data.company_logo;
-    page_image = job.extra_data.company_logo;
-   END;
+[%
+    IF job.company.extra_data AND job.company.extra_data.logo;
+        page_image = job.company.extra_data.logo;
+    ELSIF job.extra_data AND job.extra_data.company_logo;
+        page_image = job.extra_data.company_logo;
+    END;
 %]
 
 [% PROCESS include/addthis.tt2 %]
@@ -13,7 +16,7 @@
 <hr class="soften">
 
 [% IF page_image %]
-<div class='pull-right company_logo'><img src='[% page_image %]' /></div>
+<div class='pull-right company_logo'><a href='[% job.company.url %]'><img src='[% page_image %]' /></a></div>
 [% END %]
 
 <ul class="list-unstyled">

@@ -47,6 +47,8 @@ sub run {
 sub on_single_page {
     my ($self, $item) = @_;
 
+    my $json = JSON::XS->new->utf8;
+
     my $link = $item->{link};
     my $resp = $self->get($link);
     my $content = $resp->decoded_content;
@@ -63,6 +65,10 @@ sub on_single_page {
         my $company;
         $company = $byline->look_down(_tag => 'a', target => '_blank') if $byline;
         $company ||= $hed->look_down(_tag => 'a', class => 'employer');
+
+        my $companylogo = $tree->look_down(_tag => 'div', id => 'companylogo');
+        $companylogo = $companylogo->look_down(_tag => 'img') if $companylogo;
+        $companylogo = $companylogo->attr('src') if $companylogo;
 
         my @tags = $hed->look_down(_tag => 'a', class => 'post-tag');
         @tags = map { $_->as_trimmed_text } @tags;
@@ -99,6 +105,9 @@ sub on_single_page {
             company => {
                 name => $company->as_trimmed_text,
                 website => $company->attr('href'),
+                $companylogo ? ( extra => $json->encode({
+                    logo => $companylogo,
+                }) ) : (),
             },
             contact   => $apply,
             posted_at => human_to_db_datetime($item->{'pubDate'}),

@@ -93,4 +93,11 @@ sub url {
 # alias title as name
 sub title { (shift)->name }
 
+# extra data
+use Mojo::JSON;
+sub extra_data {
+    my $extra = (shift)->extra;
+    return ($extra and $extra =~ /^\{/) ? Mojo::JSON->new->decode($extra) : {};
+}
+
 1;
