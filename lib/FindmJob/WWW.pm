@@ -28,9 +28,6 @@ sub startup {
         public_key  => $config->{api}->{recaptcha}->{pub},
         private_key => $config->{api}->{recaptcha}->{pri},
     });
-    $self->plugin(mail => {
-        from => $config->{email}->{default_from},
-    });
 
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);

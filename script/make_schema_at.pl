@@ -13,7 +13,7 @@ make_schema_at(
     {   debug => 1,
         dump_directory => "$Bin/../lib",
         use_moose => 0,
-        exclude => qr/location_alias/,
+        exclude => qr/location_alias|emails/,
     },
     [   @$dbi_config    ]
 );

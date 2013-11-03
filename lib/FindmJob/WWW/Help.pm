@@ -1,6 +1,7 @@
 package FindmJob::WWW::Help;
 
 use Mojo::Base 'Mojolicious::Controller';
+use FindmJob::Email 'sendmail';
 
 sub contact {
     my $self = shift;
@@ -31,13 +32,9 @@ sub contact {
             return;
         }
 
-        ## Mojolicious::Plugin::Mail
-        $self->mail(
-            to => $self->sconfig->{email}->{default_to},
-            $email ? (from => $email) : (),
-            subject => $subject,
-            data => $body
-        );
+        # sendmail
+        sendmail($email || $self->sconfig->{email}->{default_from}, $self->sconfig->{email}->{default_to}, $subject, $body);
+
         $self->flash('message' => "Request sent, we'll get back to you asap.");
         return $self->redirect_to('/');
     }

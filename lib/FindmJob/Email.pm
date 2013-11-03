@@ -6,20 +6,20 @@ use base 'Exporter';
 use vars qw/@EXPORT_OK/;
 @EXPORT_OK = qw/sendmail/;
 
-use MIME::Lite;
+use FindmJob::Basic;
 
 sub sendmail {
-    my ($from, $to, $subject, $body) = @_;
+	my ($from, $to, $subject, $body, $html_body);
+	if (@_ > 1) {
+		($from, $to, $subject, $body) = @_;
+	} else {
+		my %d = @_;
+		($from, $to, $subject, $body, $html_body) = @d{qw/from to subject body html_body/};
+	}
 
-    my $msg = MIME::Lite->new(
-        From    => $from,
-        To      => $to,
-        Subject => $subject,
-        Type    => 'TEXT',
-        Data    => $body
-    );
-
-    $msg->send; # send via default
+    my $dbh = FindmJob->dbh;
+    $dbh->do("INSERT INTO emails (`from`, `to`, `subject, `body`, `html_body`) VALUES (?, ?, ?, ?)", undef,
+    	$from, $to, $subject, $body, $html_body);
 }
 
 1;

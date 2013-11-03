@@ -3,72 +3,72 @@
 use strict;
 use warnings;
 use FindBin qw/$Bin/;
-use lib "$Bin/../../lib"; # FindmJob::Basic
+
+BEGIN {
+	use Proc::PID::File;
+	exit if Proc::PID::File->running( { dir => $Bin } );
+};
+
+use lib "$Bin/../../lib";
 use FindmJob::Basic;
-use Data::Dumper;
-use JSON::XS;
 use MIME::Lite;
-use Template;
 use HTML::FormatText;
 use HTML::TreeBuilder;
 
-my $root    = FindmJob::Basic->root;
-my $config  = FindmJob::Basic->config;
-my $dbh     = FindmJob::Basic->dbh;
-my $dbh_log = FindmJob::Basic->dbh_log;
+my $config = FindmJob::Basic->config;
+my $schema = FindmJob::Basic->schema;
+my $dbh = $schema->storage->dbh;
 
-my $tt = Template->new(
-    INCLUDE_PATH => "$root/templates/emails",
-    PRE_CHOMP    => 0,
-    POST_CHOMP   => 0,
-);
-my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 520);
-
-my $mark_as_sent_sth = $dbh->prepare("UPDATE findmjob_log.email SET status=1 WHERE id = ?");
-
-my $sql = "SELECT * FROM findmjob_log.email WHERE status=0";
-my $sth = $dbh->prepare($sql);
+my $sth = $dbh->prepare("SELECT * FROM emails");
 $sth->execute();
-while (my $r = $sth->fetchrow_hashref) {
-    print "on $r->{id} / $r->{to}\n";
+while (my $e = $sth->fetchrow_hashref) {
+	print "# sending $e->{subject} to $e->{to}\n";
 
-    my ($html, $text);
-    my $data = decode_json($r->{data});
-    my $template = $data->{template};
-    if ($template) {
-        $tt->process("$template.html", $data, \$html)
-            || die $tt->error(), "\n";
-        my $tree = HTML::TreeBuilder->new_from_content($html);
-        $text = $formatter->format($tree);
-        $tree = $tree->delete;
-    } else {
-        $text = delete $data->{TEXT};
-        $html = delete $data->{HTML};
-    }
-
-    my $from = $data->{from} || $config->{email}->{default_from};
-    my $to   = $r->{to} || $config->{email}->{default_to};
-    my $msg = MIME::Lite->new(
-        From    => $from,
-        To      => $to,
-        Subject => $data->{subject},
+	my $msg = MIME::Lite->new(
+        From    => $e->{from} || $config->{emails}->{default_from},
+        To      => $e->{to},
+	    Subject => $e->{subject},
         Type    => 'multipart/mixed'
     );
-    if ($text) {
+    if ($e->{body}) {
         $msg->attach(
             Type => 'TEXT',
-            Data => $text
+            Data => $e->{body}
         );
     }
-    if ($html) {
+    if ($e->{html_body}) {
         $msg->attach(
             Type => 'text/html',
-            Data => $html
+            Data => $e->{html_body}
         );
+        unless ($e->{body}) {
+        	my $tree = HTML::TreeBuilder->new_from_content($e->{html_body});
+		    my $text = $formatter->format($tree);
+		    $tree = $tree->delete;
+		    $msg->attach(
+	            Type => 'TEXT',
+	            Data => $text
+	        );
+        }
     }
-    $msg->send; # send via default
 
-    $mark_as_sent_sth->execute($r->{id});
+	if ($e->{extra_headers}) {
+        my @parts = split("\r\n", $e->{extra_headers});
+        foreach my $p (@parts) {
+            next unless $p;
+            my @p = split(/\:\s*/, $p, 2);
+            if (lc($p[0]) eq 'content-type') {
+                $msg->attr('content-type', $p[1]);
+            } else {
+                $msg->add(@p);
+            }
+        }
+    }
+    # MIME::Lite->send("sendmail", "/usr/sbin/exim -t -oi -oem");
+	$msg->send() or die "[ERROR][Email] Error sending email: $!\n";
+
+	$dbh->do("INSERT IGNORE INTO emails_sent SELECT * FROM emails WHERE id = ?", undef, $e->{id});
+	$dbh->do("DELETE FROM emails WHERE id = ?", undef, $e->{id});
 }
 
 1;
