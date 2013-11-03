@@ -6,22 +6,32 @@ extends 'FindmJob::Schema::ResultSet';
 sub get_or_create {
     my ($self, $row) = @_;
 
-    if ($row->{website}) {
-        my $r = $self->get_by_website( $row->{website} );
-        return $r if $r;
-    }
-    if ($row->{ref}) {
-        my $r = $self->get_by_ref( $row->{ref} );
-        return $r if $r;
-    }
+    my $r;
+    $r = $self->get_by_website( $row->{website} ) if $row->{website};
+    $r ||= $self->get_by_ref( $row->{ref} ) if $row->{ref};
+
     $row->{name} //= $row->{website}; #/
+    $row->{name} = 'Unknown' unless length $row->{name};
     $row->{name} =~ s#http://(www\.)?##;
+    $r ||= $self->get_by_name( $row->{name} );
+
+    if ($r) {
+        if ($row->{extra}) {
+            # merge extra
+            my $extra_data = $r->extra_data;
+            $row->{extra} = { %{$row->{extra}}, %$extra_data };
+
+            $r->extra($row->{extra});
+            $r->update();
+            die "updated " . Dumper(\$row->{extra}) . $r->id . "\n"; use Data::Dumper;
+        }
+        return $r;
+    }
+
     $row->{website} //= ''; #/
     $row->{ref} //= ''; #/
     $row->{extra} //= ''; #/
-    $row->{name} = 'Unknown' unless length $row->{name};
-    my $r = $self->get_by_name( $row->{name} );
-    return $r if $r;
+
     return $self->create($row);
 }
 
