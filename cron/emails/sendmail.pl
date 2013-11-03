@@ -19,6 +19,8 @@ my $config = FindmJob::Basic->config;
 my $schema = FindmJob::Basic->schema;
 my $dbh = $schema->storage->dbh;
 
+my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 520);
+
 my $sth = $dbh->prepare("SELECT * FROM emails");
 $sth->execute();
 while (my $e = $sth->fetchrow_hashref) {
