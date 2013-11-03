@@ -33,7 +33,12 @@ sub contact {
         }
 
         # sendmail
-        sendmail($email || $self->sconfig->{email}->{default_from}, $self->sconfig->{email}->{default_to}, $subject, $body);
+        sendmail( {
+            to => $self->sconfig->{email}->{default_to},
+            subject => $subject,
+            body => $body,
+            ($email) ? (extra_headers => "Reply-To: $email") : ()
+        } );
 
         $self->flash('message' => "Request sent, we'll get back to you asap.");
         return $self->redirect_to('/');

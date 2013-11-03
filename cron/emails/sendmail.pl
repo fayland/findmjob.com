@@ -39,19 +39,20 @@ while (my $e = $sth->fetchrow_hashref) {
         );
     }
     if ($e->{html_body}) {
+        unless ($e->{body}) {
+            my $tree = HTML::TreeBuilder->new_from_content($e->{html_body});
+            my $text = $formatter->format($tree);
+            $tree = $tree->delete;
+            $msg->attach(
+                Type => 'TEXT',
+                Data => $text
+            );
+        }
+
         $msg->attach(
             Type => 'text/html',
             Data => $e->{html_body}
         );
-        unless ($e->{body}) {
-        	my $tree = HTML::TreeBuilder->new_from_content($e->{html_body});
-		    my $text = $formatter->format($tree);
-		    $tree = $tree->delete;
-		    $msg->attach(
-	            Type => 'TEXT',
-	            Data => $text
-	        );
-        }
     }
 
 	if ($e->{extra_headers}) {
@@ -66,7 +67,8 @@ while (my $e = $sth->fetchrow_hashref) {
             }
         }
     }
-    # MIME::Lite->send("sendmail", "/usr/sbin/exim -t -oi -oem");
+
+    # MIME::Lite->send("sendmail", "/usr/sbin/sendmail");
 	$msg->send() or die "[ERROR][Email] Error sending email: $!\n";
 
 	$dbh->do("INSERT IGNORE INTO emails_sent SELECT * FROM emails WHERE id = ?", undef, $e->{id});
