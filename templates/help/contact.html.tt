@@ -1,0 +1,49 @@
+[% title = 'Contact Us' %]
+
+<h2>[% title %]</h2>
+<hr class="soften">
+
+[% IF errors.size %]
+<ul class='list-unstyled alert alert-error'>
+	[% FOREACH err IN errors %]
+	<li>[% err %]</li>
+	[% END %]
+</ul>
+[% END %]
+
+[% USE FillInForm %]
+[% FILTER fillinform fobject => c %]
+<form class="form-horizontal" method="POST" role="form">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Email:</label>
+		<div class="col-lg-6">
+			<input name="email" type="text" class="form-control" />
+			<span class="help-block">You'll get a reply to this email.</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Subject:</label>
+		<div class="col-lg-6">
+			<input name="subject" type="text" class="form-control" required="required" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Body:</label>
+		<div class="col-lg-6">
+			<textarea name="body" class="form-control" required="required"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">reCaptcha:</label>
+		<div class="col-lg-6">
+			[% h.recaptcha_html %]
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-6">
+		<button class="btn btn-primary save">Send Request</button>
+		</div>
+	</div>
+</form>
+[% END %]

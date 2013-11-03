@@ -40,15 +40,15 @@ sub run {
             company => {
                 name => $item->{company},
                 website => $item->{company_url},
+                extra    => $json->encode({
+                    company_logo => $item->{company_logo},
+                }),
             },
             contact   => $item->{how_to_apply},
             posted_at => human_to_db_datetime($item->{created_at}),
             description => $desc,
             location => $item->{location},
             type     => $item->{type},
-            extra    => $json->encode({
-                company_logo => $item->{company_logo},
-            }),
             tags     => ['github', @tags],
         };
         $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};

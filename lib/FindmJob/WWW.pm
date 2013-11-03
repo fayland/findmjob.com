@@ -28,6 +28,9 @@ sub startup {
         public_key  => $config->{api}->{recaptcha}->{pub},
         private_key => $config->{api}->{recaptcha}->{pri},
     });
+    $self->plugin(mail => {
+        from => $config->{email}->{default_from},
+    });
 
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);
@@ -76,6 +79,8 @@ sub startup {
     $r->get('/company/:cid/review/:rid')->to(controller => 'Review', action => 'review');
     $r->get('/company/:cid/review/:rid/*seo')->to(controller => 'Review', action => 'review');
     $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
+
+    $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
 
     ## html files
     $r->get('/:html.html' => sub {
