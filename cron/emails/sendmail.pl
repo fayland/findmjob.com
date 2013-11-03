@@ -27,7 +27,7 @@ while (my $e = $sth->fetchrow_hashref) {
 	print "# sending $e->{subject} to $e->{to}\n";
 
 	my $msg = MIME::Lite->new(
-        From    => $e->{from} || $config->{emails}->{default_from},
+        From    => $e->{from} || $config->{email}->{default_from},
         To      => $e->{to},
 	    Subject => $e->{subject},
         Type    => 'multipart/mixed'
