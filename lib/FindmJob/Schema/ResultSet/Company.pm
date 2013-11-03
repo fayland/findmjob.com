@@ -27,7 +27,6 @@ sub get_or_create {
 
             $r->extra( $json->encode($row->{extra}) );
             $r->update();
-            die "updated " . Dumper(\$row->{extra}) . $r->id . "\n"; use Data::Dumper;
         }
         return $r;
     }
