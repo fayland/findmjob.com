@@ -20,7 +20,6 @@ my $tt = Template->new(
     PRE_CHOMP    => 0,
     POST_CHOMP   => 0,
 );
-my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 520);
 
 my $mark_as_sent_sth = $dbh->prepare("UPDATE subscriber SET last_sent=? WHERE id = ?");
 
@@ -37,11 +36,11 @@ while (my $r = $sth->fetchrow_hashref) {
     $tt->process("subscribe_confirm.html", $r, \$html)
         || die $tt->error(), "\n";
 
-    sendmail(
+    sendmail( {
     	to => $to,
     	subject => "[FindmJob.com] Confirmation on subscription",
     	html_body => $html
-    )
+    } );
 
     $mark_as_sent_sth->execute(time(), $r->{id});
 }

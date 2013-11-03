@@ -72,7 +72,7 @@
 [% END %]
 [% error = c.flash('error') %]
 [% IF error %]
-<div class="col-md-8 col-md-offset-2 alert alert-error clearfix">[% error %]</div>
+<div class="col-md-8 col-md-offset-2 alert alert-danger clearfix">[% error %]</div>
 [% END %]
 
 [% content %]

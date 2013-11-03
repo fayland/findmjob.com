@@ -9,17 +9,18 @@ use vars qw/@EXPORT_OK/;
 use FindmJob::Basic;
 
 sub sendmail {
-	my ($from, $to, $subject, $body, $html_body);
-	if (@_ > 1) {
+	my ($from, $to, $subject, $body, $html_body, $extra_headers);
+	if (scalar(@_) > 1) {
+		print scalar(@_) . "\n";
 		($from, $to, $subject, $body) = @_;
 	} else {
-		my %d = @_;
-		($from, $to, $subject, $body, $html_body) = @d{qw/from to subject body html_body/};
+		my %d = %{(shift)};
+		($from, $to, $subject, $body, $html_body, $extra_headers) = @d{qw/from to subject body html_body extra_headers/};
 	}
 
-    my $dbh = FindmJob->dbh;
-    $dbh->do("INSERT INTO emails (`from`, `to`, `subject, `body`, `html_body`) VALUES (?, ?, ?, ?)", undef,
-    	$from, $to, $subject, $body, $html_body);
+    my $dbh = FindmJob::Basic->dbh;
+    $dbh->do("INSERT INTO emails (`from`, `to`, `subject`, `body`, `html_body`, `extra_headers`) VALUES (?, ?, ?, ?, ?, ?)", undef,
+    	$from, $to, $subject, $body, $html_body, $extra_headers);
 }
 
 1;

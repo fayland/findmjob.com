@@ -4,7 +4,7 @@
 <hr class="soften">
 
 [% IF errors.size %]
-<ul class='list-unstyled alert alert-error'>
+<ul class='list-unstyled alert alert-danger'>
 	[% FOREACH err IN errors %]
 	<li>[% err %]</li>
 	[% END %]
