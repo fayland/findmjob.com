@@ -95,9 +95,10 @@ sub title { (shift)->name }
 
 # extra data
 use JSON::XS;
+use Encode;
 sub extra_data {
     my $extra = (shift)->extra;
-    return ($extra and $extra =~ /^\{/) ? JSON::XS->new->utf8->decode($extra) : {};
+    return ($extra and $extra =~ /^\{/) ? JSON::XS->new->utf8->decode( decode_utf8($extra) ) : {};
 }
 
 1;
