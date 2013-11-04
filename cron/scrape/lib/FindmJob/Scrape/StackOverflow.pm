@@ -67,6 +67,10 @@ sub on_single_page {
         $company ||= $hed->look_down(_tag => 'a', class => 'employer');
 
         my $companylogo = $tree->look_down(_tag => 'div', id => 'companylogo');
+        unless ($companylogo) {
+            my $company = $tree->look_down(_tag => 'div', class => 'company');
+            $companylogo = $company->look_down(_tag => 'div', class => 'logo') if $company;
+        }
         $companylogo = $companylogo->look_down(_tag => 'img') if $companylogo;
         $companylogo = $companylogo->attr('src') if $companylogo;
 
