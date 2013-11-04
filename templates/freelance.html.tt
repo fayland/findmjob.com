@@ -2,7 +2,6 @@
 [% title = job.title %]
 [% description = String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]
 
-[% PROCESS include/addthis.tt2 %]
 <h2>[% title %]</h2>
 <hr class="soften">
 
