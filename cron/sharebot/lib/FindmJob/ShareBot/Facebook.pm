@@ -54,7 +54,7 @@ sub share {
     @tags = sort { length($a) <=> length($b) } @tags;
     @tags = map { s/\s+//g; $_ } @tags;
     push @tags, 'jobs', 'hiring', 'careers';
-    @tags = map { s/[\&\#\+]//g; $_ } @tags; # no &, # in tags
+    @tags = map { s/[\&\#\+\/]//g; $_ } @tags; # no &, # in tags
     @tags = grep { length($_) and $_ ne 'c' } @tags;
     @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
