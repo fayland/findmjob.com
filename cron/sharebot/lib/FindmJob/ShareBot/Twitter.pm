@@ -29,11 +29,11 @@ sub share {
     my @tags = @{ $job->tags };
     @tags = map { $_->{text} } @tags;
     @tags = $self->remove_useless_tags(@tags);
-    @tags = grep { $_ ne 'c' } @tags;
+    @tags = map { s/[\&\#\+\s\.\-]+//g; $_ } @tags; # no &, # in tags
+    @tags = grep { length($_) and $_ ne 'c' } @tags;
     @tags = shuffle @tags; # shuffle should work better so every tag has the chance
     @tags = splice(@tags, 0, 2);
     push @tags, 'jobs', 'hiring', 'careers';
-    @tags = map { s/[\&\#\+\s\.\-]+//g; $_ } @tags; # no &, # in tags
     @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
 

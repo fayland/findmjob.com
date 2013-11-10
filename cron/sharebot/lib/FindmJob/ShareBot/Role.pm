@@ -14,7 +14,7 @@ sub remove_useless_tags {
     my @useless_tags = ('jobs.perl.org', 'odesk', 'elance', 'careerbuilder', 'linkedin', 'github', 'joelonsoftware', 'stackoverflow', 'Other', 'Others', 'freelancer', 'freelance', 'smashingmagazine', 'rubynow', 'crunchboard');
 
     my %useless_tags = map { $_ => 1 } @useless_tags;
-    @tags = grep { not $useless_tags{$_} } @tags;
+    @tags = grep { length($_) and not $useless_tags{$_} } @tags;
     return @tags;
 }
 
