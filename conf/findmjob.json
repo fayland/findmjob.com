@@ -71,6 +71,10 @@
       "name": "findmjob",
       "email": "findmjob.com@gmail.com",
       "password": "secret"
+    },
+    "GooglePlus": {
+      "email": "findmjob.com@gmail.com",
+      "password": "secret"
     }
   }
 }
