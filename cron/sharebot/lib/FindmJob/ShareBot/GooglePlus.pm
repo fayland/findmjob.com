@@ -16,7 +16,7 @@ sub share {
     @tags = shuffle @tags; # shuffle should work better so every tag has the chance
     @tags = splice(@tags, 0, 2);
     push @tags, 'jobs', 'hiring', 'careers';
-    @tags = map { '+' . $_ } @tags;
+    @tags = map { '#' . $_ } @tags;
     my $tags = join(' ', @tags);
 
     my $config = $self->config;

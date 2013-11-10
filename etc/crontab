@@ -29,3 +29,4 @@
 40 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Facebook
 */20 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m LinkedIn -n 5
 #50 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Tumblr
+*/5 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m GooglePlus -n 1
