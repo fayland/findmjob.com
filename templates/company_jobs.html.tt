@@ -11,7 +11,7 @@
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
 
-<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn btn-default'>Write anonymous review</a></p>
+<p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn btn-default'><i class='fa fa-comment-o'></i> Write anonymous review</a></p>
 
 <hr class="soften">
 
