@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         files: {
           'static/assets/findmjob.min.css': [
             'static/assets/src/bootstrap/css/bootstrap.min.css',
-            'static/assets/src/css/font-awesome.min.css',
+            'static/assets/src/font-awesome/css/font-awesome.css',
             'static/assets/src/css/findmjob.css'
           ]
         }
