@@ -13,7 +13,6 @@ use FindmJob::Email 'sendmail';
 my $root    = FindmJob::Basic->root;
 my $config  = FindmJob::Basic->config;
 my $dbh     = FindmJob::Basic->dbh;
-my $dbh_log = FindmJob::Basic->dbh_log;
 
 my $tt = Template->new(
     INCLUDE_PATH => "$root/templates/emails",

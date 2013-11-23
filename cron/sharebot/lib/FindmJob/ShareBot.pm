@@ -30,9 +30,9 @@ sub run {
         page => 1
     });
 
-    my $dbh_log = $self->dbh_log;
-    my $is_inserted_sth = $dbh_log->prepare("SELECT 1 FROM `findmjob_log`.`sharebot` WHERE id = ? AND site = ?");
-    my $insert_sth = $dbh_log->prepare("INSERT INTO `findmjob_log`.`sharebot` (id, site, time) VALUES (?, ?, ?)");
+    my $dbh = $self->dbh;
+    my $is_inserted_sth = $dbh->prepare("SELECT 1 FROM `stats_sharebot` WHERE id = ? AND site = ?");
+    my $insert_sth = $dbh->prepare("INSERT INTO `stats_sharebot` (id, site, time) VALUES (?, ?, ?)");
 
     my $posted_num = 0;
     while (my $job = $job_rw->next) {

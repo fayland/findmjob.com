@@ -12,14 +12,13 @@ use URI;
 
 my $config  = FindmJob::Basic->config;
 my $dbh     = FindmJob::Basic->dbh;
-my $dbh_log = FindmJob::Basic->dbh_log;
 
 my $text;
 
 # sharebots
 my $daysago = time() - 7 * 86400;
-my $sql = "select DATE(FROM_UNIXTIME(time)) d, site, COUNT(*) as cnt from `findmjob_log`.sharebot WHERE time > $daysago group by d, site ORDER by d DESC";
-my $sth = $dbh_log->prepare($sql);
+my $sql = "select DATE(FROM_UNIXTIME(time)) d, site, COUNT(*) as cnt from `stats_sharebot` WHERE time > $daysago group by d, site ORDER by d DESC";
+my $sth = $dbh->prepare($sql);
 $sth->execute();
 $text .= "Daily ShareBot Stats:\n";
 my %sharebot_stats;
@@ -44,7 +43,7 @@ $text .= "Daily Scrape Stats:\n";
 
 foreach my $table ('job', 'freelance') {
     $sql = "select DATE(FROM_UNIXTIME(inserted_at)) d, source_url from $table WHERE inserted_at > $daysago";
-    $sth = $dbh_log->prepare($sql);
+    $sth = $dbh->prepare($sql);
     $sth->execute();
     while (my ($d, $url) = $sth->fetchrow_array) {
         my $host = URI->new($url)->host;

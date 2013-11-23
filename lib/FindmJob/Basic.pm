@@ -42,7 +42,4 @@ sub dbh {
     return $schema->storage->dbh;
 }
 
-# we may have standalone database later, but not now
-sub dbh_log { dbh() }
-
 1;
