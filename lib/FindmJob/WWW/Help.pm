@@ -1,6 +1,7 @@
 package FindmJob::WWW::Help;
 
 use Mojo::Base 'Mojolicious::Controller';
+use FindmJob::Basic;
 use FindmJob::Email 'sendmail';
 
 sub contact {
@@ -46,5 +47,12 @@ sub contact {
 
 }
 
+sub html {
+    my $self = shift;
+    my $html = $self->stash('html');
+    if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
+        $self->render(template => 'help/' . $html);
+    }
+}
 
 1;

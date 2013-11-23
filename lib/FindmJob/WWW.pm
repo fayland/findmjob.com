@@ -80,15 +80,7 @@ sub startup {
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
-
-    ## html files
-    $r->get('/help/:html.html' => sub {
-        my $self = shift;
-        my $html = $self->stash('html');
-        if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
-            $self->render(template => 'help/' . $html);
-        }
-    });
+    $r->get('/help/:html.html')->to(controller => 'Help', action => 'html');
 }
 
 1;
