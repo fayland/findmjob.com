@@ -7,10 +7,10 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         files: {
-          'static/assets/css/findmjob.min.css': [
-            'static/bootstrap/css/bootstrap.min.css',
-            'static/assets/css/font-awesome.min.css',
-            'static/assets/css/findmjob.css'
+          'static/assets/findmjob.min.css': [
+            'static/assets/src/bootstrap/css/bootstrap.min.css',
+            'static/assets/src/css/font-awesome.min.css',
+            'static/assets/src/css/findmjob.css'
           ]
         }
       }
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     coffee: {
       compile: {
         files: {
-          'static/js/facebook.js': 'static/js/facebook.coffee'
+          'static/assets/src/js/facebook.js': 'static/assets/src/js/facebook.coffee'
         }
       },
       compileJoined: {
@@ -26,20 +26,20 @@ module.exports = function(grunt) {
           join: true
         },
         files: {
-          'static/js/findmjob.js': 'static/js/coffee/*.coffee'
+          'static/assets/src/js/findmjob.js': 'static/assets/src/js/coffee/*.coffee'
         }
       }
     },
     uglify: {
       build: {
         src: [
-          'static/js/jquery.min.js',
-          'static/bootstrap/js/bootstrap.min.js',
-          'static/js/jquery.timeago.js',
-          'static/js/findmjob.js',
-          'static/js/ga.js'
+          'static/assets/src/js/jquery.min.js',
+          'static/assets/src/bootstrap/js/bootstrap.min.js',
+          'static/assets/src/js/jquery.timeago.js',
+          'static/assets/src/js/findmjob.js',
+          'static/assets/src/js/ga.js'
         ],
-        dest: 'static/js/findmjob.min.js'
+        dest: 'static/assets/findmjob.min.js'
       }
     }
   });
