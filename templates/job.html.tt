@@ -25,7 +25,7 @@
 <li><p><b>Tags</b>:
 [% tags_text = [] %]
 [% FOREACH tag IN job.tags %]
-<i class="fa-tag"></i><a href='/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html'>[% tag.text %]</a>
+<i class="fa fa-tag"></i><a href='/tag/[% tag.id %]/+job/[% tag.text | seo_title %].html'>[% tag.text %]</a>
 [% tags_text.push(tag.text) %]
 [% END %]
 [% meta_keywords = tags_text.join(', ') %]
@@ -34,7 +34,7 @@
 
 <li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a> (<a href="/company/[% job.company.id %]/reviews/new">write anonymous review</a>)</p></li>
 [% IF job.location %]
-<li><p><b>Location</b>: <i class='fa-flag'></i><a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location %]</a></p></li>
+<li><p><b>Location</b>: <i class='fa fa-flag'></i><a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location %]</a></p></li>
 [% END %]
 [% IF job.type %]
 <li><p><b>Hours</b>: [% job.type %]</p></li>
@@ -145,6 +145,6 @@
 [% END %]
 
 [% out_url = job.source_url %]
-<li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank"><i class='fa-external-link'></i> [% job.source_url %]</a></p></li>
+<li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank"><i class='fa fa-external-link'></i> [% job.source_url %]</a></p></li>
 
 </ul>
