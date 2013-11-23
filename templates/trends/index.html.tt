@@ -29,7 +29,7 @@ $(function () {
 	    },
         yAxis: {
             title: {
-                text: 'Count'
+                text: 'Jobs'
             }
         },
         tooltip: {
