@@ -20,10 +20,11 @@
     <h3>Twitter/Facebook/LinkedIn</h3>
     <p>
       <ul class="list-unstyled">
-        <li><i class='icon-twitter-sign'></i><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
-        <li><i class='icon-facebook-sign'></i><a href='https://apps.facebook.com/findmjob/' target='_blank'>https://apps.facebook.com/findmjob/</a></li>
-        <li><i class='icon-facebook-sign'></i><a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
-        <li><i class='icon-linkedin-sign'></i><a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
+        <li><i class='fa-twitter-square'></i><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
+        <li><i class='fa-facebook-square'></i><a href='https://apps.facebook.com/findmjob/' target='_blank'>https://apps.facebook.com/findmjob/</a></li>
+        <li><i class='fa-facebook-square'></i><a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
+        <li><i class='fa-linkedin-square'></i><a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
+        <li><i class='fa-google-plus-square'></i><a href='https://plus.google.com/u/0/108951842434983124305/posts' target='_blank'>Google Plus</a>
       </ul>
     </p>
   </div>

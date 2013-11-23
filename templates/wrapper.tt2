@@ -3,7 +3,6 @@
 <title>[% IF title; title _ ' - '; END; -%]FindmJob.com</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <link href="[% config.sites.static %]/assets/findmjob.min.css" rel="stylesheet">
-<link href="[% config.sites.static %]/assets/src/font-awesome/css/font-awesome.css" rel="stylesheet">
 <script type="text/javascript" src="[% config.sites.static %]/assets/findmjob.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +51,7 @@
     <form action='/search' id="search_form" role="form" class="form-inline">
         <div class="form-group"><input type="text" class="form-control col-md-2" name="q" placeholder="Keyword ..."></div>
         <div class="form-group"><input type="text" class="form-control col-md-2" name="loc" placeholder="Location ..."></div>
-        <button type='submit' class="btn btn-primary" value="Search" /><i class="icon-search"></i> Search</button>
+        <button type='submit' class="btn btn-primary" value="Search" /><i class="fa-search"></i> Search</button>
     </form>
   </div>
 </div>
@@ -60,10 +59,10 @@
 <div class="navbar navbar-default">
     <ul class="nav navbar-nav">
       <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="fa-home fa-large"></i></a></li>
-      <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='icon-user'></i> Jobs</a></li>
-      <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='icon-globe'></i>  Freelances</a></li>
-      <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html"><i class='icon-question-sign'></i> How Does It Work?</a></li>
-      <li[% IF base_url == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html"><i class='icon-mobile-phone'></i> Android App</a></li>
+      <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='fa-user'></i> Jobs</a></li>
+      <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='fa-globe'></i>  Freelances</a></li>
+      <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html"><i class='fa-question-sign'></i> How Does It Work?</a></li>
+      <li[% IF base_url == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html"><i class='fa-mobile-phone'></i> Android App</a></li>
     </ul>
 </div>
 
