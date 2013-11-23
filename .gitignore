@@ -9,3 +9,5 @@ mobile/android/libs/cordova-*.jar
 mobile/android/bin/*
 mobile/android/gen/*
 static/sitemap.*.gz
+
+node_modules/*

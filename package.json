@@ -1,0 +1,13 @@
+{
+  "name": "findmjob",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-cssmin": "~0.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fayland/findmjob.git"
+  },
+  "author": "Fayland Lam <fayland@gmail.com>"
+}
