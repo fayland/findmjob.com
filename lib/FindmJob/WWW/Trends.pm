@@ -30,8 +30,8 @@ SQL
     $self->stash(
         languages => \%languages,
         skills => \%skills,
-        top10_languages => [splice(@languages, 0, 15)],
-        top10_skills => [splice(@skills, 0, 15)],
+        top_languages => [splice(@languages, 0, 15)],
+        top_skills => [splice(@skills, 0, 15)],
     );
 }
 

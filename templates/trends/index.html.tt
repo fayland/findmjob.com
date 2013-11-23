@@ -3,5 +3,70 @@
 <h2>[% title %]</h2>
 <hr class="soften">
 
-[% USE Dumper; Dumper.dump(languages); Dumper.dump(skills);  %]
-[% Dumper.dump(top10_languages) %]
+<h3>Languages</h3>
+
+<script src="[% config.sites.static %]/assets/highcharts/highcharts.js"></script>
+<script src="[% config.sites.static %]/assets/highcharts/modules/exporting.js"></script>
+
+<div id="languages" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="skills" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+$(function () {
+	var options = {
+    	chart: { type: 'spline' },
+        title: {
+            text: 'Monthly Jobs By Language',
+            x: -20 //center
+        },
+        xAxis: {
+	        type: 'datetime',
+	        dateTimeLabelFormats: { // don't display the dummy year
+	            month: '%b %e',
+	            year: '%b'
+	        }
+	    },
+        yAxis: {
+            title: {
+                text: 'Count'
+            }
+        },
+        tooltip: {
+            formatter: function() {
+	            return '<b>'+ this.series.name +'</b><br/>'+
+	                Highcharts.dateFormat('%b %e', this.x) +': '+ this.y;
+	        }
+        },
+        credits: { enabled: false }
+    };
+    options.series = [
+    	[%+ FOREACH lang IN top_languages %]
+    	{
+    		name: '[% lang %]',
+    		data: [
+    			[%+ FOREACH row IN languages.${lang} %]
+    				[% dt_arr = row.dt.split('-') %]
+    				[Date.UTC([% dt_arr.0 %], [% dt_arr.1 - 1 %], [% dt_arr.2 %]), [% row.num %]][% UNLESS loop.last %],[% END %]
+    			[% END +%]
+    		]
+    	}[% UNLESS loop.last %],[% END %]
+    	[% END +%]
+	];
+    $('#languages').highcharts(options);
+    options.title.text = 'Monthly Jobs By Skill';
+    options.series = [
+    	[%+ FOREACH skill IN top_skills %]
+    	{
+    		name: '[% skill %]',
+    		data: [
+    			[%+ FOREACH row IN skills.${skill} %]
+    				[% dt_arr = row.dt.split('-') %]
+    				[Date.UTC([% dt_arr.0 %], [% dt_arr.1 - 1 %], [% dt_arr.2 %]), [% row.num %]][% UNLESS loop.last %],[% END %]
+    			[% END +%]
+    		]
+    	}[% UNLESS loop.last %],[% END %]
+    	[% END +%]
+	];
+    $('#skills').highcharts(options);
+});
+</script>
