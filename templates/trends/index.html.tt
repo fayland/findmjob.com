@@ -3,12 +3,13 @@
 <h2>[% title %]</h2>
 <hr class="soften">
 
-<h3>Languages</h3>
-
 <script src="[% config.sites.static %]/assets/highcharts/highcharts.js"></script>
 <script src="[% config.sites.static %]/assets/highcharts/modules/exporting.js"></script>
 
+<h3>Languages</h3>
 <div id="languages" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<h3>Skills</h3>
 <div id="skills" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">

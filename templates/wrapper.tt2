@@ -61,8 +61,7 @@
       <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="fa fa-home fa-lg"></i></a></li>
       <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='fa fa-user'></i> Jobs</a></li>
       <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='fa fa-globe'></i> Freelances</a></li>
-      <li[% IF base_url == '/HowDoesItWork.html' %] class="active"[% END %]><a href="/HowDoesItWork.html"><i class='fa fa-question-circle'></i> How Does It Work?</a></li>
-      <li[% IF base_url == '/AndroidApp.html' %] class="active"[% END %]><a href="/AndroidApp.html"><i class='fa fa-mobile-phone'></i> Android App</a></li>
+      <li[% IF base_url == '/trends' %] class="active"[% END %]><a href='/trends'><i class='fa fa-bar-chart-o'></i> Trends</a></li>
     </ul>
 </div>
 
@@ -91,7 +90,7 @@
     <link rel="alternate" type="application/rss+xml" href="[% base_url %]/feed.rss" title="RSS 2.0">
     <link rel="alternate" type="application/atom+xml" href="[% base_url %]/feed.atom" title="Atom 1.0">
     [% END %]
-    <p>&copy; FindmJob.com | <a href='/help/contact'>Contact</a></p>
+    <p>&copy; FindmJob.com | <a href='/help/contact'><i class='fa fa-envelope-o'></i> Contact</a> | <a href="/help/HowDoesItWork.html"><i class='fa fa-question-circle'></i> How Does It Work?</a> | <a href="/help/AndroidApp.html"><i class='fa fa-mobile-phone'></i> Android App</a></p>
 </footer>
 
 </div>

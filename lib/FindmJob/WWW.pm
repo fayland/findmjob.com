@@ -82,10 +82,10 @@ sub startup {
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
 
     ## html files
-    $r->get('/:html.html' => sub {
+    $r->get('/help/:html.html' => sub {
         my $self = shift;
         my $html = $self->stash('html');
-        if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/" . $html . ".html.tt") {
+        if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
             $self->render(template => $html);
         }
     });
