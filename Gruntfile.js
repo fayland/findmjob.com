@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         },
         files: {
           'static/assets/findmjob.min.css': [
-            'static/assets/src/bootstrap/css/bootstrap.min.css',
+            'static/assets/src/bootstrap/css/bootstrap.css',
             'static/assets/src/font-awesome/css/font-awesome.css',
             'static/assets/src/css/findmjob.css'
           ]
@@ -37,7 +37,6 @@ module.exports = function(grunt) {
       build: {
         src: [
           'static/assets/src/js/jquery.min.js',
-          'static/assets/src/bootstrap/js/bootstrap.min.js',
           'static/assets/src/js/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
           'static/assets/src/js/ga.js'
