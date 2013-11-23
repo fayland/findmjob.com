@@ -1,0 +1,6 @@
+[% title = 'Job Trends' %]
+
+<h2>[% title %]</h2>
+<hr class="soften">
+
+[% USE Dumper; Dumper.dump(languages); Dumper.dump(skills);  %]

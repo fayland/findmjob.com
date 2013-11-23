@@ -77,6 +77,8 @@ sub startup {
     $r->get('/company/:cid/review/:rid/*seo')->to(controller => 'Review', action => 'review');
     $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
 
+    $r->get('/trends')->to(controller => 'Trends', action => 'index');
+
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
 
     ## html files
