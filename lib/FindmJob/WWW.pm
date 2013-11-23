@@ -86,7 +86,7 @@ sub startup {
         my $self = shift;
         my $html = $self->stash('html');
         if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
-            $self->render(template => $html);
+            $self->render(template => 'help/' . $html);
         }
     });
 }
