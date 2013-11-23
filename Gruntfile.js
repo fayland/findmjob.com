@@ -19,11 +19,11 @@ module.exports = function(grunt) {
       }
     },
     coffee: {
-      compile: {
-        files: {
-          'static/assets/src/js/facebook.js': 'static/assets/src/js/facebook.coffee'
-        }
-      },
+      // compile: {
+      //   files: {
+      //     'static/assets/src/js/facebook.js': 'static/assets/src/js/facebook.coffee'
+      //   }
+      // },
       compileJoined: {
         options: {
           join: true

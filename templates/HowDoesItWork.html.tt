@@ -13,18 +13,17 @@
         <a href='/tag/Perl/feed.rss'>http://findmjob.com/tag/Perl/feed.rss</a> or <a href='/tag/Ruby/feed.atom'>http://findmjob.com/tag/Ruby/feed.atom</a>
     </p>
     <p>
-        You can find it in the right bottom of the page next to <img src='[% config.sites.static %]/images/rss.png' />
+        You can find it in the right bottom of the page next to <i class='fa fa-rss-square fa-lg'></i>
     </p>
   </div>
   <div class="col-md-4">
     <h3>Twitter/Facebook/LinkedIn</h3>
     <p>
       <ul class="list-unstyled">
-        <li><i class='fa fa-twitter-square'></i><a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
-        <li><i class='fa fa-facebook-square'></i><a href='https://apps.facebook.com/findmjob/' target='_blank'>https://apps.facebook.com/findmjob/</a></li>
-        <li><i class='fa fa-facebook-square'></i><a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
-        <li><i class='fa fa-linkedin-square'></i><a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
-        <li><i class='fa fa-google-plus-square'></i><a href='https://plus.google.com/u/0/108951842434983124305/posts' target='_blank'>Google Plus</a>
+        <li><i class='fa fa-twitter-square'></i> <a href='https://twitter.com/findmjob' target='_blank'>https://twitter.com/findmjob</a></li>
+        <li><i class='fa fa-facebook-square'></i> <a href='https://facebook.com/findmjob' target='_blank'>https://facebook.com/findmjob</a></li>
+        <li><i class='fa fa-linkedin-square'></i> <a href='http://www.linkedin.com/in/findmjob' target='_blank'>http://www.linkedin.com/in/findmjob</a></li>
+        <li><i class='fa fa-google-plus-square'></i> <a href='https://plus.google.com/u/0/108951842434983124305/posts' target='_blank'>Google Plus</a>
       </ul>
     </p>
   </div>
