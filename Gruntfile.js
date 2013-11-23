@@ -14,10 +14,26 @@ module.exports = function(grunt) {
 	      ]
 	    }
 	  }
+	},
+	coffee: {
+	  compile: {
+	  	files: {
+	  	  'static/js/facebook.js': 'static/js/facebook.coffee'
+	  	}
+	  },
+	  compileJoined: {
+	    options: {
+	      join: true
+	    },
+	    files: {
+	      'static/js/findmjob.js': 'static/js/coffee/*.coffee'
+	    }
+	  }
 	}
   });
 
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
 
-  grunt.registerTask('default', ['cssmin']);
+  grunt.registerTask('default', ['cssmin', 'coffee']);
 };
