@@ -6,6 +6,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     cssmin: {
       combine: {
+        options: {
+          keepSpecialComments: 0
+        },
         files: {
           'static/assets/findmjob.min.css': [
             'static/assets/src/bootstrap/css/bootstrap.min.css',

@@ -20,7 +20,7 @@
                 [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
                 [% tags = ['Perl', 'Python', 'Ruby', 'PHP', 'Java', 'ruby-on-rails', 'Javascript', 'MySQL', 'jQuery', 'AWS', 'iOS', 'Django', 'WordPress', 'Joomla', 'ASP.Net', 'iPhone', 'Android', 'HTML5'] %]
                 [% FOREACH tag IN tags %]
-                <li><i class="fa-tag"></i> <a href='/tag/[% tag %]'>[% tag %]</a></li>
+                <li><i class="fa fa-tag"></i> <a href='/tag/[% tag %]'>[% tag %]</a></li>
                 [% END %]
             </ul>
         </div>
@@ -34,7 +34,7 @@
         <div class="panel-body">
             <ul class='list-inline'>
                 [% FOREACH location IN popular_locations %]
-                <li><i class='fa-flag'></i> <a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
+                <li><i class='fa fa-flag'></i> <a href='/location/[% location.id %]/[% location.text | seo_title %].html'>[% location.text | html %]</a></li>
                 [% END %]
             </ul>
         </div>
@@ -61,7 +61,7 @@
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
             </div>
             <div class="panel-footer text-right">
-                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa-circle-arrow-right'></i></a>
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa fa-circle-arrow-right'></i></a>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
             </div>
             <div class="panel-footer text-right">
-                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa-circle-arrow-right'></i></a>
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa fa-circle-arrow-right'></i></a>
             </div>
         </div>
     </div>
@@ -85,9 +85,9 @@
 
 <div class="row">
     <div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/jobs'>More Jobs <i class='fa-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='/jobs'>More Jobs <i class='fa fa-circle-arrow-right'></i></a></p>
     </div>
     <div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/freelances'>More Freelances <i class='fa-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='/freelances'>More Freelances <i class='fa fa-circle-arrow-right'></i></a></p>
     </div>
 </div>
