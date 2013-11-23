@@ -50,7 +50,7 @@
                 <p>[% String.new(review.pros).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
             </div>
             <div class="panel-footer text-right">
-                <a href='/company/[% company.id %]/review/[% review.id %]/[% review.title | seo_title %].html' class='btn btn-default'>View More <i class='fa-circle-arrow-right'></i></a>
+                <a href='/company/[% company.id %]/review/[% review.id %]/[% review.title | seo_title %].html' class='btn btn-default'>View More <i class='fa fa-arrow-circle-right'></i></a>
             </div>
         </div>
         [% END %]
@@ -66,7 +66,7 @@
                 <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
             </div>
             <div class="panel-footer text-right">
-                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa-circle-arrow-right'></i></a>
+                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa fa-arrow-circle-right'></i></a>
             </div>
         </div>
         [% END %]
@@ -76,9 +76,9 @@
 
 <div class="row">
 	<div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/reviews'>More Reviews <i class='fa-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/reviews'>More Reviews <i class='fa fa-arrow-circle-right'></i></a></p>
     </div>
     <div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/jobs'>More Jobs <i class='fa-circle-arrow-right'></i></a></p>
+        <p class="btn btn-default pull-right"><a href='/company/[% company.id %]/jobs'>More Jobs <i class='fa fa-arrow-circle-right'></i></a></p>
     </div>
 </div>
