@@ -7,7 +7,7 @@ use lib "$Bin/../../lib"; # FindmJob::Basic etc.
 use lib "$Bin/../lib";    # FindmJob::Role::
 use lib "$Bin/lib";       # FindmJob::Scrape::
 use Getopt::Long;
-use Class::Load 'load_class';
+use Module::Runtime 'use_module';
 
 my $m;
 my %options;
@@ -20,14 +20,12 @@ unless ($m) {
     die <<USAGE;
 perl $0 [options]
     options:
-        -m, --module        running module, eg: JobsPerlOrg
+        -m, --module        running module, eg: Perl
         --update            in updating mode
 USAGE
 }
 
 my $module = "FindmJob::Scrape::$m";
-load_class($module) or die "Failed to load $module\n";
-
-$module->new(%options)->run;
+use_module($module)->new(%options)->run;
 
 1;

@@ -2,7 +2,7 @@ package FindmJob::Role::UA;
 
 use Moo::Role;
 use MooX::Types::MooseLike::Base qw(:all);
-use Class::Load 'load_class';
+use Module::Runtime 'use_module';
 
 has 'ua_class' => (is => 'rw', isa => Str, default => sub { 'LWP::UserAgent' });
 has 'ua_args'  => (is => 'rw', isa => HashRef, default => sub { {
@@ -13,9 +13,7 @@ has 'ua' => (
 );
 sub _build_ua {
     my $self = shift;
-    my $class = $self->ua_class;
-    load_class($class) or die;
-    return $class->new( %{$self->ua_args} );
+    return use_module($self->ua_class)->new( %{$self->ua_args} );
 }
 
 sub get {

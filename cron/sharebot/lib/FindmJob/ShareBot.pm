@@ -2,7 +2,7 @@ package FindmJob::ShareBot;
 
 use Moo;
 use MooX::Options;
-use Class::Load 'load_class';
+use Module::Runtime 'use_module';
 with 'FindmJob::ShareBot::Role';
 
 option 'module' => (is => 'ro', format => 's', required => sub { 1 }, short => 'm');
@@ -16,8 +16,7 @@ sub run {
     my @modules = split(/\,/, $self->module);
     foreach my $m (@modules) {
         my $module = "FindmJob::ShareBot::$m";
-        load_class($module) or die "Failed to load $module\n";
-        push @plugins, $module->new;
+        push @plugins, use_module($module)->new;
     }
 
     # random so that every job have the chance
