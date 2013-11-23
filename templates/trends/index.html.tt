@@ -4,3 +4,4 @@
 <hr class="soften">
 
 [% USE Dumper; Dumper.dump(languages); Dumper.dump(skills);  %]
+[% Dumper.dump(top10_languages) %]
