@@ -90,7 +90,7 @@
     <link rel="alternate" type="application/rss+xml" href="[% base_url %]/feed.rss" title="RSS 2.0">
     <link rel="alternate" type="application/atom+xml" href="[% base_url %]/feed.atom" title="Atom 1.0">
     [% END %]
-    <p>&copy; FindmJob.com | <a href='/help/contact'><i class='fa fa-envelope-o'></i> Contact</a> | <a href="/help/HowDoesItWork.html"><i class='fa fa-question-circle'></i> How Does It Work?</a> | <a href="/help/AndroidApp.html"><i class='fa fa-mobile-phone'></i> Android App</a></p>
+    <p>&copy; FindmJob.com | <a href='/help/contact'><i class='fa fa-envelope-o'></i> Contact</a> | <a href="/help/HowDoesItWork.html"><i class='fa fa-question'></i> How Does It Work?</a> | <a href="/help/AndroidApp.html"><i class='fa fa-mobile-phone'></i> Android App</a></p>
 </footer>
 
 </div>
