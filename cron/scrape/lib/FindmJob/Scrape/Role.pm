@@ -58,9 +58,12 @@ sub get_location_id_from_text {
 
     my $countries_regex = $self->countries_regex;
     # parse country
+    my $country = '';
     my $o_text = $text;
-    ($text =~ s{(^|\,\s*|\s+)($countries_regex)$}{}) and my $country = $2;
-    $country = 'United States' if $country and $country eq 'USA';
+    if ($text =~ s{(^|\,\s*|\s+)($countries_regex)$}{}) { # {}()
+        $country = $2;
+    }
+    $country = 'United States' if $country eq 'USA';
     if ($row) {
         $row->update({ city => $text, country => $country }) if $country;
         return $row->id;

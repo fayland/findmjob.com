@@ -69,6 +69,10 @@
         [% FOREACH k IN job.extra_data.keys %]
             <li><p><b>[% k %]</b> [% job.extra_data.$k %]</p></li>
         [% END %]
+    [% ELSIF job.source_url.search('/djangojobs.net/') %]
+        [% FOREACH k IN job.extra_data.keys %]
+            <li><p><b>[% k %]</b> [% job.extra_data.$k %]</p></li>
+        [% END %]
     [% END %]
     <!-- [% USE Dumper; Dumper.dump(job.extra_data) %] -->
 [% END %]
