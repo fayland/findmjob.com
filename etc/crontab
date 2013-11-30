@@ -19,6 +19,7 @@
 0 * * * * perl /findmjob.com/cron/scrape/run.pl -m RubyNow
 10 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m CrunchBoard
 20 */2 * * * perl /findmjob.com/cron/scrape/run.pl -m CareerBuilder
+20 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m DjangoJobs
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
