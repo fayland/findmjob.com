@@ -29,6 +29,10 @@ print "DELETE job object: $rows\n";
 $rows = $dbh->do("DELETE FROM object_tag where object not in (SELECT id FROM object)");
 print "DELETE object_tag: $rows\n";
 
+# tags not used anymore
+$rows = $dbh->do("DELETE FROM tag where id not in (SELECT DISTINCT tag FROM object_tag)");
+print "DELETE tag: $rows\n";
+
 print "Done\n";
 
 1;
