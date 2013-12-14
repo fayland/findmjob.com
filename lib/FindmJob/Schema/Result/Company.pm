@@ -52,6 +52,18 @@ __PACKAGE__->table("company");
   data_type: 'text'
   is_nullable: 0
 
+=head2 is_deletable
+
+  data_type: 'tinyint'
+  default_value: 1
+  extra: {unsigned => 1}
+  is_nullable: 0
+
+=head2 data
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -65,6 +77,15 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 32 },
   "extra",
   { data_type => "text", is_nullable => 0 },
+  "is_deletable",
+  {
+    data_type => "tinyint",
+    default_value => 1,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
+  "data",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -80,8 +101,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:56:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iTHWzl5mceJKPlVq6fhNaw
+# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-14 21:47:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hI3qGJUeX0fl70ColIzDzg
 
 use FindmJob::Utils 'seo_title';
 sub url {
