@@ -8,10 +8,10 @@ sub startup {
     my $self = shift;
 
     my $config = FindmJob::Basic->config;
-    $config->{hypnotoad} = {
+    $self->config(hypnotoad => {
         listen => ['http://*:8081'],
         workers => 2,
-    };
+    });
     $self->secret($config->{secret_hash});
     $self->helper(sconfig => sub { return $config });
     $self->helper(schema => sub { FindmJob::Basic->schema });
