@@ -33,6 +33,11 @@ print "DELETE object_tag: $rows\n";
 $rows = $dbh->do("DELETE FROM tag where id not in (SELECT DISTINCT tag FROM object_tag)");
 print "DELETE tag: $rows\n";
 
+# company does not have any jobs
+$dbh->do("UPDATE company SET is_deletable=0 WHERE id IN (SELECT DISTINCT company_id FROM company_review)");
+$rows = $dbh->do("DELETE FROM company WHERE is_deletable=1 AND id NOT IN (SELECT DISTINCT company_id FROM job)");
+print "DELETE compnay: $rows\n";
+
 print "Done\n";
 
 1;

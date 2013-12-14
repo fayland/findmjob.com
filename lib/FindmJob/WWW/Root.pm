@@ -150,6 +150,11 @@ sub company {
     my $company = $schema->resultset('Company')->find($companyid);
     $self->stash(company => $company);
 
+    unless ($job) {
+        $self->res->code(410); # Gone
+        return $self->render(template => 'gone', object => 'company');
+    }
+
     my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
     }, {

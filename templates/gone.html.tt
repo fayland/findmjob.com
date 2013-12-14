@@ -10,6 +10,8 @@
             <li>The freelance job you're looking for is no longer active.</li>
             [% ELSIF object == 'tag' %]
             <li>Sorry, we couldn’t find that related tag. It might have been removed.</li>
+            [% ELSIF object == 'company' %]
+            <li>Sorry, we couldn’t find that related company. It might have been removed due to no related jobs.</li>
             [% END %]
             <li>Have you misspelled the url?</li>
             <li>If you feel something is wrong, please <a href="mailto:findmjob.com@gmail.com"><i class='fa fa-envelope'></i>contact us</a>.</li>
