@@ -36,10 +36,11 @@ sub startup {
     $self->plugin('basic_auth');
     $r = $r->under(sub {
         my $self = shift;
-        return $self->render(text => 'Permission Denied.')
-          unless $self->basic_auth(
-                  realm => sub { return 1 if "@_" eq $config->{admin}->{auth} }
-          );
+        unless ( $self->basic_auth( realm => sub { return 1 if "@_" eq $config->{admin}->{auth} } ) ) {
+            $self->render(text => 'Permission Denied.');
+            return 0;
+        }
+        return 1;
     });
 
     $r->any('/')->to(controller => 'Root', action => 'index');
