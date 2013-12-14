@@ -13,6 +13,9 @@
     "main": "http://findmjob.com",
     "static": "http://static.findmjob.com"
   },
+  "admin": {
+    "auth": "admin password"
+  },
   "email": {
     "default_from": "noreply@findmjob.com",
     "default_to": "findmjob.com@gmail.com"
