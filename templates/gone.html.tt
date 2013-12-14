@@ -2,12 +2,14 @@
     <div class="col-md-8 col-md-offset-2 alert alert-warning">
         <h3>410 Gone</h3>
         <ul>
-            [% IF base_url.search('/job') %]
+            [% IF object == 'job' %]
             <li>Sorry, we couldn’t find that job. It might have expired or been removed.</li>
             <li>The job you're looking for is no longer active.</li>
-            [% ELSIF base_url.search('/freelance') %]
+            [% ELSIF object == 'freelance' %]
             <li>Sorry, we couldn’t find that freelance job. It might have expired or been removed.</li>
             <li>The freelance job you're looking for is no longer active.</li>
+            [% ELSIF object == 'tag' %]
+            <li>Sorry, we couldn’t find that related tag. It might have been removed.</li>
             [% END %]
             <li>Have you misspelled the url?</li>
             <li>If you feel something is wrong, please <a href="mailto:findmjob.com@gmail.com"><i class='fa fa-envelope'></i>contact us</a>.</li>

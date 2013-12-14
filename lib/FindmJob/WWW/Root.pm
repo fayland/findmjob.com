@@ -112,7 +112,7 @@ sub job {
 
     unless ($job) {
         $self->res->code(410); # Gone
-        return $self->render(template => 'gone');
+        return $self->render(template => 'gone', object => 'job');
     }
 
     if ($job->source_url =~ 'jobs.github.com') {
@@ -133,7 +133,7 @@ sub freelance {
 
     unless ($job) {
         $self->res->code(410); # Gone
-        return $self->render(template => 'gone');
+        return $self->render(template => 'gone', object => 'freelance');
     }
 
     $self->stash(job => $job);
@@ -249,6 +249,11 @@ sub tag {
         $tagid = $tag->id if $tag;
     }
     $self->stash(tag => $tag);
+
+    unless ($tag) {
+        $self->res->code(410); # Gone
+        return $self->render(template => 'gone', object => 'tag');
+    }
 
     my ($view_tab) = ($self->req->url->path =~ m{/\+(freelance|job)/});
     $view_tab ||= '';
