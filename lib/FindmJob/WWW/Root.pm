@@ -150,7 +150,7 @@ sub company {
     my $company = $schema->resultset('Company')->find($companyid);
     $self->stash(company => $company);
 
-    unless ($job) {
+    unless ($company) {
         $self->res->code(410); # Gone
         return $self->render(template => 'gone', object => 'company');
     }
