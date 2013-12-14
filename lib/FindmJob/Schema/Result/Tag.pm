@@ -41,6 +41,11 @@ __PACKAGE__->table("tag");
   is_nullable: 1
   size: 24
 
+=head2 data
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -50,6 +55,8 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 64 },
   "category",
   { data_type => "varchar", is_nullable => 1, size => 24 },
+  "data",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -79,8 +86,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("text", ["text"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07035 @ 2013-08-15 18:59:08
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bBncHVv3utDnwVio8mmLog
+# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-14 22:46:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mOIVYrx0dCQrESPBrzQ0cg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
