@@ -8,6 +8,10 @@ use File::Spec::Functions 'catdir';
 sub startup {
     my $self = shift;
 
+    $self->config(hypnotoad => {
+        listen => ['http://*:8080'],
+    });
+
     my $config = FindmJob::Basic->config;
     $self->secret($config->{secret_hash});
     $self->helper(sconfig => sub { return $config });
