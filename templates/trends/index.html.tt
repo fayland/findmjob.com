@@ -12,6 +12,9 @@
 <h3>Skills</h3>
 <div id="skills" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+<h3>Softwares</h3>
+<div id="softwares" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 <script type="text/javascript">
 $(function () {
 	var options = {
@@ -54,6 +57,7 @@ $(function () {
     	[% END +%]
 	];
     $('#languages').highcharts(options);
+
     options.title.text = 'Monthly Jobs By Skill';
     options.series = [
     	[%+ FOREACH skill IN top_skills %]
@@ -69,5 +73,21 @@ $(function () {
     	[% END +%]
 	];
     $('#skills').highcharts(options);
+
+    options.title.text = 'Monthly Jobs By Softwares';
+    options.series = [
+        [%+ FOREACH software IN top_softwares %]
+        {
+            name: '[% software %]',
+            data: [
+                [%+ FOREACH row IN softwares.${software} %]
+                    [% dt_arr = row.dt.split('-') %]
+                    [Date.UTC([% dt_arr.0 %], [% dt_arr.1 - 1 %], [% dt_arr.2 %]), [% row.num %]][% UNLESS loop.last %],[% END %]
+                [% END +%]
+            ]
+        }[% UNLESS loop.last %],[% END %]
+        [% END +%]
+    ];
+    $('#softwares').highcharts(options);
 });
 </script>

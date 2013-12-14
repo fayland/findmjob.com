@@ -15,7 +15,7 @@ has 'language_regex' => ( is => 'lazy' );
 sub _build_language_regex {
     my $self = shift;
     my $schema = $self->schema;
-    my @tags = $schema->resultset('Tag')->search( { category => ['language', 'skill'] } )->all;
+    my @tags = $schema->resultset('Tag')->search( { category => ['language', 'skill', 'software'] } )->all;
     @tags = map { $_->text } @tags;
     my $tags = join('|', map { quotemeta($_) } @tags);
     return $tags;
