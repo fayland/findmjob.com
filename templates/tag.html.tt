@@ -1,10 +1,36 @@
 [% title = tag.text %]
 [% has_feed = 1 %]
 
+[% page_image = '' %]
+[%
+    IF tag.data AND tag.data.logo;
+        page_image = tag.data.logo;
+    END;
+%]
+
 [% USE String %]
 
 [% PROCESS include/addthis.tt2 %]
+
+<div class="row">
+
+[% IF page_image %]
+<div class='tag_logo pull-left' style='margin-right: 20px'>
+    [% IF tag.data.url %]
+    <a href='[% tag.data.url %]' target='_blank'><img src='[% page_image %]' /></a>
+    [% ELSE %]
+    <img src='[% page_image %]' />
+    [% END %]
+</div>
+[% END %]
+
 <h2>[% title %]</h2>
+[% IF tag.data.desc %]
+<p>[% tag.data.desc %]</p>
+[% END %]
+
+</div>
+
 <hr class="soften">
 
 <ul class="nav nav-tabs">

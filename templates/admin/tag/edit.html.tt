@@ -3,6 +3,7 @@
 [% IF c.req.method == 'POST'; fdat = c.req.body_params.to_hash; ELSE; fdat = {
 	id => tag.id,
 	'data[logo]' => tag.data.logo,
+	'data[url]'  => tag.data.url,
 	'data[desc]' => tag.data.desc,
 	category => tag.category,
 	text => tag.text
@@ -32,6 +33,13 @@
 		<label class="col-lg-2 control-label">Logo:</label>
 		<div class="col-lg-6">
 			<input type="text" name="data[logo]" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">URL:</label>
+		<div class="col-lg-6">
+			<input type="text" name="data[url]" class="form-control" />
 		</div>
 	</div>
 

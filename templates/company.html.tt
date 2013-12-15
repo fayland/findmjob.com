@@ -15,13 +15,22 @@
 
 <div class="row">
 
+[% IF company.website %]
+[% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
+[% END %]
+
 [% IF page_image %]
-<div class='company_logo pull-left' style='margin-right: 20px'><a href='[% job.company.url %]'><img src='[% page_image %]' /></a></div>
+<div class='company_logo pull-left' style='margin-right: 20px'>
+    [% IF company.website %]
+    <a href='[% company.website %]' target='_blank'><img src='[% page_image %]' /></a>
+    [% ELSE %]
+    <img src='[% page_image %]' />
+    [% END %]
+</div>
 [% END %]
 
 <h2>[% title %]</h2>
 [% IF company.website %]
-[% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]
 <p><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></p>
 [% END %]
 

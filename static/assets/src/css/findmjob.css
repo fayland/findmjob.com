@@ -8,7 +8,7 @@ span.stars span {
   background: url(../jquery.raty/img/star-on.png);
 }
 
-.company_logo {
+.company_logo, .tag_logo {
   text-align:center;
   background:#fff;
   padding:5px;
@@ -18,6 +18,6 @@ span.stars span {
   -moz-border-radius:2px;
 }
 
-.company_logo img{
+.company_logo img, .tag_logo img {
   max-width: 100px;
 }
