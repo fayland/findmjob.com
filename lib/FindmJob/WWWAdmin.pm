@@ -55,6 +55,8 @@ sub startup {
     $r->any('/')->to('root#index');
     $r->any('/tag')->to('tag#index');
     $r->any('/tag/edit')->to('tag#edit');
+    $r->any('/companycorrection')->to('CompanyCorrection#index');
+    $r->any('/companycorrection/edit')->to('CompanyCorrection#edit');
 
 }
 

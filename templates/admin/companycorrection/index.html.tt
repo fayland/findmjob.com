@@ -1,0 +1,18 @@
+[% USE Dumper %]
+[% IF corrections.size %]
+<table class='table table-bordered table-condensed'>
+	<thead>
+		<tr><th>ID</th><th>By</th><th>Data</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+		[% FOREACH correction IN corrections %]
+		<tr>
+			<td>[% correction.id %]</td><td>[% correction.edit_by %]</td><td>[% Dumper.dump(correction.data) %]</td>
+			<td>
+				<a href='/companycorrection/edit?id=[% correction.id %]'>Edit</a>
+			</td>
+		</tr>
+		[% END %]
+	</tbody>
+</table>
+[% END %]

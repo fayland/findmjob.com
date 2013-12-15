@@ -1,21 +1,3 @@
-[% title = company.name _ ' Correction' %]
-[% description = title %]
-[% meta_keywords = title %]
-
-[% USE String %]
-
-<h2>[% title %]</h2>
-
-<hr class="soften">
-
-[% IF errors.size %]
-<ul class='list-unstyled alert alert-danger'>
-	[% FOREACH err IN errors %]
-	<li>[% err %]</li>
-	[% END %]
-</ul>
-[% END %]
-
 [%# final data %]
 [%
     IF NOT company.data; company.data = {}; END;
@@ -46,25 +28,25 @@
 %]
 
 [% USE FillInForm %]
-[% IF c.req.method == 'POST'; fdat = c.req.body_params.to_hash; ELSE; fdat = {
-	'website' => company.website,
-	'data[employeeCountRange]' => company.data.employeeCountRange,
-	'data[desc]' => company.data.desc,
-	'data[foundedYear]' => company.data.foundedYear,
-	'data[facebookId]' => (company.data.facebookId) ? 'https://facebook.com/' _ company.data.facebookId : '',
-	'data[twitterId]'  => (company.data.twitterId)  ? 'https://twitter.com/' _ company.data.twitterId : '',
-	'data[googleplusId]' => (company.data.googleplusId) ? 'https://plus.google.com/u/0/' _ company.data.googleplusId : '',
-	'data[linkedinId]' => (company.data.linkedinId) ? 'http://www.linkedin.com/company/' _ company.data.linkedinId : '',
-	'data[githubId]'   => (company.data.githubId)   ? 'https://github.com/' _ company.data.githubId : '',
-}; END; %]
+[% IF c.req.method == 'POST'; fdat = c.req.body_params.to_hash; ELSE;
+	fdat = correction.data;
+	fdat.id = correction.id;
+END; %]
 [% FILTER fillinform fdat => fdat %]
 <form class="form-horizontal" method="POST" role="form">
+	<input type='hidden' name='id' value='[% tag.id %]' />
+
+	[% IF correction.data.website != company.website %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Website:</label>
 		<div class="col-lg-6">
 			<input name="website" type="text" class="form-control" required="required" />
+			<span class="help-inline">Old: [% company.website %]</span>
 		</div>
 	</div>
+	[% END %]
+
+	[% IF correction.data.item('data[employeeCountRange]') != company.data.employeeCountRange %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Company Size:</label>
 		<div class="col-lg-6">
@@ -73,76 +55,84 @@
 			<option value="[% role %]">[% role %]</option>
 			[% END %]
 			</select>
+			<span class="help-inline">Old: [% company.data.employeeCountRange %]</span>
 		</div>
 	</div>
+	[% END %]
+
+	[% IF correction.data.item('data[desc]') != company.data.desc %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Description:</label>
 		<div class="col-lg-6">
 			<textarea name="data[desc]" class="form-control" required="required" placeholder='Share some of the best reasons to work at [%+ company.name.squote %].'></textarea>
+			<span class="help-inline">Old: [% company.data.desc %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[foundedYear]') != company.data.foundedYear %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Founded Year:</label>
 		<div class="col-lg-6">
 			<input name="data[foundedYear]" type="text" class="form-control" maxlength='4' />
+			<span class="help-inline">Old: [% company.data.foundedYear %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[facebookId]') AND (NOT company.data.facebookId OR correction.data.item('data[facebookId]') != 'https://facebook.com/' _ company.data.facebookId) %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Facebook:</label>
 		<div class="col-lg-6">
 			<input name="data[facebookId]" type="text" class="form-control" />
+			<span class="help-inline">Old: [% 'https://facebook.com/' _ company.data.facebookId %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[twitterId]') AND (NOT company.data.twitterId OR correction.data.item('data[twitterId]') != 'https://twitter.com/' _ company.data.twitterId) %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Twitter:</label>
 		<div class="col-lg-6">
 			<input name="data[twitterId]" type="text" class="form-control" />
+			<span class="help-inline">Old: [% 'https://twitter.com/' _ company.data.twitterId %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[googleplusId]') AND (NOT company.data.googleplusId OR correction.data.item('data[googleplusId]') != 'https://plus.google.com/u/0/' _ company.data.googleplusId) %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Google Plus:</label>
 		<div class="col-lg-6">
 			<input name="data[googleplusId]" type="text" class="form-control" />
+			<span class="help-inline">Old: [% 'https://plus.google.com/u/0/' _ company.data.googleplusId %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[linkedinId]') AND (NOT company.data.linkedinId OR correction.data.item('data[linkedinId]') != 'http://www.linkedin.com/company/' _ company.data.linkedinId) %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">LinkedIn:</label>
 		<div class="col-lg-6">
 			<input name="data[linkedinId]" type="text" class="form-control" />
+			<span class="help-inline">Old: [% 'http://www.linkedin.com/company/' _ company.data.linkedinId %]</span>
 		</div>
 	</div>
+	[% END %]
 
+	[% IF correction.data.item('data[githubId]') AND (NOT company.data.githubId OR correction.data.item('data[githubId]') != 'https://github.com/' _ company.data.githubId) %]
 	<div class="form-group">
 		<label class="col-lg-2 control-label">GitHub:</label>
 		<div class="col-lg-6">
 			<input name="data[githubId]" type="text" class="form-control" />
+			<span class="help-inline">Old: [% 'https://github.com/' _ company.data.githubId %]</span>
 		</div>
 	</div>
-
-	<div class="form-group">
-		<label class="col-lg-2 control-label">reCaptcha:</label>
-		<div class="col-lg-6">
-			[% h.recaptcha_html %]
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-lg-2 control-label">Notify Email:</label>
-		<div class="col-lg-6">
-			<input name="edited_by" type="text" class="form-control" />
-			<span class="help-inline">Optional. we'll send email when the changes got applied.</span>
-		</div>
-	</div>
+	[% END %]
 
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-6">
-		<button class="btn btn-primary save">Correct it</button>
-		<a href='/company/[% company.id %]' class='btn btn-default'>Back to [% company.name %]</a>
+		<button class="btn btn-primary save">Save</button>
 		</div>
 	</div>
 </form>

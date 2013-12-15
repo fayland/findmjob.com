@@ -16,6 +16,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li[% IF base_url == '/' %] class="active"[% END %]><a href="/">Home</a></li>
       <li[% IF base_url.search('/tag') %] class="active"[% END %]><a href="/tag">Tags</a></li>
+      <li[% IF base_url.search('/companycorrection') %] class="active"[% END %]><a href="/companycorrection">Company Corrections</a></li>
     </ul>
   </nav>
 

@@ -54,6 +54,13 @@ __PACKAGE__->table("company_correction");
   data_type: 'text'
   is_nullable: 1
 
+=head2 is_reviewed
+
+  data_type: 'tinyint'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -77,6 +84,13 @@ __PACKAGE__->add_columns(
   },
   "data",
   { data_type => "text", is_nullable => 1 },
+  "is_reviewed",
+  {
+    data_type => "tinyint",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -92,8 +106,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-14 21:47:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NfzL32V0rjze9Nx2HJhgSQ
+# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-15 20:45:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NZyOzfUMQSXuWP+621rZKQ
 
 __PACKAGE__->load_components('InflateColumn::Serializer');
 __PACKAGE__->set_serialize_column('data', 'JSON');

@@ -52,7 +52,7 @@
 
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-6">
-		<button class="btn btn-primary save">Search</button>
+		<button class="btn btn-primary save">Save</button>
 		</div>
 	</div>
 </form>
