@@ -1,0 +1,140 @@
+[% title = company.name _ ' Correction' %]
+[% description = title %]
+[% meta_keywords = title %]
+
+[% USE String %]
+
+<h2>[% title %]</h2>
+
+<hr class="soften">
+
+[% IF errors.size %]
+<ul class='list-unstyled alert alert-danger'>
+	[% FOREACH err IN errors %]
+	<li>[% err %]</li>
+	[% END %]
+</ul>
+[% END %]
+
+[%# final data %]
+[%
+    IF NOT company.data; company.data = {}; END;
+    IF company.extra_data;
+      IF NOT company.data.logo;
+        IF company.extra_data.logoUrl;
+            company.data.logo = company.extra_data.logoUrl;
+        ELSIF company.extra_data.logo;
+            company.data.logo = company.extra_data.logo;
+        END;
+      END;
+      IF NOT company.data.employeeCountRange AND company.extra_data.employeeCountRange;
+        company.data.employeeCountRange = company.extra_data.employeeCountRange.name;
+      END;
+      IF NOT company.data.foundedYear AND company.extra_data.foundedYear;
+        company.data.foundedYear = company.extra_data.foundedYear;
+      END;
+      IF NOT company.data.twitterId AND company.extra_data.twitterId;
+        company.data.twitterId = company.extra_data.twitterId;
+      END;
+      IF NOT company.data.desc AND company.extra_data.description;
+        company.data.desc = company.extra_data.description;
+      END;
+      IF NOT company.data.linkedinId AND company.extra_data.universalName;;
+        company.data.linkedinId = company.extra_data.universalName;
+      END;
+    END;
+%]
+
+[% USE FillInForm %]
+[% IF c.req.method == 'POST'; fdat = c.req.body_params.to_hash; ELSE; fdat = {
+	'website' => company.website,
+	'data[employeeCountRange]' => company.data.employeeCountRange,
+	'data[desc]' => company.data.desc,
+	'data[facebookId]' => (company.data.facebookId) ? 'https://facebook.com/' _ company.data.facebookId : '',
+	'data[twitterId]'  => (company.data.twitterId)  ? 'https://twitter.com/' _ company.data.twitterId : '',
+	'data[googleplusId]' => (company.data.googleplusId) ? 'https://plus.google.com/u/0/' _ company.data.googleplusId : '',
+	'data[linkedinId]' => (company.data.linkedinId) ? 'http://www.linkedin.com/company/' _ company.data.linkedinId : '',
+	'data[githubId]'   => (company.data.githubId)   ? 'https://github.com/' _ company.data.githubId : '',
+}; END; %]
+[% FILTER fillinform fdat => fdat %]
+<form class="form-horizontal" method="POST" role="form">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Website:</label>
+		<div class="col-lg-6">
+			<input name="website" type="text" class="form-control" required="required" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Company Size:</label>
+		<div class="col-lg-6">
+			<select name='data[employeeCountRange]' class='form-control'>
+			[% FOREACH role IN ['1-10', '11-50', '51-200', '201-500', '501-1000', '1000-5000', 'More than 5000'] %]
+			<option value="[% role %]">[% role %]</option>
+			[% END %]
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Description:</label>
+		<div class="col-lg-6">
+			<textarea name="data[desc]" class="form-control" required="required" placeholder='Share some of the best reasons to work at [%+ company.name.squote %].'></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Founded Year:</label>
+		<div class="col-lg-6">
+			<input name="data[foundedYear]" type="text" class="form-control" required="required" maxlength='4' />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Facebook:</label>
+		<div class="col-lg-6">
+			<input name="data[facebookId]" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Twitter:</label>
+		<div class="col-lg-6">
+			<input name="data[twitterId]" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Google Plus:</label>
+		<div class="col-lg-6">
+			<input name="data[googleplusId]" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">LinkedIn:</label>
+		<div class="col-lg-6">
+			<input name="data[linkedinId]" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">GitHub:</label>
+		<div class="col-lg-6">
+			<input name="data[githubId]" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">reCaptcha:</label>
+		<div class="col-lg-6">
+			[% h.recaptcha_html %]
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-6">
+		<button class="btn btn-primary save">Correct it</button>
+		<a href='/company/[% company.id %]' class='btn btn-default'>Back to [% company.name %]</a>
+		</div>
+	</div>
+</form>
+[% END %]

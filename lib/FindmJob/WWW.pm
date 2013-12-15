@@ -73,13 +73,14 @@ sub startup {
     $r->get('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
     $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
     $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
-    $r->get('/company/:id')->to(controller => 'Root', action => 'company');
-    $r->any('/company/:id/jobs')->to(controller => 'Root', action => 'company_jobs');
+    $r->get('/company/:id')->to('company#index');
+    $r->any('/company/:id/jobs')->to('company#jobs');
+    $r->any('/company/:id/correct')->to('company#correct');
     $r->any('/company/:id/reviews')->to(controller => 'Review', action => 'company_reviews');
     $r->any('/company/:id/reviews/new')->to(controller => 'Review', action => 'company_review_new');
     $r->get('/company/:cid/review/:rid')->to(controller => 'Review', action => 'review');
     $r->get('/company/:cid/review/:rid/*seo')->to(controller => 'Review', action => 'review');
-    $r->get('/company/:id/*seo')->to(controller => 'Root', action => 'company');
+    $r->get('/company/:id/*seo')->to('company#index');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 

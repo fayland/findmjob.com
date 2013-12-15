@@ -141,65 +141,6 @@ sub freelance {
     $self->render(template => 'freelance');
 }
 
-sub company {
-    my $self = shift;
-
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
-
-    my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
-
-    unless ($company) {
-        $self->res->code(410); # Gone
-        return $self->render(template => 'gone', object => 'company');
-    }
-
-    my $job_rs = $schema->resultset('Job')->search( {
-        company_id => $companyid
-    }, {
-        order_by => 'inserted_at DESC',
-        rows => 12,
-        page => 1
-    });
-    $self->stash(jobs => [ $job_rs->all ]);
-
-    my $review_rs = $schema->resultset('CompanyReview')->search( {
-        company_id => $companyid
-    }, {
-        order_by => 'inserted_at DESC',
-        rows => 12,
-        page => 1
-    });
-    $self->stash(reviews => [ $review_rs->all ]);
-
-    $self->render(template => 'company');
-}
-
-sub company_jobs {
-    my $self = shift;
-
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
-
-    my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
-
-    my $p = $self->stash('page');
-    $p = 1 unless $p and $p =~ /^\d+$/;
-    my $job_rs = $schema->resultset('Job')->search( {
-        company_id => $companyid
-    }, {
-        order_by => 'inserted_at DESC',
-        rows => 12,
-        page => $p
-    });
-    $self->stash(pager => $job_rs->pager);
-    $self->stash(jobs  => [ $job_rs->all ]);
-
-    $self->render(template => 'company_jobs');
-}
-
 sub location {
     my $self = shift;
 

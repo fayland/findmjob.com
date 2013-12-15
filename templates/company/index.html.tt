@@ -47,7 +47,7 @@
     [% IF company.website %]
     <a href='[% company.website %]' target='_blank'><img src='[% page_image %]' /></a>
     [% ELSE %]
-    <img src='[% page_image %]' />
+    <img src='[% page_image %]' class='img-thumbnail' />
     [% END %]
 </div>
 [% END %]
@@ -65,12 +65,34 @@
             <dt>Website</dt><dd><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></dd>
             <dt>Company Size</dt><dd>[% IF company.data.employeeCountRange %][% company.data.employeeCountRange +%] employees[% ELSE %]N/A[% END %]</dd>
             <dt>Founded</dt><dd>[% IF company.data.foundedYear %][% company.data.foundedYear %][% ELSE %]N/A[% END %]</dd>
-            <dt>Twitter</dt><dd>[% IF company.data.twitterId %]<a href='https://twitter.com/[% company.data.twitterId %]'>[% company.data.twitterId %]</a>[% ELSE %]N/A[% END %]</dd>
-            <dt>LinkedIn</dt><dd>[% IF company.data.linkedinId %]<a href='http://www.linkedin.com/company/[% company.data.linkedinId %]'>[% company.data.linkedinId %]</a>[% ELSE %]N/A[% END %]</dd>
+
+            [% IF company.data.facebookId %]
+            <dt>Facebook</dt><dd><a href='https://facebook.com/[% company.data.facebookId %]'>[% company.data.facebookId %]</a></dd>
+            [% END %]
+
+            [% IF company.data.twitterId %]
+            <dt>Twitter</dt><dd><a href='https://twitter.com/[% company.data.twitterId %]'>[% company.data.twitterId %]</a></dd>
+            [% END %]
+
+            [% IF company.data.googleplusId %]
+            <dt>Google Plus</dt><dd><a href='https://plus.google.com/u/0/[% company.data.googleplusId %]'>[% company.data.googleplusId %]</a></dd>
+            [% END %]
+
+            [% IF company.data.linkedinId %]
+            <dt>LinkedIn</dt><dd><a href='http://www.linkedin.com/company/[% company.data.linkedinId %]'>[% company.data.linkedinId %]</a></dd>
+            [% END %]
+
+            [% IF company.data.githubId %]
+            <dt>GitHub</dt><dd><a href='https://github.com/[% company.data.githubId %]'>[% company.data.githubId %]</a></dd>
+            [% END %]
+
             [% IF company.data.desc %]<dt>Description</dt><dd>[% company.data.desc | html_line_break %]</dd>[% END %]
         </dl>
 
-        <p class='pull-right'><a href="/company/[% company.id %]/reviews/new" class='btn btn-default'><i class='fa fa-comment-o'></i> Write anonymous review</a></p>
+        <p class='pull-right'>
+            <a href="/company/[% company.id %]/correct" class='btn btn-default'><i class='fa fa-check'></i> It's wrong, Correct it</a>
+            <a href="/company/[% company.id %]/reviews/new" class='btn btn-default'><i class='fa fa-comment-o'></i> Write anonymous review</a>
+        </p>
 
         [% IF reviews.size %]
         <h3>Reviews</h3>

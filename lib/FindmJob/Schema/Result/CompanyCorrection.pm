@@ -95,6 +95,7 @@ __PACKAGE__->set_primary_key("id");
 # Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-14 21:47:28
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NfzL32V0rjze9Nx2HJhgSQ
 
+__PACKAGE__->load_components('InflateColumn::Serializer');
+__PACKAGE__->set_serialize_column('data', 'JSON');
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 1;
