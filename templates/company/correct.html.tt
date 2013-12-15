@@ -131,6 +131,14 @@
 	</div>
 
 	<div class="form-group">
+		<label class="col-lg-2 control-label">Notify Email:</label>
+		<div class="col-lg-6">
+			<input name="edited_by" type="text" class="form-control" />
+			<span class="help-inline">Optional. we'll send email when the changes got applied.</span>
+		</div>
+	</div>
+
+	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-6">
 		<button class="btn btn-primary save">Correct it</button>
 		<a href='/company/[% company.id %]' class='btn btn-default'>Back to [% company.name %]</a>

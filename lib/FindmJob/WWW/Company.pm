@@ -85,6 +85,7 @@ sub correct {
         delete $params->{recaptcha_challenge_field};
         $schema->resultset('CompanyCorrection')->create( {
             company_id => $companyid,
+            edited_by  => delete $params->{edited_by},
             data => $params,
         } );
 
