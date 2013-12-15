@@ -35,6 +35,7 @@ print "DELETE tag: $rows\n";
 
 # company does not have any jobs
 $dbh->do("UPDATE company SET is_deletable=0 WHERE id IN (SELECT DISTINCT company_id FROM company_review)");
+$dbh->do("UPDATE company SET is_deletable=0 WHERE id IN (SELECT DISTINCT company_id FROM company_correction)");
 $rows = $dbh->do("DELETE FROM company WHERE is_deletable=1 AND id NOT IN (SELECT DISTINCT company_id FROM job)");
 print "DELETE compnay: $rows\n";
 
