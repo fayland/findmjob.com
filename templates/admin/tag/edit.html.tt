@@ -1,0 +1,51 @@
+
+[% USE FillInForm %]
+[% IF c.req.method == 'POST'; fdat = c.req.body_params.to_hash; ELSE; fdat = {
+	id => tag.id,
+	'data[logo]' => tag.data.logo,
+	'data[desc]' => tag.data.desc,
+	category => tag.category,
+	text => tag.text
+}; END; %]
+[% FILTER fillinform fdat => fdat %]
+<form class="form-horizontal" method="POST" role="form">
+	<input type='hidden' name='id' value='[% tag.id %]' />
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Category:</label>
+		<div class="col-lg-6">
+			<select name='category' class="form-control">
+			<option value=''>None</option>
+			<option value='language'>Language</option>
+			<option value='skill'>Skill</option>
+			<option value='software'>Software</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Text:</label>
+		<div class="col-lg-6">
+			<input name="text" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Logo:</label>
+		<div class="col-lg-6">
+			<input type="text" name="data[logo]" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Description:</label>
+		<div class="col-lg-6">
+			<textarea name="data[desc]" class="form-control"></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-6">
+		<button class="btn btn-primary save">Search</button>
+		</div>
+	</div>
+</form>
+[% END %]

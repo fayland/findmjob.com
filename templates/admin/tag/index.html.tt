@@ -1,0 +1,47 @@
+
+[% USE FillInForm %]
+[% FILTER fillinform fobject => c %]
+<form class="form-horizontal" method="POST" role="form">
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Category:</label>
+		<div class="col-lg-6">
+			<select name='category' class="form-control">
+			<option value='language'>Language</option>
+			<option value='skill'>Skill</option>
+			<option value='software'>Software</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-lg-2 control-label">Text:</label>
+		<div class="col-lg-6">
+			<input name="text" type="text" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-6">
+		<button class="btn btn-primary save">Search</button>
+		</div>
+	</div>
+</form>
+[% END %]
+
+[% USE Dumper %]
+[% IF tags.size %]
+<table class='table table-bordered table-condensed'>
+	<thead>
+		<tr><th>ID</th><th>Text</th><th>Category</th><th>Data</th><th>Action</th></tr>
+	</thead>
+	<tbody>
+		[% FOREACH tag IN tags %]
+		<tr>
+			<td>[% tag.id %]</td><td>[% tag.text %]</td><td>[% tag.category %]</td><td>[% Dumper.dump(tag.data) %]</td>
+			<td>
+				<a href='/tag/edit?id=[% tag.id %]'>Edit</a>
+			</td>
+		</tr>
+		[% END %]
+	</tbody>
+</table>
+[% END %]

@@ -44,7 +44,17 @@ sub startup {
         return 1;
     });
 
-    $r->any('/')->to(controller => 'Root', action => 'index');
+    $self->hook(before_dispatch => sub {
+        my $self = shift;
+
+        # config into stash
+        $self->stash(config => $config);
+        $self->stash(base_url => $self->req->url->path->to_string);
+    });
+
+    $r->any('/')->to('root#index');
+    $r->any('/tag')->to('tag#index');
+    $r->any('/tag/edit')->to('tag#edit');
 
 }
 
