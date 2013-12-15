@@ -46,6 +46,7 @@ sub run {
         my @tags = $self->get_extra_tags_from_desc($r->{JobTitle});
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, $self->get_extra_tags_from_desc($r->{JobRequirements});
+        next unless @tags; # we need skill/langauge tag
 
         ## we really don't want follow some industries, mainly I want to do the IT jobs I think
         ## and only when there is no tags we loved
