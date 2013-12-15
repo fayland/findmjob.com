@@ -10,7 +10,7 @@
 
 [% USE String %]
 
-[% PROCESS include/addthis.tt2 %]
+[%# PROCESS include/addthis.tt2 %]
 
 <div class="row">
 

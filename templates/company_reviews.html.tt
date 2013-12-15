@@ -4,7 +4,7 @@
 
 [% USE String %]
 
-[% PROCESS include/addthis.tt2 %]
+[%# PROCESS include/addthis.tt2 %]
 <h2>[% title %]</h2>
 [% IF company.website %]
 [% IF NOT company.website.search('^https?://'); company.website = 'http://' _ company.website; END; %]

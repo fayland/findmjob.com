@@ -4,7 +4,7 @@
 
 [% USE date %]
 
-[% PROCESS include/addthis.tt2 %]
+[%# PROCESS include/addthis.tt2 %]
 <h2>[% title %]</h2>
 
 <hr class="soften">

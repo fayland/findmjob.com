@@ -34,7 +34,7 @@
 [% page_image = company.data.logo %]
 [% USE String %]
 
-[% PROCESS include/addthis.tt2 %]
+[%# PROCESS include/addthis.tt2 %]
 
 <div class="row">
 
@@ -65,7 +65,7 @@
             <dt>Website</dt><dd><a href='[% company.website %]' target='_blank'>[% company.website.replace('https?://', '').replace('/$', '') %]</a></dd>
             <dt>Company Size</dt><dd>[% IF company.data.employeeCountRange %][% company.data.employeeCountRange +%] employees[% ELSE %]N/A[% END %]</dd>
             <dt>Founded</dt><dd>[% IF company.data.foundedYear %][% company.data.foundedYear %][% ELSE %]N/A[% END %]</dd>
-            <dt>Twitter</dt><dd>[% IF company.data.twitterId %][% company.data.twitterId %][% ELSE %]N/A[% END %]</dd>
+            <dt>Twitter</dt><dd>[% IF company.data.twitterId %]<a href='https://twitter.com/[% company.data.twitterId %]'>[% company.data.twitterId %]</a>[% ELSE %]N/A[% END %]</dd>
             <dt>LinkedIn</dt><dd>[% IF company.data.linkedinId %]<a href='http://www.linkedin.com/company/[% company.data.linkedinId %]'>[% company.data.linkedinId %]</a>[% ELSE %]N/A[% END %]</dd>
             [% IF company.data.desc %]<dt>Description</dt><dd>[% company.data.desc | html_line_break %]</dd>[% END %]
         </dl>
