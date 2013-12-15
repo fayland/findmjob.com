@@ -13,7 +13,7 @@ sub index {
 
 		my $rs = $schema->resultset('Tag')->search( {
 			($category) ? (category => $category) : (),
-			($text) ? (text => { 'LIEK', '%' . $text . '%' }) : (),
+			($text) ? (text => { 'LIKE', '%' . $text . '%' }) : (),
 		});
 		$self->stash(tags => [$rs->all]);
 	}
