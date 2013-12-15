@@ -1,6 +1,7 @@
 package FindmJob::WWWAdmin::CompanyCorrection;
 
 use Mojo::Base 'Mojolicious::Controller';
+use FindmJob::Email 'sendmail';
 
 sub index {
 	my $self = shift;
@@ -30,13 +31,30 @@ sub edit {
 		$company->website($params->{website}) if $params->{website};
 		foreach my $k ('employeeCountRange', 'desc', 'foundedYear', 'facebookId', 'twitterId', 'googleplusId', 'linkedinId', 'githubId') {
 			next unless exists $params->{"data[$k]"};
-			$data->{$k} = $params->{"data[$k]"};
+			my $v = $params->{"data[$k]"};
+			$v =~ s{https?://(www.)?(facebook|twitter|linkedin|github).com/}{}i if $k =~ /Id$/;
+			$v =~ s{https://plus.google.com/u/0/}{}i if $k eq 'googleplusId';
+			$data->{$k} = $v;
 		}
 		$company->data($data);
 		$company->update();
 
 		$correction->is_reviewed(1);
 		$correction->update();
+
+		if ($correction->edited_by) {
+			my $company_url = $company->url;
+			sendmail( {
+	            to => $correction->edited_by,
+	            subject => '[Findmjob.com] Correction for ' . $company->name . ' Applied',
+	            body => <<'B',
+Hi
+
+Thanks for your contribution. and your changes are applied. Please take a look at
+$company_url
+B
+	        } );
+		}
 
 		$self->stash('message' => 'Saved.');
 	}

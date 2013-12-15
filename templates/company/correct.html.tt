@@ -142,7 +142,7 @@
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-6">
 		<button class="btn btn-primary save">Correct it</button>
-		<a href='/company/[% company.id %]' class='btn btn-default'>Back to [% company.name %]</a>
+		<a href='[% company.url %]' class='btn btn-default'>Back to [% company.name %]</a>
 		</div>
 	</div>
 </form>

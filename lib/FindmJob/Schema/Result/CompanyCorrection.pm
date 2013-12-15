@@ -109,6 +109,11 @@ __PACKAGE__->set_primary_key("id");
 # Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-15 20:45:02
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NZyOzfUMQSXuWP+621rZKQ
 
+__PACKAGE__->belongs_to(
+    company => 'Company',
+    { 'foreign.id' => 'self.company_id' }
+);
+
 __PACKAGE__->load_components('InflateColumn::Serializer');
 __PACKAGE__->set_serialize_column('data', 'JSON');
 

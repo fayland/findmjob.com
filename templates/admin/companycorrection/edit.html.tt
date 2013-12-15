@@ -133,6 +133,7 @@ END; %]
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-6">
 		<button class="btn btn-primary save">Save</button>
+		<a href='[% config.sites.main %][% correction.company.url %]' class='btn btn-default'>Back to [% correction.company.name %]</a>
 		</div>
 	</div>
 </form>
