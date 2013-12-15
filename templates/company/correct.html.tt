@@ -84,7 +84,7 @@
 	<div class="form-group">
 		<label class="col-lg-2 control-label">Founded Year:</label>
 		<div class="col-lg-6">
-			<input name="data[foundedYear]" type="text" class="form-control" required="required" maxlength='4' />
+			<input name="data[foundedYear]" type="text" class="form-control" maxlength='4' />
 		</div>
 	</div>
 
