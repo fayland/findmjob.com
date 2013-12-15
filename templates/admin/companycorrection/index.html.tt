@@ -8,7 +8,7 @@
 		[% FOREACH correction IN corrections %]
 		<tr>
 			<td>[% correction.id %]</td>
-			<td><a href='[% correction.company.url %]'>[% correction.company.name %]</a></td>
+			<td><a href='[% config.sites.main %][% correction.company.url %]'>[% correction.company.name %]</a></td>
 			<td>[% correction.edit_by %]</td><td>[% Dumper.dump(correction.data) %]</td>
 			<td>
 				<a href='/companycorrection/edit?id=[% correction.id %]'>Edit</a>
