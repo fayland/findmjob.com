@@ -122,4 +122,7 @@ sub extra_data {
     return ($extra and $extra =~ /^\{/) ? JSON::XS->new->utf8->decode( encode_utf8($extra) ) : {};
 }
 
+__PACKAGE__->load_components('InflateColumn::Serializer');
+__PACKAGE__->set_serialize_column('data', 'JSON');
+
 1;

@@ -25,3 +25,8 @@ requires 'Facebook::Graph';
 requires 'MIME::Lite';
 requires 'Locale::Codes::Country', '3.25';
 requires 'Proc::PID::File';
+
+## scrape
+requires 'Log::Dispatchouli';
+requires 'HTML::FormatText';
+requires 'WWW::LinkedIn';
