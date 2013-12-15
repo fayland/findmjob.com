@@ -37,7 +37,7 @@
 	<tbody>
 		[% FOREACH tag IN tags %]
 		<tr>
-			<td>[% tag.id %]</td><td>[% tag.text %]</td><td>[% tag.category %]</td><td>[% Dumper.dump(tag.data) %]</td>
+			<td><a href='[% config.sites.main %][% tag.url %]'>[% tag.id %]</a></td><td>[% tag.text %]</td><td>[% tag.category %]</td><td>[% Dumper.dump(tag.data) %]</td>
 			<td>
 				<a href='/tag/edit?id=[% tag.id %]'>Edit</a>
 			</td>

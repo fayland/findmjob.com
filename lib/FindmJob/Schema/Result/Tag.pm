@@ -92,4 +92,11 @@ __PACKAGE__->add_unique_constraint("text", ["text"]);
 __PACKAGE__->load_components('InflateColumn::Serializer');
 __PACKAGE__->set_serialize_column('data', 'JSON');
 
+use FindmJob::Utils 'seo_title';
+sub url {
+    my ($self) = @_;
+
+    return "/tag/" . $self->id . "/" . seo_title($self->text) . ".html";
+}
+
 1;
