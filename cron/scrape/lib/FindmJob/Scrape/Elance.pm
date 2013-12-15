@@ -57,7 +57,7 @@ sub on_single_page {
     my $desc = $self->format_tree_text($jobDescText);
     $desc =~ s{\s*<a href="javascript:loginReturn.*?$}{}sg;
 
-    my @tags = ('elance', 'freelance');
+    my @tags = ('elance');
     my $jobDetailTags = $tree->look_down(_tag => 'div', id => 'jobDetailTags');
     my @sets =  $jobDetailTags ? $jobDetailTags->look_down(_tag => 'a', href => qr'/r/contractors/') : ();
     foreach my $h (@sets) {

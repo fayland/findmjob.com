@@ -49,7 +49,7 @@ sub run {
             description => $desc,
             type     => delete $item->{op_engagement},
             extra    => $json->encode($item),
-            tags     => ['odesk', 'freelance', @tags],
+            tags     => ['odesk', @tags],
         };
         if ( $is_inserted and $self->opt_update ) {
             $job_rs->update_job($row);

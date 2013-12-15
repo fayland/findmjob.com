@@ -87,7 +87,7 @@ sub on_single_page {
         my ($project_id) = ($content =~ /projectID="(\d+)"/);
         $desc = "Project ID: $project_id\n\n$desc" if $project_id;
 
-        my @tags = ('freelancer', 'freelance');
+        my @tags = ('freelancer');
         push @tags, $self->get_extra_tags_from_desc($title);
         push @tags, $self->get_extra_tags_from_desc($desc);
         push @tags, keys %skill_urls;
