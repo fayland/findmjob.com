@@ -19,6 +19,7 @@ sub startup {
     $self->helper(schema => sub { FindmJob::Basic->schema });
     unshift @{$self->static->paths}, catdir( FindmJob::Basic->root, 'static' );
 
+    unshift @{$self->renderer->paths}, catdir( FindmJob::Basic->root, 'templates', 'admin' );
     $self->plugin('charset' => {charset => 'UTF-8'});
     $self->plugin('tt_renderer' => {
         template_options => {
