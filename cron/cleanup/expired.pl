@@ -30,7 +30,7 @@ $rows = $dbh->do("DELETE FROM object_tag where object not in (SELECT id FROM obj
 print "DELETE object_tag: $rows\n";
 
 # tags not used anymore
-$rows = $dbh->do("DELETE FROM tag where id not in (SELECT DISTINCT tag FROM object_tag)");
+$rows = $dbh->do("DELETE FROM tag where (category = '' OR category IS NULL) AND id not in (SELECT DISTINCT tag FROM object_tag)");
 print "DELETE tag: $rows\n";
 
 # company does not have any jobs

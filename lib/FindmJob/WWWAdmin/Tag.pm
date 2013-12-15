@@ -31,11 +31,11 @@ sub edit {
 		my $params = $self->req->body_params->to_hash;
 		$tag->text($params->{text});
 		$tag->category($params->{category});
-		$tag->data( {
-			logo => $params->{'data[logo]'},
-			url  => $params->{'data[url]'},
-			desc => $params->{'data[desc]'},
-		});
+		my $data = $tag->data || {};
+		foreach my $i ('logo', 'url', 'desc') {
+			$data->{$i} = $params->{"data[$i]"};
+		}
+		$tag->data($data);
 		$tag->update();
 		$self->stash('message' => 'Saved.');
 	}
