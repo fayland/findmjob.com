@@ -41,7 +41,7 @@ __PACKAGE__->table("user_connect");
   is_nullable: 1
   size: 255
 
-=head2 info
+=head2 data
 
   data_type: 'text'
   is_nullable: 1
@@ -62,7 +62,7 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 16 },
   "token",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "info",
+  "data",
   { data_type => "text", is_nullable => 1 },
   "last_connected",
   {
@@ -88,9 +88,10 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("user_id", "service");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-20 19:49:41
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yVdatmG4gjHV4PD6ESl3aw
+# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-20 19:51:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+XtmtFP1B/cTcdkd0sdqUQ
 
+__PACKAGE__->load_components('InflateColumn::Serializer');
+__PACKAGE__->set_serialize_column('data', 'JSON');
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 1;
