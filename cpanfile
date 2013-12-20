@@ -9,7 +9,7 @@ requires 'DBIx::Class::InflateColumn::Serializer';
 requires 'Moo';
 requires 'MooX::Types::MooseLike::Base';
 requires 'MooX::Options';
-requires 'Mojolicious', '3.94';
+requires 'Mojolicious', '4.63';
 requires 'Mojolicious::Plugin::Recaptcha';
 requires 'Mojolicious::Plugin::TtRenderer';
 requires 'Mojolicious::Plugin::BasicAuth';
