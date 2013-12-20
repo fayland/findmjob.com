@@ -13,6 +13,7 @@ requires 'Mojolicious', '3.94';
 requires 'Mojolicious::Plugin::Recaptcha';
 requires 'Mojolicious::Plugin::TtRenderer';
 requires 'Mojolicious::Plugin::BasicAuth';
+requires 'Mojolicious::Plugin::Web::Auth';
 requires 'Data::UUID';
 requires 'Module::Runtime';
 requires 'WWW::Sitemap::XML';

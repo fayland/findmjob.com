@@ -33,6 +33,17 @@ sub startup {
         private_key => $config->{api}->{recaptcha}->{pri},
     });
 
+    ## WebAuth
+    $self->plugin('Web::Auth',
+        module      => 'Github',
+        key         => $config->{auth}->{github}->{client_id},
+        secret      => $config->{auth}->{github}->{client_secret},
+        on_finished => sub {
+            my ( $c, $access_token, $access_secret ) = @_;
+            $c->renderer(text => Dumper(\@_));
+        },
+    );
+
     my $r = $self->routes;
     $r->namespaces(['FindmJob::WWW']);
 
