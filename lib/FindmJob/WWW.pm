@@ -33,16 +33,50 @@ sub startup {
         private_key => $config->{api}->{recaptcha}->{pri},
     });
 
+    my $auth_on_finished = sub {
+        my ($service) = pop @_;
+        my ($c, $access_token, $data) = @_;
+
+        my $schema = $c->schema;
+
+        my $email = $data->{email};
+        my $name  = $data->{name};
+
+        ## dirty hack
+        foreach my $k (keys %$data) {
+            if (ref($data->{$k}) eq 'Mojo::JSON::_Bool') {
+                $data->{$k} = $data->{$k} ? 1 : 0;
+            }
+        }
+        # use Data::Dumper; print Dumper(\$data);
+
+        # check if signed up
+        my $user = $schema->resultset('User')->find({ email => $email });
+        $user ||= $schema->resultset('User')->create({
+            email => $email,
+            name  => $name,
+        });
+
+        $schema->resultset('UserConnect')->update_or_create( {
+            user_id => $user->id,
+            service => $service,
+            token   => $access_token,
+            last_connected => time(),
+            data    => $data,
+        } );
+
+        $c->session(__user => $user->id);
+        $c->redirect_to('/');
+    };
+
     ## WebAuth
     $self->plugin('Web::Auth',
         module      => 'Github',
         key         => $config->{auth}->{github}->{client_id},
         secret      => $config->{auth}->{github}->{client_secret},
         on_finished => sub {
-            my ( $c, $access_token, $access_secret ) = @_;
-            print STDERR Dumper(\@_);
-            $c->render(text => Dumper(\@_)); use Data::Dumper;
-        },
+            $auth_on_finished->(@_, 'github');
+        }
     );
 
     my $r = $self->routes;
