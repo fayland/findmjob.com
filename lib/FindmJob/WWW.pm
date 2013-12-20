@@ -40,7 +40,7 @@ sub startup {
         secret      => $config->{auth}->{github}->{client_secret},
         on_finished => sub {
             my ( $c, $access_token, $access_secret ) = @_;
-            $c->renderer(text => Dumper(\@_));
+            $c->renderer(text => Dumper(\@_)); use Data::Dumper;
         },
     );
 
