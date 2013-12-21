@@ -35,6 +35,12 @@ sub startup {
         private_key => $config->{api}->{recaptcha}->{pri},
     });
 
+    my $auth_on_error = sub {
+        my ( $c, $err ) = @_;
+        $c->flash('error' => $err);
+        $c->redirect_to('/user/login');
+    };
+
     my $auth_on_finished = sub {
         my ($service) = pop @_;
         my ($c, $access_token, $data) = @_;
@@ -72,6 +78,7 @@ sub startup {
             data    => $data,
         } );
 
+        $c->flash('message' => "Welcome back.");
         $c->session(__user => $user->id);
         $c->redirect_to('/');
     };
@@ -84,7 +91,8 @@ sub startup {
         scope       => $config->{auth}->{github}->{scope},
         on_finished => sub {
             $auth_on_finished->(@_, 'github');
-        }
+        },
+        on_error    => $auth_on_error,
     );
     $self->plugin('Web::Auth',
         module      => 'Google',
@@ -93,7 +101,8 @@ sub startup {
         scope       => $config->{auth}->{google}->{scope},
         on_finished => sub {
             $auth_on_finished->(@_, 'google');
-        }
+        },
+        on_error    => $auth_on_error,
     );
 
     my $r = $self->routes;
@@ -101,24 +110,31 @@ sub startup {
 
     # feed.(rss|atom) and /p.2/
     $self->hook(before_dispatch => sub {
-        my $self = shift;
+        my $c = shift;
 
-        my $p = $self->req->url->path;
+        my $p = $c->req->url->path;
         if ($p =~ s{/feed\.(rss|atom)$}{}) {
-            $self->stash('is_feed' => $1);
+            $c->stash('is_feed' => $1);
         }
         if ($p =~ s{/p\.(\d+)(/|$)}{$2}) {
-            $self->stash('page' => $1);
+            $c->stash('page' => $1);
         }
-        $self->req->url->path($p);
+        $c->req->url->path($p);
 
-        if ($self->req->url->to_abs->host =~ /fb/) { # fb.findmjob.com
-            $self->stash(is_fb_app => 1);
+        if ($c->req->url->to_abs->host =~ /fb/) { # fb.findmjob.com
+            $c->stash(is_fb_app => 1);
         }
 
         # config into stash
-        $self->stash(config => $config);
-        $self->stash(base_url => $self->req->url->path->to_string);
+        $c->stash(config => $config);
+        $c->stash(base_url => $c->req->url->path->to_string);
+
+        # user
+        my $user_id = $c->session('__user');
+        if ($user_id) {
+            my $user = $c->schema->resultset('User')->find($user_id);
+            $c->stash(user => $user);
+        }
     });
 
     $r->any('/')->to(controller => 'Root', action => 'index');
@@ -146,6 +162,7 @@ sub startup {
     $r->get('/company/:id/*seo')->to('company#index');
 
     $r->get('/user/login')->to('user#login');
+    $r->get('/user/logout')->to('user#logout');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 

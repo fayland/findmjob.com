@@ -42,7 +42,6 @@
 </head>
 <body>
 
-<header>
 <div class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -61,10 +60,22 @@
         <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='fa fa-globe'></i> Freelances</a></li>
         <li[% IF base_url == '/trends' %] class="active"[% END %]><a href='/trends'><i class='fa fa-bar-chart-o'></i> Trends</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        [% IF user %]
+        <li><a href='/user/logout'>Logout</a></li>
+        [% ELSE %]
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/auth/github/authenticate"><i class="fa fa-github-square"></i> Login with GitHub</a></li>
+            <li><a href="/auth/google/authenticate"><i class="fa fa-google-plus"></i> Login with Google</a></li>
+          </ul>
+        </li>
+        [% END %]
+      </ul>
     </div>
   </div>
 </div>
-</header>
 
 <div class="container[% IF is_fb_app +%] canvas[% END %]">
 

@@ -37,6 +37,7 @@ module.exports = function(grunt) {
       build: {
         src: [
           'static/assets/src/js/jquery.min.js',
+          'static/assets/src/bootstrap/js/bootstrap.js',
           'static/assets/src/js/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
           'static/assets/src/js/ga.js'
