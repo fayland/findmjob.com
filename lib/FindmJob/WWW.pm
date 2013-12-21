@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious';
 use FindmJob::Basic;
 use FindmJob::Utils 'seo_title';
 use File::Spec::Functions 'catdir';
+use JSON qw//;
+use Mojo::JSON;
 
 sub startup {
     my $self = shift;
@@ -39,15 +41,20 @@ sub startup {
 
         my $schema = $c->schema;
 
+        ## dirty hack, JSON is not working with Mojo::JSON::_Bool
+        $data = JSON::from_json( Mojo::JSON->new->encode($data) ); # stupid WOKR
+
         my $email = $data->{email};
         my $name  = $data->{name};
-
-        ## dirty hack
-        foreach my $k (keys %$data) {
-            if (ref($data->{$k}) eq 'Mojo::JSON::_Bool') {
-                $data->{$k} = $data->{$k} ? 1 : 0;
+        if ($service eq 'google') {
+            $name = $data->{displayName};
+            foreach my $acc (@{ $data->{emails} }) {
+                if ($acc->{type} eq 'account') {
+                    $email = $acc->{value};
+                }
             }
         }
+
         # use Data::Dumper; print Dumper(\$data);
 
         # check if signed up
