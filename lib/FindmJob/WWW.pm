@@ -74,8 +74,18 @@ sub startup {
         module      => 'Github',
         key         => $config->{auth}->{github}->{client_id},
         secret      => $config->{auth}->{github}->{client_secret},
+        scope       => $config->{auth}->{github}->{scope},
         on_finished => sub {
             $auth_on_finished->(@_, 'github');
+        }
+    );
+    $self->plugin('Web::Auth',
+        module      => 'Google',
+        key         => $config->{auth}->{google}->{client_id},
+        secret      => $config->{auth}->{google}->{client_secret},
+        scope       => $config->{auth}->{google}->{scope},
+        on_finished => sub {
+            $auth_on_finished->(@_, 'google');
         }
     );
 

@@ -26,8 +26,14 @@
   },
   "auth": {
     "github": {
-        "client_id": "84b07f7f384a0511aa41",
-        "client_secret": "secret"
+      "client_id": "84b07f7f384a0511aa41",
+      "client_secret": "secret",
+      "scope": "user"
+    },
+    "google": {
+      "client_id": "285315490603.apps.googleusercontent.com",
+      "client_secret": "secret",
+      "scope": "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
     }
   },
   "api": {
