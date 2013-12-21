@@ -66,9 +66,9 @@
 </div>
 </header>
 
-<div class="container[% IF is_fb_app +%] canvas[% END %]" style="margin-top: 10px">
+<div class="container[% IF is_fb_app +%] canvas[% END %]">
 
-<div class="row">
+<div class="row clearfix">
   <div class="col-md-5 pull-right">
     <form action='/search' id="search_form" role="form" class="form-inline">
         <div class="form-group"><input type="text" class="form-control col-md-2" name="q" placeholder="Keyword ..."></div>
