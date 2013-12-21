@@ -1,0 +1,8 @@
+[% title = 'Login' %]
+
+<hr class='soften' />
+
+
+<a href='/auth/github/authenticate' class='btn btn-primary'><i class="fa fa-github-square"></i> Login with GitHub</a>
+
+<a href='/auth/google/authenticate' class='btn btn-primary'><i class="fa fa-google-plus"></i> Login with Google</a>

@@ -145,6 +145,8 @@ sub startup {
     $r->get('/company/:cid/review/:rid/*seo')->to(controller => 'Review', action => 'review');
     $r->get('/company/:id/*seo')->to('company#index');
 
+    $r->get('/user/login')->to('user#login');
+
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
