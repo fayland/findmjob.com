@@ -95,7 +95,7 @@ sub freelances {
 
         if ($is_feed) {
             $self->stash(title => "Recent Freelances");
-            map { $_->{tbl} = 'job' } @jobs;
+            map { $_->{tbl} = 'freelance' } @jobs;
             return $self->_render_feed(@jobs);
         }
     }
@@ -148,6 +148,12 @@ sub location {
     my $location_id = $self->stash('id');
 
     my $location = $schema->resultset('Location')->find($location_id);
+
+    unless ($location) {
+        $self->res->code(410); # Gone
+        return $self->render(template => 'gone', object => 'location');
+    }
+
     $self->stash(location => $location);
 
     my $p = $self->stash('page');
