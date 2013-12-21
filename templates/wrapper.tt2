@@ -42,12 +42,34 @@
 </head>
 <body>
 
+<header>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Findmjob.com</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="fa fa-home fa-lg"></i></a></li>
+        <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='fa fa-user'></i> Jobs</a></li>
+        <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='fa fa-globe'></i> Freelances</a></li>
+        <li[% IF base_url == '/trends' %] class="active"[% END %]><a href='/trends'><i class='fa fa-bar-chart-o'></i> Trends</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</header>
+
 <div class="container[% IF is_fb_app +%] canvas[% END %]" style="margin-top: 10px">
 
-<header>
 <div class="row">
-  <div class="col-md-4"><a href='/'><img src="[% config.sites.static %]/Logo.png" /></a></div>
-  <div class="col-md-6 col-md-offset-2" style="margin-top: 20px">
+  <div class="col-md-5 pull-right">
     <form action='/search' id="search_form" role="form" class="form-inline">
         <div class="form-group"><input type="text" class="form-control col-md-2" name="q" placeholder="Keyword ..."></div>
         <div class="form-group"><input type="text" class="form-control col-md-2" name="loc" placeholder="Location ..."></div>
@@ -56,16 +78,6 @@
   </div>
 </div>
 
-<div class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-      <li[% IF base_url == '/' %] class="active"[% END %]><a href='/'><i class="fa fa-home fa-lg"></i></a></li>
-      <li[% IF base_url.search('/job') %] class="active"[% END %]><a href="/jobs"><i class='fa fa-user'></i> Jobs</a></li>
-      <li[% IF base_url.search('/freelance') %] class="active"[% END %]><a href="/freelances"><i class='fa fa-globe'></i> Freelances</a></li>
-      <li[% IF base_url == '/trends' %] class="active"[% END %]><a href='/trends'><i class='fa fa-bar-chart-o'></i> Trends</a></li>
-    </ul>
-</div>
-
-</header>
 
 [% message = c.flash('message') %]
 [% IF message %]
