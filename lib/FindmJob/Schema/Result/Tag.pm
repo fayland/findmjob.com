@@ -90,7 +90,7 @@ __PACKAGE__->add_unique_constraint("text", ["text"]);
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mOIVYrx0dCQrESPBrzQ0cg
 
 __PACKAGE__->load_components('InflateColumn::Serializer');
-__PACKAGE__->set_serialize_column('data', 'JSON');
+__PACKAGE__->add_columns('+data', { serializer_class => 'JSON' });
 
 use FindmJob::Utils 'seo_title';
 sub url {

@@ -121,9 +121,9 @@ sub startup {
         }
         $c->req->url->path($p);
 
-        if ($c->req->url->to_abs->host =~ /fb/) { # fb.findmjob.com
-            $c->stash(is_fb_app => 1);
-        }
+        # if ($c->req->url->to_abs->host =~ /fb/) { # fb.findmjob.com
+        #     $c->stash(is_fb_app => 1);
+        # }
 
         # config into stash
         $c->stash(config => $config);

@@ -92,6 +92,6 @@ __PACKAGE__->set_primary_key("user_id", "service");
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+XtmtFP1B/cTcdkd0sdqUQ
 
 __PACKAGE__->load_components('InflateColumn::Serializer');
-__PACKAGE__->set_serialize_column('data', 'JSON');
+__PACKAGE__->add_columns('+data', { serializer_class => 'JSON' });
 
 1;

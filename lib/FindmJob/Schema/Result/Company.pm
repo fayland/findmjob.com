@@ -123,6 +123,6 @@ sub extra_data {
 }
 
 __PACKAGE__->load_components('InflateColumn::Serializer');
-__PACKAGE__->set_serialize_column('data', 'JSON');
+__PACKAGE__->add_columns('+data', { serializer_class => 'JSON' });
 
 1;
