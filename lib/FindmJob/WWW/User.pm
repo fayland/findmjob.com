@@ -32,7 +32,7 @@ sub updates {
         my ($_id, $_token) = ($token =~ /^(.*?)\-(\w{12})$/);
         if ($_id) {
             my $_user = $c->schema->resulset('User')->find($_id);
-            $user_id = $user->id if $user->token eq $_token;
+            $user_id = $_user->id if $_user->token eq $_token;
         }
     } elsif (my $user = $c->stash('user')) {
         $user_id = $user->id;
@@ -46,8 +46,41 @@ sub updates {
     # my $rs = $c->schema->resultset('UserFollow')->search({ user_id => $user_id });
     # while (my $r = $rs->next) { push @follow_ids, $r->follow_id; }
 
-    my @updates;
-    my $rs = $c->schema->resultset('UserUpdates')->search({ user_id => $user_id });
+    my $rows = ($ref eq 'chrome') ? 10 : 20;
+
+    my $schema = $c->schema;
+    my $dbh = $schema->storage->dbh;
+
+    my %updates;
+    my $rs = $c->schema->resultset('UserUpdate')->search({
+        user_id => $user_id
+    }, {
+        rows => $rows,
+        order_by => \'pushed_at DESC', #'
+    });
+    while (my $r = $rs->next) {
+        # only job and freelance for now
+        my $obj = $schema->resultset(ucfirst $r->tbl)->find($r->object_id);
+        next unless $obj;
+        my $data = {
+            title => $obj->title,
+            url   => $obj->url,
+            id    => $obj->id,
+            pushed_at => $r->pushed_at,
+            follow_id => $r->follow_id,
+        };
+
+        # get follow obj (FIXME)
+
+        $updates{$obj->id} = $data;
+    }
+    my @updates = sort { $updates{$b}{pushed_at} <=> $updates{$a}{pushed_at} } keys %updates;
+    @updates = @updates{@updates}; # get values
+    if ($ref eq 'chrome') {
+        my @pushed_at = map { $updates{$_}{pushed_at} } keys %updates;
+        my $max_pushed_at = (sort(@pushed_at))[-1];
+        $c->render(json => { 'updates' => \@updates, max_pushed_at => $max_pushed_at });
+    }
 }
 
 sub follow {

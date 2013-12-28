@@ -187,6 +187,7 @@ sub startup {
     my $auth_r = $r->under( $is_authenticated );
     $auth_r->get('/user/token')->to('user#token');
     $auth_r->any('/user/follow')->to('user#follow');
+    $r->get('/user/updates')->to('user#updates'); # can use Chrome token to fetch
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
