@@ -61,7 +61,7 @@ sub startup {
             }
         }
 
-        use Data::Dumper; print Dumper(\$data);
+        # use Data::Dumper; print Dumper(\$data);
 
         # check if signed up
         my $user = $schema->resultset('User')->find({ email => $email });
@@ -89,7 +89,9 @@ sub startup {
 
         $c->flash('message' => "Welcome back.");
         $c->session(__user => $user->id);
-        $c->redirect_to('/');
+        my $redirect = $c->session('__redirect') || '/';
+        delete $c->session->{__redirect};
+        $c->redirect_to($redirect);
     };
 
     ## WebAuth
@@ -174,9 +176,10 @@ sub startup {
     $r->get('/user/logout')->to('user#logout');
 
     my $is_authenticated = sub {
-        my ($self) = @_;
-        unless ($self->stash('user')) {
-            $self->redirect_to('/user/login');
+        my ($c) = @_;
+        unless ($c->stash('user')) {
+            $c->session(__redirect => $c->req->url->path);
+            $c->redirect_to('/user/login');
             return 0;
         }
         return 1;
