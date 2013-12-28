@@ -62,10 +62,10 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         [% IF user %]
-        <li><a href='/user/logout'>Logout</a></li>
+        <li><a href='/user/logout'><i class='fa fa-sign-out'></i> Logout</a></li>
         [% ELSE %]
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='fa fa-sign-in'></i> Login <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="/auth/github/authenticate"><i class="fa fa-github-square"></i> Login with GitHub</a></li>
             <li><a href="/auth/google/authenticate"><i class="fa fa-google-plus"></i> Login with Google</a></li>
