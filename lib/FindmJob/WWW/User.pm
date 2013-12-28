@@ -21,6 +21,35 @@ sub token {
     }
 }
 
+sub updates {
+    my $c = shift;
+
+    my $ref = $c->param('ref') || ''; # Chrome extension ref=chrome
+
+    my $user_id = 0;
+    my $token = $c->param('token');
+    if ($token) {
+        my ($_id, $_token) = ($token =~ /^(.*?)\-(\w{12})$/);
+        if ($_id) {
+            my $_user = $c->schema->resulset('User')->find($_id);
+            $user_id = $user->id if $user->token eq $_token;
+        }
+    } elsif (my $user = $c->stash('user')) {
+        $user_id = $user->id;
+    }
+    unless ($user_id) {
+        return $c->render(json => { error => "Token is required. "}) if $ref eq 'chrome';
+        return $c->redirect_to('/user/login');
+    }
+
+    # my @follow_ids;
+    # my $rs = $c->schema->resultset('UserFollow')->search({ user_id => $user_id });
+    # while (my $r = $rs->next) { push @follow_ids, $r->follow_id; }
+
+    my @updates;
+    my $rs = $c->schema->resultset('UserUpdates')->search({ user_id => $user_id });
+}
+
 sub follow {
     my $c = shift;
 

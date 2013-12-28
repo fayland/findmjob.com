@@ -42,6 +42,18 @@ around 'create' => sub {
                 tag    => $tag_row->id,
                 time   => time(),
             } );
+
+            ## for user update
+            my $rs = $schema->resultset('UserFollow')->search({ follow_id => $tag_row->id });
+            while (my $r = $rs->next) {
+                $schema->resultset('UserUpdate')->create({
+                    user_id => $r->user_id,
+                    object_id => $row->id,
+                    tbl => $table,
+                    follow_id => $r->follow_id,
+                    pushed_at => time(),
+                });
+            }
         }
     }
 

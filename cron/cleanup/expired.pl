@@ -18,7 +18,7 @@ $rows = $dbh->do("DELETE FROM object where tbl='freelance' and id not in (SELECT
 print "DELETE freelance object: $rows\n";
 
 ## jobs, for 3 months
-$month_ago = time() - 100 * 86400;
+$month_ago = time() - 40 * 86400;
 $rows = $dbh->do("DELETE FROM job WHERE inserted_at < $month_ago");
 print "DELETE job: $rows\n";
 
@@ -38,6 +38,11 @@ $dbh->do("UPDATE company SET is_deletable=0 WHERE id IN (SELECT DISTINCT company
 $dbh->do("UPDATE company SET is_deletable=0 WHERE id IN (SELECT DISTINCT company_id FROM company_correction)");
 $rows = $dbh->do("DELETE FROM company WHERE is_deletable=1 AND id NOT IN (SELECT DISTINCT company_id FROM job)");
 print "DELETE compnay: $rows\n";
+
+# updates
+$month_ago = time() - 30 * 86400;
+$rows = $dbh->do("DELETE FROM user_update WHERE pushed_at < ?", undef, $month_ago);
+print "DELETE user_update: $rows\n";
 
 print "Done\n";
 
