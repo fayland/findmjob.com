@@ -1,0 +1,4 @@
+
+<p>Your Token is <b>[% user.id %]-[% user.token %]</b></p>
+
+<input value='[% user.id %]-[% user.token %]' class='col-md-4' />

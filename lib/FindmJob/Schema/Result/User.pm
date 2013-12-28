@@ -41,6 +41,17 @@ __PACKAGE__->table("user");
   is_nullable: 1
   size: 64
 
+=head2 data
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 token
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 12
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -50,6 +61,10 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 128 },
   "name",
   { data_type => "varchar", is_nullable => 1, size => 64 },
+  "data",
+  { data_type => "text", is_nullable => 1 },
+  "token",
+  { data_type => "char", is_nullable => 1, size => 12 },
 );
 
 =head1 PRIMARY KEY
@@ -79,9 +94,10 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("email", ["email"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-20 19:49:41
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hMSwV+1IjqhvJeooV/9qRg
+# Created by DBIx::Class::Schema::Loader v0.07038 @ 2013-12-28 18:40:54
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dqJVUScMTXAeMhjjRbldhg
 
+__PACKAGE__->load_components('InflateColumn::Serializer');
+__PACKAGE__->add_columns('+data', { serializer_class => 'JSON' });
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 1;

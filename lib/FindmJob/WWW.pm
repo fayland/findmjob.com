@@ -61,14 +61,21 @@ sub startup {
             }
         }
 
-        # use Data::Dumper; print Dumper(\$data);
+        use Data::Dumper; print Dumper(\$data);
 
         # check if signed up
         my $user = $schema->resultset('User')->find({ email => $email });
-        $user ||= $schema->resultset('User')->create({
-            email => $email,
-            name  => $name,
-        });
+        if ($user) {
+            my $user_data = $user->data;
+            $user_data->{googleplus} = $data->{url} if $service eq 'google';
+            $user->data($user_data);
+            $user->update();
+        } else {
+            $user = $schema->resultset('User')->create({
+                email => $email,
+                name  => $name,
+            });
+        }
 
         $schema->resultset('UserConnect')->update_or_create( {
             user_id => $user->id,
@@ -163,6 +170,17 @@ sub startup {
 
     $r->get('/user/login')->to('user#login');
     $r->get('/user/logout')->to('user#logout');
+
+    my $is_authenticated = sub {
+        my ($self) = @_;
+        unless ($self->stash('user')) {
+            $self->redirect_to('/user/login');
+            return 0;
+        }
+        return 1;
+    };
+    my $auth_r = $r->under( $is_authenticated );
+    $r->get('/user/token')->to('user#token');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
