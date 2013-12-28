@@ -34,7 +34,7 @@ sub follow {
     }
 
     if ($c->req->is_xhr) {
-        $c->render(json => {'success': 1});
+        $c->render(json => {'success' => 1});
     } else {
         $c->redirect_to('/'); # FIXME, to /user/followed
     }

@@ -29,6 +29,8 @@
 <p>[% tag.data.desc %]</p>
 [% END %]
 
+<p><a href='/user/follow?follow_id=[% tag.id %]' class='btn btn-primary'>Follow</a></p>
+
 </div>
 
 <hr class="soften">

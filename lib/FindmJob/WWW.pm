@@ -185,7 +185,8 @@ sub startup {
         return 1;
     };
     my $auth_r = $r->under( $is_authenticated );
-    $r->get('/user/token')->to('user#token');
+    $auth_r->get('/user/token')->to('user#token');
+    $auth_r->any('/user/follow')->to('user#follow');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
