@@ -1,0 +1,13 @@
+[% IF updates.size %]
+
+<ul>
+[% FOREACH update IN updates %]
+<li><a href='[% update.url %]'>[% update.title %]</a></li>
+[% END %]
+</ul>
+
+[% ELSE %]
+
+<p>Nothing to do.</p>
+
+[% END %]

@@ -51,9 +51,12 @@ sub updates {
     my $schema = $c->schema;
     my $dbh = $schema->storage->dbh;
 
-    my %updates;
+    my @updates;
+
+    my $min_pushed_at = $c->param('min_pushed_at') || 0;
     my $rs = $c->schema->resultset('UserUpdate')->search({
-        user_id => $user_id
+        user_id => $user_id,
+        $min_pushed_at ? (pushed_at => {'>', $min_pushed_at}) : (),
     }, {
         rows => $rows,
         order_by => \'pushed_at DESC', #'
@@ -62,24 +65,30 @@ sub updates {
         # only job and freelance for now
         my $obj = $schema->resultset(ucfirst $r->tbl)->find($r->object_id);
         next unless $obj;
-        my $data = {
-            title => $obj->title,
-            url   => $obj->url,
-            id    => $obj->id,
-            pushed_at => $r->pushed_at,
-            follow_id => $r->follow_id,
-        };
 
         # get follow obj (FIXME)
 
-        $updates{$obj->id} = $data;
+        $obj->{follow_id} = $r->follow_id;
+        $obj->{pushed_at} = $r->pushed_at;
+        push @updates, $obj;
     }
-    my @updates = sort { $updates{$b}{pushed_at} <=> $updates{$a}{pushed_at} } keys %updates;
-    @updates = @updates{@updates}; # get values
     if ($ref eq 'chrome') {
-        my @pushed_at = map { $updates{$_}{pushed_at} } keys %updates;
-        my $max_pushed_at = (sort(@pushed_at))[-1];
-        $c->render(json => { 'updates' => \@updates, max_pushed_at => $max_pushed_at });
+        my $max_pushed_at = $min_pushed_at;
+        my @jdata;
+        foreach my $obj (@updates) {
+            my $data = {
+                title => $obj->title,
+                url   => $obj->url,
+                id    => $obj->id,
+                pushed_at => $obj->{pushed_at},
+                follow_id => $obj->{follow_id},
+            };
+            push @jdata, $data;
+            $max_pushed_at = $data->{pushed_at} if $data->{pushed_at} > $max_pushed_at;
+        }
+        $c->render(json => { 'updates' => \@jdata, max_pushed_at => $max_pushed_at });
+    } else {
+        $c->stash(updates => \@updates);
     }
 }
 
