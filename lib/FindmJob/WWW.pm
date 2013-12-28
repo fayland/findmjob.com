@@ -65,15 +65,17 @@ sub startup {
 
         # check if signed up
         my $user = $schema->resultset('User')->find({ email => $email });
+        my $user_data = $user ? $user->data : {};
+        $user_data->{googleplus} = $data->{url} if $service eq 'google';
+        $user_data->{github} = $data->{login} if $service eq 'github';
         if ($user) {
-            my $user_data = $user->data;
-            $user_data->{googleplus} = $data->{url} if $service eq 'google';
             $user->data($user_data);
             $user->update();
         } else {
             $user = $schema->resultset('User')->create({
                 email => $email,
                 name  => $name,
+                data  => $user_data
             });
         }
 
