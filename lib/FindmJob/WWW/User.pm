@@ -25,6 +25,7 @@ sub updates {
     my $c = shift;
 
     my $ref = $c->param('ref') || ''; # Chrome extension ref=chrome
+    my $is_json = ($ref =~ /chrome/) ? 1 : 0;
 
     my $user_id = 0;
     my $token = $c->param('token');
@@ -38,7 +39,7 @@ sub updates {
         $user_id = $user->id;
     }
     unless ($user_id) {
-        return $c->render(json => { error => "Token is required. "}) if $ref eq 'chrome';
+        return $c->render(json => { error => "Token is required. "}) if $is_json;
         return $c->redirect_to('/user/login');
     }
 
@@ -46,7 +47,7 @@ sub updates {
     # my $rs = $c->schema->resultset('UserFollow')->search({ user_id => $user_id });
     # while (my $r = $rs->next) { push @follow_ids, $r->follow_id; }
 
-    my $rows = ($ref eq 'chrome') ? 10 : 20;
+    my $rows = ($is_json) ? 10 : 20;
 
     my $schema = $c->schema;
     my $dbh = $schema->storage->dbh;
@@ -72,7 +73,7 @@ sub updates {
         $obj->{pushed_at} = $r->pushed_at;
         push @updates, $obj;
     }
-    if ($ref eq 'chrome') {
+    if ($is_json) {
         my $max_pushed_at = $min_pushed_at;
         my @jdata;
         foreach my $obj (@updates) {
