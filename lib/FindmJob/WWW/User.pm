@@ -14,7 +14,7 @@ sub token {
     my $c = shift;
 
     my $user = $c->stash('user');
-    unless ($user->token) {
+    if (not $user->token or $c->param('revoke')) {
         my $token = rand_string(12);
         $user->token($token);
         $user->update();

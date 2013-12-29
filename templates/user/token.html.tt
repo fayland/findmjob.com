@@ -1,4 +1,4 @@
 
 <p>Your Token is <b>[% user.id %]-[% user.token %]</b></p>
 
-<input value='[% user.id %]-[% user.token %]' class='col-md-4' />
+<input value='[% user.id %]-[% user.token %]' class='col-md-4' /> <a class='btn' href='/user/token?revoke=1'>Revoke</a>
