@@ -39,7 +39,7 @@ sub updates {
         $user_id = $user->id;
     }
     unless ($user_id) {
-        return $c->render(json => { error => "Token is required. "}) if $is_json;
+        return $c->render(json => { error => "Token is required or invalid."}) if $is_json;
         return $c->redirect_to('/user/login');
     }
 
