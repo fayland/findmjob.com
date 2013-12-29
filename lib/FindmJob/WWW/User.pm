@@ -31,7 +31,7 @@ sub updates {
     if ($token) {
         my ($_id, $_token) = ($token =~ /^(.*?)\-(\w{12})$/);
         if ($_id) {
-            my $_user = $c->schema->resulset('User')->find($_id);
+            my $_user = $c->schema->resultset('User')->find($_id);
             $user_id = $_user->id if $_user->token eq $_token;
         }
     } elsif (my $user = $c->stash('user')) {
