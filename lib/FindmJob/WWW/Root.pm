@@ -305,7 +305,7 @@ sub _render_feed {
 
     my %feed_properties = (
         title   => $self->stash('title') . " Jobs - FindmJob.com",
-        description => 'Find My Job Today',
+        description => 'Push Jobs To You',
         id      => $config->{sites}->{main},
         modified => DateTime->now,
         entries  => \@entries,
