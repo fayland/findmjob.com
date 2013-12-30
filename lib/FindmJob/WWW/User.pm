@@ -26,6 +26,7 @@ sub updates {
 
     my $ref = $c->param('ref') || ''; # Chrome extension ref=chrome
     my $is_json = ($ref =~ /chrome/) ? 1 : 0;
+    my $is_notification = ($ref =~ /chrome/) ? 1 : 0;
 
     my $user_id = 0;
     my $token = $c->param('token');
@@ -60,7 +61,7 @@ sub updates {
         $min_pushed_at ? (pushed_at => {'>', $min_pushed_at}) : (),
     }, {
         rows => $rows,
-        order_by => \'pushed_at DESC', #'
+        $is_notification ? (order_by => 'pushed_at') : (order_by => \'pushed_at DESC'), #'
     });
     while (my $r = $rs->next) {
         # only job and freelance for now
@@ -71,7 +72,11 @@ sub updates {
 
         $obj->{follow_id} = $r->follow_id;
         $obj->{pushed_at} = $r->pushed_at;
-        push @updates, $obj;
+        if ($is_notification) {
+            unshift @updates, $obj;
+        } else {
+            push @updates, $obj;
+        }
     }
     if ($is_json) {
         my $max_pushed_at = $min_pushed_at;
