@@ -161,8 +161,6 @@ sub startup {
     $r->get('/location/:id/*seo')->to(controller => 'Root', action => 'location');
     $r->get('/tag/:id')->to(controller => 'Root', action => 'tag');
     $r->get('/tag/:id/*seo')->to(controller => 'Root', action => 'tag');
-    $r->post('/subscribe')->to(controller => 'Subscribe', action => 'subscribe');
-    $r->get('/subscribe/confirm')->to(controller => 'Subscribe', action => 'confirm');
     $r->get('/company/:id')->to('company#index');
     $r->any('/company/:id/jobs')->to('company#jobs');
     $r->any('/company/:id/correct')->to('company#correct');
