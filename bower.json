@@ -1,0 +1,24 @@
+{
+  "name": "findmjob.com",
+  "version": "0.0.1",
+  "homepage": "https://github.com/fayland/findmjob.com",
+  "authors": [
+    "Fayland Lam <fayland@gmail.com>"
+  ],
+  "description": "Push Jobs To You",
+  "keywords": [
+    "job"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "notify.js": "*"
+  }
+}

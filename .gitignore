@@ -11,3 +11,4 @@ mobile/android/gen/*
 static/sitemap.*.gz
 
 node_modules/*
+bower_components/*
