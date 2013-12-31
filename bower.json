@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "notify.js": "*"
+    "notify.js": "*",
+    "jquery": ">2.0.0"
   }
 }

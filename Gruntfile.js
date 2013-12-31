@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         src: [
-          'static/assets/src/js/jquery.min.js',
+          'bower_components/jquery/jquery.js',
           'static/assets/src/bootstrap/js/bootstrap.js',
           'static/assets/src/js/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
