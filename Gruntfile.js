@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         src: [
           'bower_components/jquery/jquery.js',
           'static/assets/src/bootstrap/js/bootstrap.js',
-          'static/assets/src/js/jquery.timeago.js',
+          'bower_components/jquery-timeago/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
           'static/assets/src/js/ga.js'
         ],
