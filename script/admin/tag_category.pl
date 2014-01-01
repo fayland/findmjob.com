@@ -25,7 +25,7 @@ foreach my $tag (@language) {
     }
 }
 
-my @skills = ('MySQL', 'Linux', 'svn', 'git', 'mercurial', 'Apache', 'Ajax', 'node.js', 'coffeescript', 'Catalyst', 'DBIx::Class', 'Moose', 'Ruby on Rails', 'Dancer', 'Mojo', 'Mojolicious', 'ruby-on-rails', 'photoshop', 'facebook', 'hadoop', 'silverlight', 'oracle', 'postgresql', 'iPad', 'iPhone', 'jquery', 'html5', 'unix', 'redis', 'mongodb', 'android', 'css3', 'jquery-ui', 'jQuery Mobile', 'memcached', 'nosql', 'django', 'oracle', 'flex', 'flash', 'Cordova', 'phonegap', 'appmobi', 'telecommute', 'telecommuting', 'CodeIgniter', 'MongoDB', 'Redis', 'Cassandra', 'CouchDB', 'Riak', 'Amazon Web Services', 'AWS', 'SOAP', 'REST', 'OAuth', 'OpenID', 'SEO', 'Rails', 'iOS', 'PayPal', 'eWAY');
+my @skills = ('MySQL', 'Linux', 'svn', 'git', 'mercurial', 'Apache', 'Ajax', 'CoffeeScript', 'LiveScript' 'Catalyst', 'DBIx::Class', 'Moose', 'Ruby on Rails', 'Dancer', 'Mojo', 'Mojolicious', 'ruby-on-rails', 'photoshop', 'facebook', 'hadoop', 'silverlight', 'oracle', 'postgresql', 'iPad', 'iPhone', 'jquery', 'html5', 'unix', 'redis', 'mongodb', 'android', 'css3', 'jquery-ui', 'jQuery Mobile', 'memcached', 'nosql', 'django', 'oracle', 'flex', 'flash', 'Cordova', 'phonegap', 'appmobi', 'telecommute', 'telecommuting', 'CodeIgniter', 'MongoDB', 'Redis', 'Cassandra', 'CouchDB', 'Riak', 'Amazon Web Services', 'AWS', 'SOAP', 'REST', 'OAuth', 'OpenID', 'SEO', 'Rails', 'iOS', 'PayPal', 'eWAY');
 foreach my $tag (@skills) {
     $select_sth->execute($tag);
     my ($id) = $select_sth->fetchrow_array;
