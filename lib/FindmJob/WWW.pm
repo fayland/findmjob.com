@@ -147,6 +147,15 @@ sub startup {
             $c->stash(user => $user);
         }
     });
+    $self->hook(around_action => sub {
+        my ($next, $c, $action, $last) = @_;
+        if ($c->stash('is_feed')) {
+            $next->();
+            __render_feed($c);
+        } else {
+            return $next->();
+        }
+    });
 
     $r->any('/')->to(controller => 'Root', action => 'index');
     $r->get('/jobs')->to(controller => 'Root', action => 'jobs');
@@ -191,6 +200,59 @@ sub startup {
 
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
     $r->get('/help/:html.html')->to(controller => 'Help', action => 'html');
+}
+
+sub __render_feed {
+    my ($c) = @_;
+
+    my $config = $c->sconfig;
+    my $feed_format = $c->stash('is_feed');
+
+    require DateTime;
+    require XML::Feed;
+
+    my @entries;
+    foreach my $obj (@{ $c->stash('feeds') }) {
+        next unless $obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance';
+        my $link = $config->{sites}->{main} . $obj->url;
+        my $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
+        my $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
+        push @entries, {
+            id => $link,
+            link => $link,
+            title => $obj->title,
+            issued => $issued, modified => $issued,
+            author => $author,
+            content => $obj->description,
+        };
+    }
+
+    my $mime = ("atom" eq $feed_format) ? "application/atom+xml" : "application/rss+xml";
+    $c->res->headers->content_type($mime);
+
+    my $format = ("atom" eq $feed_format) ? 'Atom' : 'RSS';
+    my $feed = XML::Feed->new($format);
+
+    my %feed_properties = (
+        title   => $c->stash('title') . " Jobs - FindmJob.com",
+        description => 'Push Jobs To You',
+        id      => $config->{sites}->{main},
+        modified => DateTime->now,
+        entries  => \@entries,
+    );
+    foreach my $x (keys %feed_properties) {
+        $feed->$x($feed_properties{$x});
+    }
+
+    foreach my $entry (@entries) {
+        my $e = XML::Feed::Entry->new($format);
+        foreach my $x (keys %$entry) {
+            $e->$x($entry->{$x});
+        }
+        $feed->add_entry($e);
+    }
+
+    $c->render(text => $feed->as_xml);
 }
 
 1;

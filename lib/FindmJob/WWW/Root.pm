@@ -59,7 +59,7 @@ sub jobs {
         if ($is_feed) {
             $self->stash(title => "Recent Jobs");
             map { $_->{tbl} = 'job' } @jobs;
-            return $self->_render_feed(@jobs);
+            return $self->stash('feeds' => \@jobs);
         }
     }
 
@@ -96,7 +96,7 @@ sub freelances {
         if ($is_feed) {
             $self->stash(title => "Recent Freelances");
             map { $_->{tbl} = 'freelance' } @jobs;
-            return $self->_render_feed(@jobs);
+            return $self->stash('feeds' => \@jobs);
         }
     }
 
@@ -180,7 +180,7 @@ sub location {
     if ($is_feed) {
         $self->stash(title => "Jobs in " . $location->text);
         map { $_->{tbl} = 'job' } @jobs;
-        return $self->_render_feed(@jobs);
+        return $self->stash('feeds' => \@jobs);
     }
 
     $self->render(template => 'location');
@@ -237,7 +237,7 @@ sub tag {
 
     if ($self->stash('is_feed')) {
         $self->stash(title => $tag->text);
-        return $self->_render_feed(@obj);
+        return $self->stash('feeds' => \@obj);
     } else {
         my $pager = $rs->pager;
         $self->stash(pager => $pager);
@@ -261,68 +261,6 @@ sub tag {
     }
 
     $self->render(template => 'tag');
-}
-
-sub _render_feed {
-    my ($self, @obj) = @_;
-
-    my $config = $self->sconfig;
-    my $feed_format = $self->stash('is_feed');
-
-    require DateTime;
-    require XML::Feed;
-
-    my @entries;
-    foreach my $obj (@obj) {
-        my ($title, $content, $link, $author, $issued);
-        # refer templates/object.tt2
-        if ($obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance') {
-            $link = $config->{sites}->{main} . $obj->url;
-            $title = $obj->title;
-            $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
-            $content = $obj->description;
-            $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
-        } elsif ($obj->{tbl} eq 'company') {
-            $link = $config->{sites}->{main} . $obj->url;
-            $title = $obj->name;
-        }
-
-        push @entries, {
-            id => $link,
-            link => $link,
-            title => $title,
-            $issued ? (issued => $issued, modified => $issued) : (),
-            $author ? (author => $author) : (),
-            $content ? (content => $content) : (),
-        };
-    }
-
-    my $mime = ("atom" eq $feed_format) ? "application/atom+xml" : "application/rss+xml";
-    $self->res->headers->content_type($mime);
-
-    my $format = ("atom" eq $feed_format) ? 'Atom' : 'RSS';
-    my $feed = XML::Feed->new($format);
-
-    my %feed_properties = (
-        title   => $self->stash('title') . " Jobs - FindmJob.com",
-        description => 'Push Jobs To You',
-        id      => $config->{sites}->{main},
-        modified => DateTime->now,
-        entries  => \@entries,
-    );
-    foreach my $x (keys %feed_properties) {
-        $feed->$x($feed_properties{$x});
-    }
-
-    foreach my $entry (@entries) {
-        my $e = XML::Feed::Entry->new($format);
-        foreach my $x (keys %$entry) {
-            $e->$x($entry->{$x});
-        }
-        $feed->add_entry($e);
-    }
-
-    $self->render(text => $feed->as_xml);
 }
 
 1;
