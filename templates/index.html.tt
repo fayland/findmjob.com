@@ -1,8 +1,11 @@
 [% title = 'Push Jobs To You' %]
-
 [% USE String %]
 
 [%# PROCESS include/addthis.tt2 %]
+
+[% IF is_chrome %]
+<div class="alert alert-info" style="margin-top: 10px">Please install our <a href='https://chrome.google.com/webstore/detail/findmjob-push-jobs-to-you/ogknnjoiljfafebechhnjgjommbolhoa' target='_blank'>Chrome Extension</a> to get instant notification.</div>
+[% END %]
 
 <hr class='soften' />
 

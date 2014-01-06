@@ -4,29 +4,32 @@ use Mojo::Base 'Mojolicious::Controller';
 use Encode;
 
 sub index {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
+    my $schema = $c->schema;
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
         rows => 6,
         page => 1,
     });
-    $self->stash->{jobs} = [$job_rs->all];
+    $c->stash->{jobs} = [$job_rs->all];
     my $freelance_rs = $schema->resultset('Freelance')->search( undef, {
         order_by => 'inserted_at DESC',
         rows => 6,
         page => 1,
     });
-    $self->stash->{freelances} = [$freelance_rs->all];
+    $c->stash->{freelances} = [$freelance_rs->all];
 
     # popular locations
-    $self->stash->{popular_locations} = [ $schema->resultset('Location')->search(undef, {
+    $c->stash->{popular_locations} = [ $schema->resultset('Location')->search(undef, {
         order_by => 'job_num DESC',
         rows => 10, page => 1
     })->all ];
 
-    $self->render(template => 'index');
+    my $is_chrome = $c->req->headers->user_agent =~ /Chrome/ ? 1 : 0;
+    $c->stash(is_chrome => $is_chrome);
+
+    $c->render(template => 'index');
 }
 
 sub jobs {
