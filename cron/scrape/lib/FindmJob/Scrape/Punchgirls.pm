@@ -24,8 +24,7 @@ sub run {
         my $is_inserted = $job_rs->is_inserted_by_url($link);
         next if $is_inserted and not $self->opt_update;
 
-        my $row;
-        {
+        try {
             my $title = $link_source->as_trimmed_text;
             my $company = $sec->look_down(_tag => 'a', href => qr'company');
             $company = $company->as_trimmed_text if $company;
@@ -58,9 +57,7 @@ sub run {
             $data->{telecommute} = 1 if grep { $_ =~ /Anywhere/ } @lis;
             push @tags, 'telecommute' if $data->{telecommute};
 
-            my $contact = 'https://jobs.punchgirls.com' . $sec->look_down(_tag => 'a', href => qr'apply')->attr('href');
-
-            $row = {
+            my $row = {
                 source_url => $link,
                 title => $title,
                 company => {
@@ -69,21 +66,21 @@ sub run {
                 },
                 posted_at => $post_date,
                 description => $desc,
-                contact => $contact,
+                contact => '',
                 location => $location || '',
                 extra => encode_json($data),
                 tags  => \@tags
             };
-        }
-        print Dumper(\$row); next;
+            $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};
+            if ( $is_inserted and $self->opt_update ) {
+                $job_rs->update_job($row);
+            } else {
+                $job_rs->create_job($row);
+            }
 
-        $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};
-        if ( $is_inserted and $self->opt_update ) {
-            $job_rs->update_job($row);
-        } else {
-            $job_rs->create_job($row);
-        }
-
+        } catch {
+            $self->log_fatal($_);
+        };
     }
     $tree = $tree->delete;
 }
