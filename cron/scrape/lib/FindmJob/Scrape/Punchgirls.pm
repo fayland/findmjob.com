@@ -56,6 +56,7 @@ sub run {
             my $data = {};
             $data->{telecommute} = 1 if grep { $_ =~ /Anywhere/ } @lis;
             push @tags, 'telecommute' if $data->{telecommute};
+            push @tags, 'Punchgirls';
 
             my $row = {
                 source_url => $link,
