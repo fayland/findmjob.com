@@ -123,6 +123,12 @@ sub startup {
     $self->hook(before_dispatch => sub {
         my $c = shift;
 
+        # Security: http://perltricks.com/article/81/2014/3/31/Perl-web-application-security-HTTP-headers
+        $c->res->headers->header('X-Frame-Options' => 'DENY');
+        $c->res->headers->header('X-Content-Type-Options' => 'nosniff');
+        $c->res->headers->header('X-Download-Options' => 'noopen');
+        $c->res->headers->header('X-XSS-Protection' => "1; 'mode=block'");
+
         my $p = $c->req->url->path;
         if ($p =~ s{/feed\.(rss|atom)$}{}) {
             $c->stash('is_feed' => $1);
