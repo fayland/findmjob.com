@@ -27,6 +27,8 @@ requires 'MIME::Lite';
 requires 'Locale::Codes::Country', '3.25';
 requires 'Proc::PID::File';
 
+requires 'Search::Elasticsearch';
+
 ## scrape
 requires 'Log::Dispatchouli';
 requires 'HTML::FormatText';

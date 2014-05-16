@@ -42,4 +42,12 @@ sub dbh {
     return $schema->storage->dbh;
 }
 
+my $__elasticsearch;
+sub elasticsearch {
+    return $__elasticsearch if $__elasticsearch;
+    require Search::Elasticsearch;
+    $__elasticsearch = Search::Elasticsearch->new();
+    return $__elasticsearch;
+}
+
 1;
