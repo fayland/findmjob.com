@@ -47,7 +47,7 @@ sub elasticsearch {
     return $__elasticsearch if $__elasticsearch;
     require Search::Elasticsearch;
     $__elasticsearch = Search::Elasticsearch->new(
-        trace_to => 'Stderr'
+        # trace_to => 'Stderr'
     );
     return $__elasticsearch;
 }
