@@ -17,10 +17,11 @@ my $bulk = $es->bulk_helper(
     # verbose => 1
 );
 
-$es->indices->delete(index => 'findmjob'); # purge
+my $prev_time = $schema->resultset('Option')->get('last_es_time_job');
+die unless $prev_time; # call fullindex instead
 
 my @rows;
-my $sth = $dbh->prepare("SELECT id, title, description, location, contact, inserted_at FROM job WHERE expired_at > NOW()");
+my $sth = $dbh->prepare("SELECT id, title, description, location, contact, inserted_at FROM job WHERE inserted_at > $prev_time");
 $sth->execute();
 while (my $row = $sth->fetchrow_hashref) {
     my $id = delete $row->{id};
@@ -36,8 +37,12 @@ $bulk = $es->bulk_helper(
     type    => 'freelance',
     # verbose => 1
 );
+
+$prev_time = $schema->resultset('Option')->get('last_es_time_freelance');
+die unless $prev_time; # call fullindex instead
+
 @rows = ();
-$sth = $dbh->prepare("SELECT id, title, description, 'Anywhere' as location, contact, inserted_at FROM freelance WHERE expired_at > NOW()");
+$sth = $dbh->prepare("SELECT id, title, description, 'Anywhere' as location, contact, inserted_at FROM freelance WHERE inserted_at > $prev_time");
 $sth->execute();
 while (my $row = $sth->fetchrow_hashref) {
     my $id = delete $row->{id};

@@ -5,7 +5,7 @@ extends 'DBIx::Class::ResultSet';
 
 use JSON::XS;
 
-sub get_option {
+sub get {
     my ($self, $k) = @_;
     my $r = $self->find($k);
     return decode_json($r->v) if $r and $r->v =~ /^[\{\[]/; # simple check
@@ -13,7 +13,7 @@ sub get_option {
     return;
 }
 
-sub set_option {
+sub set {
     my ($self, $k, $v) = @_;
 
     $self->update_or_create({
