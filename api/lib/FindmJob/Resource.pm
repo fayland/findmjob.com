@@ -55,7 +55,11 @@ sub _dispatcher {
         } );
         my @data;
         if ($ret->{total}) {
-            my @jobids = map { $_->{id} } @{$ret->{matches}};
+            # old sphinx
+            # my @jobids = map { $_->{id} } @{$ret->{matches}};
+            # new es
+            my @jobids = map { $_->{_source}->{id} } @{$ret->{hits}};
+
             my $schema = FindmJob::Basic->schema;
             my @jobs   = $schema->resultset('Job')->search( {
                 id => { 'IN', \@jobids }
