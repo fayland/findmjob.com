@@ -46,7 +46,9 @@ my $__elasticsearch;
 sub elasticsearch {
     return $__elasticsearch if $__elasticsearch;
     require Search::Elasticsearch;
-    $__elasticsearch = Search::Elasticsearch->new();
+    $__elasticsearch = Search::Elasticsearch->new(
+        trace_to => 'Stderr'
+    );
     return $__elasticsearch;
 }
 

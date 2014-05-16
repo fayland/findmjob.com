@@ -17,7 +17,7 @@ sub search {
     my $loc = $self->param('loc') || '';
     my $by  = $self->param('by') || 'relevance';
     my $rest_url = $self->stash('rest') || '';
-    my ($filename) = ($rest_url =~ m{/([^/]+).html$});
+    my ($filename) = ($rest_url =~ m{([^/]+)\.html$});
     if ($filename) {
         $filename =~ s/\_by\_(date|relevance)$// and $by = $1;
         $filename =~ s/(^|\_)in\_(\w+)$// and $loc = $2;
@@ -43,9 +43,15 @@ sub search {
     if ($ret->{total}) {
         my $schema = FindmJob::Basic->schema;
 
-        my @ids    = map { $_->{id} } @{$ret->{matches}};
-        my @jobids = map { $_->{id} } grep { $_->{tbl} eq 'job' } @{$ret->{matches}};
-        my @freelance_ids = map { $_->{id} } grep { $_->{tbl} eq 'freelance' } @{$ret->{matches}};
+        # old sphinx
+        # my @ids    = map { $_->{id} } @{$ret->{matches}};
+        # my @jobids = map { $_->{id} } grep { $_->{tbl} eq 'job' } @{$ret->{matches}};
+        # my @freelance_ids = map { $_->{id} } grep { $_->{tbl} eq 'freelance' } @{$ret->{matches}};
+
+        # new es
+        my @ids    = map { $_->{_source}->{id} } @{$ret->{hits}};
+        my @jobids = map { $_->{_source}->{id} } grep { $_->{_type} eq 'job' } @{$ret->{hits}};
+        my @freelance_ids = map { $_->{_source}->{id} } grep { $_->{_type} eq 'freelance' } @{$ret->{hits}};
 
         my %ids;
         if (@jobids) {

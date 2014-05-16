@@ -4,6 +4,54 @@ use Moo;
 use Sphinx::Search;
 use FindmJob::Basic;
 
+has 'es' => (is => 'lazy');
+sub _build_es {
+    return FindmJob::Basic->elasticsearch;
+}
+
+sub search_job {
+    my $self = shift;
+    my %args = @_ % 2 ? %{$_[0]} : @_;
+
+    my $rows = $args{rows} || 12;
+    my $page = $args{page};
+    $page = 1 unless $page and $page =~ /^\d+$/;
+    my $q    = $args{'q'};
+    my $loc  = $args{'loc'};
+    my $tbl  = $args{'tbl'};
+
+    my $es = $self->es;
+
+    my $body = {};
+    $body->{from} = ($page - 1) * $rows;
+    $body->{size} = $rows;
+    if ($args{sort} and $args{sort} =~ /(date|time)/) {
+        $body->{sort} = { "inserted_at" => { order => "desc" } };
+    }
+
+    if ($q and $loc) {
+        $body->{query}->{bool}->{must} =  [
+                { match => { '_all' => $q } },
+                { match => { 'location' => $loc } }
+            ];
+
+    } elsif ($q) {
+        $body->{query}->{match} = { '_all' => $q };
+    } elsif ($loc) {
+        $body->{query}->{match} = { 'location' => $loc };
+    }
+
+    my $search = { index => 'findmjob', body => $body };
+    if ($tbl and ($tbl eq 'job' or $tbl eq 'freelance')) {
+        $search->{type} = $tbl;
+    }
+
+    my $results = $es->search($search);
+    return $results->{hits};
+}
+
+=pod
+
 has 'sphinx' => (is => 'lazy');
 sub _build_sphinx {
     my $sph = Sphinx::Search->new;
@@ -47,5 +95,7 @@ sub search_job {
     my $ret = $sph->Query(join(' & ', @query));
     return $ret;
 }
+
+=cut
 
 1;
