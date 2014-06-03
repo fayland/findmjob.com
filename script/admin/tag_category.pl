@@ -13,7 +13,7 @@ my $select_sth = $dbh->prepare("SELECT id FROM tag WHERE text = ?");
 my $insert_sth = $dbh->prepare("INSERT INTO tag (id, text, category) VALUES (?, ?, ?)");
 my $update_sth = $dbh->prepare("UPDATE tag SET category = ? WHERE id = ?");
 
-my @language = ('perl', 'python', 'java', 'asp', 'php', 'javascript', 'ruby', 'c#', 'c++', 'lisp', 'actionscript', 'c', 'objective-c', 'visual basic', 'sql', '.net', 'asp.net', 'pascal', 'lua', 'fortran', 'scheme', 'bash', 'haskell', 'smalltalk', 'erlang', 'groovy', 'prolog', 'html', 'xml', 'css', 'scala', 'vbscript', 'clojure', 'ColdFusion', 'OCaml', 'Smalltalk', 'shell', 'Dart', 'node.js', 'GoLang');
+my @language = ('perl', 'python', 'java', 'asp', 'php', 'javascript', 'ruby', 'c#', 'c++', 'lisp', 'actionscript', 'c', 'objective-c', 'visual basic', 'sql', '.net', 'asp.net', 'pascal', 'lua', 'fortran', 'scheme', 'bash', 'haskell', 'smalltalk', 'erlang', 'groovy', 'prolog', 'html', 'xml', 'css', 'scala', 'vbscript', 'clojure', 'ColdFusion', 'OCaml', 'Smalltalk', 'shell', 'Dart', 'node.js', 'GoLang', 'Scala');
 foreach my $tag (@language) {
     $select_sth->execute($tag);
     my ($id) = $select_sth->fetchrow_array;
