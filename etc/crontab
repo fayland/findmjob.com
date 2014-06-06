@@ -26,6 +26,7 @@
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
 50 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m ScalaJobs
+5 1 * * * perl /findmjob.com/cron/scrape/run.pl -m PythonWeekly
 
 # sharebot
 */30 * * * * perl /findmjob.com/cron/sharebot/sharebot.pl -m Twitter
