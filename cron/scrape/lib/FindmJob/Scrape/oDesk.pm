@@ -12,6 +12,8 @@ use Encode;
 sub run {
     my ($self) = @_;
 
+    return; # NOT WORKING ANY MORE.
+
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Freelance');
     my $json = JSON::XS->new->utf8;
