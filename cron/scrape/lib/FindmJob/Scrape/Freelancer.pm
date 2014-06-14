@@ -26,7 +26,7 @@ sub run {
     # those urls just do it every hour, not on each 15 minutes
     my @d = localtime();
     if ($d[1] > 10 and $d[2] < 20) {
-        push @urls, ('http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml');
+        push @urls, ('http://www.freelancer.com/rss/job_Python.xml', 'http://www.freelancer.com/rss/job_Ruby-on-Rails.xml', 'http://www.freelancer.com/rss/job_PHP.xml', 'http://www.freelancer.com/rss/job_Java.xml', 'https://www.freelancer.com/rss/job_Web-Scraping.xml', 'https://www.freelancer.com/rss/job_Javascript.xml');
     }
 
     foreach my $url (@urls) {

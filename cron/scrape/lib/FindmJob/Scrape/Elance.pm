@@ -16,7 +16,7 @@ sub run {
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Freelance');
-    my @urls = ('https://www.elance.com/php/search/main/resultsproject.php?matchType=project&rss=1&sortBy=timelistedSort&sortOrder=1&statusFilter=10037');
+    my @urls = ('https://www.elance.com/php/search/main/resultsproject.php?matchType=project&rss=1&sortBy=timelistedSort&sortOrder=1&statusFilter=10037', 'https://www.elance.com/r/rss/jobs/cat-it-programming');
 
     # set socks proxy (Tor)
     my $config = $self->config;
