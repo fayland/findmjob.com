@@ -10,7 +10,7 @@ use Data::Dumper;
 my $dbh = FindmJob::Basic->dbh;
 
 ## remove old freelances which is older than one months
-my $month_ago = time() - 40 * 86400;
+my $month_ago = time() - 14 * 86400; # 2 weeks are enough
 my $rows = $dbh->do("DELETE FROM freelance WHERE inserted_at < $month_ago");
 print "DELETE freelance: $rows\n";
 
