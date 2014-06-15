@@ -152,6 +152,10 @@ sub startup {
             my $user = $c->schema->resultset('User')->find($user_id);
             $c->stash(user => $user);
         }
+
+        # TEST ONLY
+        # my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
+        # $c->stash(user => $user);
     });
     $self->hook(around_action => sub {
         my ($next, $c, $action, $last) = @_;
@@ -201,6 +205,10 @@ sub startup {
     $auth_r->get('/user/token')->to('user#token');
     $auth_r->any('/user/follow')->to('user#follow');
     $r->get('/user/updates')->to('user#updates'); # can use Chrome token to fetch
+
+    $auth_r->get('/app')->to('app#index');
+    $auth_r->any('/app/create')->to('app#create');
+    $auth_r->any('/app/:id/verify')->to('app#verify');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 

@@ -1,0 +1,35 @@
+[% title = 'Create App' %]
+
+<h2>[% title %]</h2>
+<hr class="soften">
+
+[% IF errors.size %]
+<ul class='list-unstyled alert alert-danger'>
+    [% FOREACH err IN errors %]
+    <li>[% err %]</li>
+    [% END %]
+</ul>
+[% END %]
+
+<form class="form-horizontal" method="POST" role="form">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">App Name:</label>
+        <div class="col-lg-6">
+            <input name="name" type="text" class="form-control" required="required" placeholder='Your App Name' value="[% c.param('name') %]" maxlength="64" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">App Website:</label>
+        <div class="col-lg-6">
+            <input name="website" type="text" class="form-control" required="required" placeholder='Your Website which post the jobs. Domain only. Example: example.com' value="[% c.param('website') %]" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-6">
+        <button class="btn btn-primary save">[% title %]</button>
+        <a href='/app' class='btn btn-default'>Back to Apps</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,27 @@
+[% title = 'Verify Your Website' %]
+
+<h2>[% title %]</h2>
+<hr/>
+
+<div class='col-md-8 col-md-offset-2 alert alert-info clearfix'>
+    <p>Please verify that you own the website <b>[% app.website %]</b>.</p>
+</div>
+
+<div class="clearfix"></div>
+
+<p>You can either:</p>
+<ul>
+    <li>Insert a meta tag in your homepage.
+<pre><code>&lt;meta property="findmjob:verify" content="[% verify_secret %]" /&gt;</code></pre>
+
+    <p>Once you're done, please click <a href='/app/[% app.id %]/verify?m=1' class='btn btn-default'>Verify</a></p>
+    </li>
+    <li>Or create a page http://[% app.website %]/findmjob.verify.html with [% verify_secret %] inside.
+
+    <p>Once you're done, please click <a href='/app/[% app.id %]/verify?m=2' class='btn btn-default'>Verify</a></p>
+    </li>
+</ul>
+
+<p>NOTE: Once verified, you can roll back all the changes.</p>
+
+<a href='/app' class='btn btn-default'>Back to Apps</a>

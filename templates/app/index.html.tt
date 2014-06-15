@@ -1,0 +1,30 @@
+<a href='/app/create' class='btn btn-primary btn-large'>Create App</a>
+
+[% IF apps.size %]
+<div class="clearfix"><p/></div>
+<div class="col-lg-8">
+    <table class='table'>
+        <tr><th>App</th><th>API Key</th><th>Status</th><th>Action</th></tr>
+        [% FOREACH app IN apps %]
+        <tr>
+            <td>[% app.name %] - [% app.website %]</td>
+            <td>[% app.key %]</td>
+            <td>[% IF NOT app.is_verified %]
+                NOT VERIFIED
+                [% ELSIF app.is_disabled %]
+                Disabled
+                [% ELSE %]
+                OK
+                [% END %]
+            </td>
+            <td>
+                <a href='/app?delete_id=[% app.id %]' class="btn btn-default" onclick="return confirm('Confirm to delete')">Delete</a>
+            </td>
+        </tr>
+        [% END %]
+    </table>
+</div>
+<div class="clearfix"></div>
+[% ELSE %]
+<p>No App created so far.</p>
+[% END %]
