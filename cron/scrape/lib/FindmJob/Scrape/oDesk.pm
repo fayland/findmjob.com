@@ -7,57 +7,74 @@ use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/encode_json decode_json/;
 use FindmJob::DateUtils 'human_to_db_date';
+use FindmJob::Utils qw/file_get_contents/;
 use Encode;
+use LWP::Authen::OAuth;
 
 sub run {
     my ($self) = @_;
-
-    return; # NOT WORKING ANY MORE.
 
     my $schema = $self->schema;
     my $job_rs = $schema->resultset('Freelance');
     my $json = JSON::XS->new->utf8;
 
-    my $resp = $self->get('https://www.odesk.com/api/profiles/v1/search/jobs.json');
-    my $data = $json->decode( decode('utf8', $resp->content) );
-    foreach my $item (@{$data->{jobs}->{job}}) {
-        next unless $item->{op_comm_status} =~ /Active/;
-        next unless $item->{op_is_viewable} == 1;
+    my $config = $self->config;
+    $config = $config->{api}->{odesk};
 
-        foreach my $key (keys %$item) {
-            if (grep { $key eq $_ } (qw/op_comm_status op_desc_digest candidates_total_active search_status/)) {
-                delete $item->{$key};
+    my $token_content = file_get_contents("/findmjob.com/script/oneoff/odesk.token.txt");
+    my ($access_token, $access_secret) = split(':', $token_content);
+    die unless $access_token and $access_secret;
+
+    my $ua = LWP::Authen::OAuth->new(
+        oauth_consumer_key => $config->{key},
+        oauth_consumer_secret => $config->{secret},
+        oauth_token => $access_token,
+        oauth_token_secret => $access_secret,
+    );
+
+
+    my @keywords = ('perl', 'python', 'php', 'ruby', 'java', 'mysql', 'scraping');
+    foreach my $keyword (@keywords) {
+        $self->log_debug("# [oDesk] working on $keyword");
+        my $res = $ua->get('https://www.odesk.com/api/profiles/v2/search/jobs.json?q=' . $keyword . '&sort=create_time desc');
+        my $data = $json->decode( decode('utf8', $res->content) );
+        foreach my $item (@{$data->{jobs}}) {
+            my $link = delete $item->{url};
+            my $is_inserted = $job_rs->is_inserted_by_url($link);
+            if ($is_inserted and $item->{job_status} ne 'Open') {
+                # got it deleted
+                $job_rs->search({ source_url => $link })->delete;
             }
-            delete $item->{$key} if $key =~ /op_pref/ or $key =~ /interviewees/ or $key =~ /op_is/
-                or $key =~ /op_avg/ or $key =~ /op_low/ or $key =~ /op_high/;
+            next if $is_inserted and not $self->opt_update;
+            next if $item->{job_status} ne 'Open';
+            delete $item->{job_status};
+
+            my $desc = delete $item->{snippet};
+
+            my @tags = @{delete $item->{skills}};
+            push @tags, $self->get_extra_tags_from_desc($item->{title});
+            push @tags, $self->get_extra_tags_from_desc($desc);
+
+            my $row = {
+                source_url => $link,
+                title => delete $item->{title},
+                contact   => '',
+                posted_at  => human_to_db_date(delete $item->{date_created}),
+                description => $desc,
+                type     => delete $item->{job_type},
+                extra    => $json->encode($item),
+                tags     => ['odesk', @tags],
+            };
+            if ( $is_inserted and $self->opt_update ) {
+                $job_rs->update_job($row);
+            } else {
+                $job_rs->create_job($row);
+            }
+
+            exit;
         }
 
-        my $link = "https://www.odesk.com/jobs/" . $item->{ciphertext};
-        my $is_inserted = $job_rs->is_inserted_by_url($link);
-        next if $is_inserted and not $self->opt_update;
-
-        my $desc = $self->format_text(delete $item->{op_description});
-
-        my @tags = split(/,\s*/, delete $item->{op_required_skills});
-        push @tags, $self->get_extra_tags_from_desc($item->{op_title});
-        push @tags, $self->get_extra_tags_from_desc($desc);
-
-        my $row = {
-            source_url => $link,
-            title => delete $item->{op_title},
-            contact   => '',
-            posted_at  => human_to_db_date(delete $item->{date_posted}) . ' ' . $item->{op_time_posted},
-            ($item->{op_job_expiration}) ? (expired_at => human_to_db_date(delete $item->{op_job_expiration}) . ' ' . $item->{op_time_posted}) : (),
-            description => $desc,
-            type     => delete $item->{op_engagement},
-            extra    => $json->encode($item),
-            tags     => ['odesk', @tags],
-        };
-        if ( $is_inserted and $self->opt_update ) {
-            $job_rs->update_job($row);
-        } else {
-            $job_rs->create_job($row);
-        }
+        sleep 5;
     }
 }
 

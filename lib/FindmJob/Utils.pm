@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base 'Exporter';
 use vars qw/@EXPORT_OK/;
-@EXPORT_OK = qw/uuid seo_title rand_string/;
+@EXPORT_OK = qw/uuid seo_title rand_string file_get_contents/;
 
 use Data::UUID;
 
@@ -36,6 +36,16 @@ sub rand_string {
     }
 
     return $str;
+}
+
+sub file_get_contents {
+    my ($file) = @_;
+
+    open(my $fh, '<', $file) or return;
+    my $c = do { local $/; <$fh> };
+    close($fh);
+
+    return $c;
 }
 
 1;

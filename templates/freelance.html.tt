@@ -21,9 +21,14 @@
 
 [% IF job.extra_data %]
     [% IF job.source_url.search('www.odesk.com') %]
-        <li><p><b>Category</b>: [% job.extra_data.job_category_level_one %] - [% job.extra_data.job_category_level_one %]</p></li>
-        <li><p><b>Duration</b>: [% job.extra_data.engagement_weeks %]</p></li>
-        <li><p><b>Expiry Date:</b>: <span class="timeago" title="[% job.expired_at %]">[% job.expired_at %]</span></p></li>
+        <li><p><b>Category</b>: [% job.extra_data.category %] - [% job.extra_data.subcategory %]</p></li>
+        <li><p><b>Duration</b>: [% job.extra_data.duration %] - [% job.extra_data.workload %]</p></li>
+        [% IF job.extra_data.budget %]<li><p><b>Budget</b>: [% job.extra_data.budget %]</p></li>[% END %]
+        <li><p><b>Client:</b>:
+            Country: [% job.extra_data.client.country %],
+            Hired/Posted: [% job.extra_data.client.past_hires %]/[% job.extra_data.client.jobs_posted %],
+            Reviews: [% job.extra_data.client.reviews_count %] * [% job.extra_data.client.feedback %]
+        </p></li>
     [% ELSIF job.source_url.search('/www.elance.com/') %]
         <li><p><b>job Poster</b>: [% job.extra_data.clientName %] ([% job.extra_data.clientCountry %])</p></li>
     [% END %]
