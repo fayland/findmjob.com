@@ -320,7 +320,7 @@ final class oDeskAPI {
         if ($type != 'get')
             list($url, $pdata) = explode('?', $url, 2);
 
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        // curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         if (self::$mode != 'web') {
             $headers[] = 'Connection: Keep-Alive';

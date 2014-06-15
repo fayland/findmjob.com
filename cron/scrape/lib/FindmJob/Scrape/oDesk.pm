@@ -70,8 +70,6 @@ sub run {
             } else {
                 $job_rs->create_job($row);
             }
-
-            exit;
         }
 
         sleep 5;
