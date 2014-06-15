@@ -21,7 +21,7 @@ sub run {
     $self->ua->proxy('http', $config->{scrape}->{proxy})
         if $config->{scrape}->{proxy};
 
-    my @keywords = ('Perl', 'Python', 'PHP', 'Ruby-on-Rails', 'Java', 'Mysql', 'Scraping');
+    my @keywords = ('Perl', 'Python', 'PHP', 'Ruby-on-Rails', 'Java', 'Javascript', 'Scraping', 'MySQL');
     foreach my $keyword (@keywords) {
         $self->log_debug("# [Freelancer] working on $keyword");
         my $url = "https://api.freelancer.com/Project/Search.json?jobs[]=" . $keyword . '&nonpublic=0';
@@ -69,8 +69,6 @@ sub run {
             } else {
                 $job_rs->create_job($row);
             }
-
-            exit;
         }
 
         sleep 5;
