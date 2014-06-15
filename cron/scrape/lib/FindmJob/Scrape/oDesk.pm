@@ -6,7 +6,7 @@ with 'FindmJob::Scrape::Role';
 use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/encode_json decode_json/;
-use FindmJob::DateUtils 'human_to_db_date';
+use FindmJob::DateUtils 'human_to_db_datetime';
 use FindmJob::Utils qw/file_get_contents/;
 use Encode;
 use LWP::Authen::OAuth;
@@ -32,7 +32,6 @@ sub run {
         oauth_token_secret => $access_secret,
     );
 
-
     my @keywords = ('perl', 'python', 'php', 'ruby', 'java', 'mysql', 'scraping');
     foreach my $keyword (@keywords) {
         $self->log_debug("# [oDesk] working on $keyword");
@@ -55,11 +54,15 @@ sub run {
             push @tags, $self->get_extra_tags_from_desc($item->{title});
             push @tags, $self->get_extra_tags_from_desc($desc);
 
+            my $title = delete $item->{title};
+            if (length($title) > 128) {
+                $title = substr($title, 0, 125) . '...';
+            }
             my $row = {
                 source_url => $link,
-                title => delete $item->{title},
+                title => $title,
                 contact   => '',
-                posted_at  => human_to_db_date(delete $item->{date_created}),
+                posted_at  => human_to_db_datetime(delete $item->{date_created}),
                 description => $desc,
                 type     => delete $item->{job_type},
                 extra    => $json->encode($item),
