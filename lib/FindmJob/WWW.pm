@@ -225,7 +225,7 @@ sub __render_feed {
     require DateTime;
     require XML::Feed;
 
-    $c->stash('feeds') ||= []; # should never happen
+    $c->stash('feeds' => []) unless $c->stash('feeds'); # should never happen
 
     my @entries;
     foreach my $obj (@{ $c->stash('feeds') }) {
