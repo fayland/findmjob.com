@@ -225,9 +225,12 @@ sub __render_feed {
     require DateTime;
     require XML::Feed;
 
+    $c->stash('feeds') ||= []; # should never happen
+
     my @entries;
     foreach my $obj (@{ $c->stash('feeds') }) {
         next unless $obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance';
+        return unless $obj->can('url');
         my $link = $config->{sites}->{main} . $obj->url;
         my $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
         my $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
