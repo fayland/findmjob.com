@@ -24,7 +24,8 @@
 10 13 * * * perl /findmjob.com/cron/scrape/run.pl -m Punchgirls
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Elance
 */15 * * * * perl /findmjob.com/cron/scrape/run.pl -m oDesk
-*/15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
+*/20 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer
+*/15 * * * * perl /findmjob.com/cron/scrape/run.pl -m Freelancer2
 50 */12 * * * perl /findmjob.com/cron/scrape/run.pl -m ScalaJobs
 5 1 * * * perl /findmjob.com/cron/scrape/run.pl -m PythonWeekly
 
