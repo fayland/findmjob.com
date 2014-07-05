@@ -23,11 +23,10 @@ sub run {
 
     my $update_sth = $dbh->prepare("UPDATE people_url SET scraped_at = ? WHERE url = ?");
 
-    my $sth = $dbh->prepare("SELECT url, scraped_at FROM people_url ORDER BY inserted_at DESC LIMIT 1000");
+    my $one_day_ago = time() - 86400; # do not repeat scraping if it's done in one day
+    my $sth = $dbh->prepare("SELECT url FROM people_url WHERE scraped_at < $one_day_ago ORDER BY inserted_at DESC LIMIT 1000");
     $sth->execute() or die $dbh->errstr;
-    while (my ($url, $scraped_at) = $sth->fetchrow_array) {
-        next if time() - $scraped_at < 86400; # do not repeat scraping if it's done in one day
-
+    while (my ($url) = $sth->fetchrow_array) {
         $self->log_debug("# [People] working on $url");
         my $res = $ua->get($url);
         unless ($res->is_success) {
