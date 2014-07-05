@@ -38,7 +38,7 @@ sub __post {
     my $uri = URI->new($source_url);
     return __raise($c, "URL is not valid") unless $uri and $uri->can('host');
     my $source_host = $uri->host;
-    return __raise($c, "You're only allowed post url from " . $app->website) unless $source_host eq $app->website;
+    return __raise($c, "You're only allowed to post url from " . $app->website) unless $source_host eq $app->website;
 
     # test url valid
     my $ua = Mojo::UserAgent->new;
@@ -130,6 +130,35 @@ sub __format_text {
 sub is_valid_datetime {
     my $s = shift;
     return ($s =~ /^20\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+}
+
+sub DELETE_job {
+    my $c = shift;
+
+    my $schema = $c->schema;
+
+    my $app_id = $c->param('app_id');
+    return __raise($c, "Param app_id is required.") unless $app_id;
+
+    my $app = $schema->resultset('App')->find($app_id);
+    return __raise($c, "App is not found.") unless $app;
+    return __raise($c, "App is not verified.") unless $app->is_verified;
+    return __raise($c, "App is disabled, please contact us.") if $app->is_disabled;
+
+    my $job_id = $c->param('id');
+    return __raise($c, "Param id is required.") unless $job_id;
+    my $job = $schema->resultset('Job')->find($job_id);
+    return __raise($c, "Job is not found.") unless $job;
+
+    my $source_url = $job->source_url;
+    my $uri = URI->new($source_url);
+    my $source_host = $uri->host;
+    return __raise($c, "You're only allowed to delete your job.") unless $source_host eq $app->website;
+
+    # delete job
+    $schema->resultset('Job')->delete_job($job_id);
+
+    $c->render(json => { status => 1, id => $job_id });
 }
 
 1;

@@ -49,4 +49,13 @@ sub update_job {
     $self->search( { source_url => $source_url } )->update($row);
 }
 
+sub delete_job {
+    my ($self, $id) = @_;
+
+    $self->search({ id => $id })->delete;
+
+    my $schema = $self->result_source->schema;
+    $schema->resultset('ObjecTag')->search({ object => $id })->delete;
+}
+
 1;

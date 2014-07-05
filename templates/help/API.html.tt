@@ -1,0 +1,56 @@
+[% title = 'API' %]
+
+<section id="how_work">
+<div class="page-header">
+    <h1>[% title %] <small>Push jobs to us</small></h1>
+</div>
+
+<div class="row">
+    <h3>Create your app</h3>
+    <p>
+      Please create your app and verify your sites on <a href='/app'>My Apps</a>.
+    </p>
+
+    <h3>Create Job</h3>
+
+    <ul>
+      <li>URL: http://findmjob.com/api/v1/job</li>
+      <li>Method: POST</li>
+      <li>Params: (* is required.)
+        <ol>
+          <li> * app_id - the one you get from <a href='/app'>My Apps</a></li>
+          <li> * url - job url. must belongs to the site you verified.</li>
+          <li> * title - job title</li>
+          <li> * description - job descriptions (only links/images are accepted)</li>
+          <li> tags - split by comma (,)</li>
+          <li> company_name - the company name</li>
+          <li> company_website - company website</li>
+          <li> location - job location</li>
+          <li> type - job type, full time or part time or telecommunication etc.</li>
+          <li> contact - contact info</li>
+        </ol>
+      </li>
+      <li>Curl Example:
+        <pre>curl -X POST -d "app_id=MYTESTAPPID" -d "url=http://example.com/job/blabla.html" -d "title=TEST JOB TITLE" -d "description=TEST JOB DESCRIPTION" http://findmjob.com/api/v1/job</pre>
+      </li>
+    </ul>
+
+    <h3>Delete Job</h3>
+
+    <ul>
+      <li>URL: http://findmjob.com/api/v1/job</li>
+      <li>Method: DELETE</li>
+      <li>Params: (* is required.)
+        <ol>
+          <li> * app_id - the one you get from <a href='/app'>My Apps</a></li>
+          <li> * id - job id</li>
+        </ol>
+      </li>
+      <li>Curl Example:
+        <pre>curl -X DELETE -d "app_id=MYTESTAPPID" -d "id=the22charjobiducreated" http://findmjob.com/api/v1/job</pre>
+      </li>
+    </ul>
+
+</div>
+
+</section>
