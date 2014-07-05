@@ -4,7 +4,7 @@
 15 0 * * * perl /findmjob.com/cron/stats/trends.pl
 0 10 * * * perl /findmjob.com/cron/stats/location_job_num.pl
 22 2 * * * perl /findmjob.com/cron/cleanup/expired.pl
-
+40 2 * * * perl /findmjob.com/cron/elasticsearch/fullindex.pl
 */15 * * * * perl /findmjob.com/cron/elasticsearch/incre_index.pl
 
 # emails
