@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         src: [
-          'bower_components/jquery/jquery.js',
+          'bower_components/jquery/dist/jquery.js',
           'bower_components/bootstrap/dist/js/bootstrap.js',
           'bower_components/jquery-timeago/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
