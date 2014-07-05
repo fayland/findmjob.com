@@ -23,7 +23,7 @@ __PACKAGE__->table("people");
 
 =head1 ACCESSORS
 
-=head2 people_id
+=head2 id
 
   data_type: 'char'
   is_nullable: 0
@@ -85,7 +85,7 @@ __PACKAGE__->table("people");
 =cut
 
 __PACKAGE__->add_columns(
-  "people_id",
+  "id",
   { data_type => "char", is_nullable => 0, size => 22 },
   "name",
   { data_type => "varchar", is_nullable => 0, size => 64 },
@@ -116,18 +116,26 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</people_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("people_id");
+__PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 21:42:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3K8UpAiMCb8HATCbygRzVQ
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 21:44:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oIww1dIfEXDRm3lCdoT+sw
 
+use FindmJob::Utils 'seo_title';
+sub url {
+    my ($self) = @_;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+    return "/people/" . $self->id . "/" . seo_title($self->name) . ".html";
+}
+
+__PACKAGE__->load_components('InflateColumn::Serializer');
+__PACKAGE__->add_columns('+data', { serializer_class => 'JSON' });
+
 1;
