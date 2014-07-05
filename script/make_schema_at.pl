@@ -14,6 +14,10 @@ make_schema_at(
         dump_directory => "$Bin/../lib",
         use_moose => 0,
         exclude => qr/location_alias|emails|stats_/,
+        moniker_parts => [qw(name)],
+        moniker_map => {
+            people  => "People", # do not convert that into Person
+        },
     },
     [   @$dbi_config    ]
 );
