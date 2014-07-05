@@ -4,26 +4,33 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    bowercopy: {
+      options: {
+          srcPrefix: 'bower_components',
+          destPrefix: 'static'
+      },
+      fonts: {
+          files: {
+              'fonts': 'fontawesome/fonts'
+          }
+      }
+    },
     cssmin: {
       combine: {
         options: {
+          root: '',
           keepSpecialComments: 0
         },
         files: {
           'static/assets/findmjob.min.css': [
-            'static/assets/src/bootstrap/css/bootstrap.css',
-            'static/assets/src/font-awesome/css/font-awesome.css',
+            'bower_components/bootstrap/dist/css/bootstrap.min.css',
+            'bower_components/fontawesome/css/font-awesome.min.css',
             'static/assets/src/css/findmjob.css'
           ]
         }
       }
     },
     coffee: {
-      // compile: {
-      //   files: {
-      //     'static/assets/src/js/facebook.js': 'static/assets/src/js/facebook.coffee'
-      //   }
-      // },
       compileJoined: {
         options: {
           join: true
@@ -37,7 +44,7 @@ module.exports = function(grunt) {
       build: {
         src: [
           'bower_components/jquery/jquery.js',
-          'static/assets/src/bootstrap/js/bootstrap.js',
+          'bower_components/bootstrap/dist/js/bootstrap.js',
           'bower_components/jquery-timeago/jquery.timeago.js',
           'static/assets/src/js/findmjob.js',
           'static/assets/src/js/ga.js'
@@ -47,9 +54,10 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-bowercopy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['cssmin', 'coffee', 'uglify']);
+  grunt.registerTask('default', ['bowercopy', 'cssmin', 'coffee', 'uglify']);
 };

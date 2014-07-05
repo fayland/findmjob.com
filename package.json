@@ -2,10 +2,11 @@
   "name": "findmjob",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-uglify": "~0.2.7"
+    "grunt": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-bowercopy": "latest"
   },
   "repository": {
     "type": "git",
