@@ -17,7 +17,7 @@ sub run {
     while (my $r = $rs->next) {
         next unless $r->location;
         next if $r->location_id;
-        my $location_id = $self->get_location_id_from_text($r->location);
+        my $location_id = $schema->resultset('Location')->get_location_id_from_text($r->location);
         $r->update( { location_id => $location_id } );
         print "# update " . $r->title . " with location_id=$location_id (" . $r->location . ")\n";
     }

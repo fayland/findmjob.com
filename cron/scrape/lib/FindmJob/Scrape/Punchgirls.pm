@@ -72,7 +72,6 @@ sub run {
                 extra => encode_json($data),
                 tags  => \@tags
             };
-            $row->{location_id} = $self->get_location_id_from_text($row->{location}) if $row->{location};
             if ( $is_inserted and $self->opt_update ) {
                 $job_rs->update_job($row);
             } else {

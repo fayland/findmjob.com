@@ -154,8 +154,8 @@ sub startup {
         }
 
         # TEST ONLY
-        # my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
-        # $c->stash(user => $user);
+        my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
+        $c->stash(user => $user);
     });
     $self->hook(around_action => sub {
         my ($next, $c, $action, $last) = @_;
@@ -211,6 +211,9 @@ sub startup {
     $auth_r->any('/app/:id/verify')->to('app#verify');
 
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
+
+    ## API
+    $r->post('/api/v1/job')->to('api#POST_job');
 
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
     $r->get('/help/:html.html')->to(controller => 'Help', action => 'html');

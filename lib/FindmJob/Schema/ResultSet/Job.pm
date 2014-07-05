@@ -19,7 +19,10 @@ sub create_job {
     }
     $row->{expired_at} ||= \"DATE_ADD(NOW(), INTERVAL 1 MONTH)"; #" default to expired after 1 month
     $row->{inserted_at} = time();
+
+    $row->{location_id} = $schema->resultset('Location')->get_location_id_from_text($row->{location}) if $row->{location};
     $row->{location_id} ||= '';
+
     $self->create($row);
 }
 
@@ -33,6 +36,9 @@ sub update_job {
     }
     $row->{expired_at} ||= \"DATE_ADD(NOW(), INTERVAL 1 MONTH)"; #" default to expired after 1 month
     $row->{inserted_at} = time();
+
+    $row->{location_id} = $schema->resultset('Location')->get_location_id_from_text($row->{location}) if $row->{location};
+
     my $source_url = delete $row->{source_url};
     $self->search( { source_url => $source_url } )->update($row);
 }
