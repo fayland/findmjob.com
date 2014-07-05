@@ -1,7 +1,7 @@
 package FindmJob::WWW::App;
 
 use Mojo::Base 'Mojolicious::Controller';
-use FindmJob::Utils 'uuid';
+use FindmJob::Utils qw/uuid rand_string/;
 use Digest::MD5 qw/md5_hex/;
 use Mojo::UserAgent;
 
@@ -21,7 +21,6 @@ sub index {
     my $rs = $schema->resultset('App')->search({ user_id => $user->id });
     while (my $r = $rs->next) {
         my %data = $r->get_columns();
-        $data{key} = md5_hex($data{id} . '-api');
         push @apps, \%data;
     }
     $c->stash(apps => \@apps);
@@ -55,6 +54,7 @@ sub create {
     my $schema = $c->schema;
     $schema->resultset('App')->create({
         id => $id,
+        secret => rand_string(6),
         name => $name,
         website => $website,
         user_id => $user->id,

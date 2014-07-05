@@ -19,6 +19,7 @@
       <li>Params: (* is required.)
         <ol>
           <li> * app_id - the one you get from <a href='/app'>My Apps</a></li>
+          <li> * app_secret - the one you get from My Apps</li>
           <li> * url - job url. must belongs to the site you verified.</li>
           <li> * title - job title</li>
           <li> * description - job descriptions (only links/images are accepted)</li>
@@ -31,7 +32,7 @@
         </ol>
       </li>
       <li>Curl Example:
-        <pre>curl -X POST -d "app_id=MYTESTAPPID" -d "url=http://example.com/job/blabla.html" -d "title=TEST JOB TITLE" -d "description=TEST JOB DESCRIPTION" http://findmjob.com/api/v1/job</pre>
+        <pre>curl -X POST -d "app_id=MYTESTAPPID" -d "app_secret=secret" -d "url=http://example.com/job/blabla.html" -d "title=TEST JOB TITLE" -d "description=TEST JOB DESCRIPTION" http://findmjob.com/api/v1/job</pre>
       </li>
     </ul>
 
@@ -43,11 +44,12 @@
       <li>Params: (* is required.)
         <ol>
           <li> * app_id - the one you get from <a href='/app'>My Apps</a></li>
+          <li> * app_secret - the one you get from My Apps</li>
           <li> * id - job id</li>
         </ol>
       </li>
       <li>Curl Example:
-        <pre>curl -X DELETE -d "app_id=MYTESTAPPID" -d "id=the22charjobiducreated" http://findmjob.com/api/v1/job</pre>
+        <pre>curl -X DELETE -d "app_id=MYTESTAPPID" -d "app_secret=secret" -d "id=the22charjobiducreated" http://findmjob.com/api/v1/job</pre>
       </li>
     </ul>
 

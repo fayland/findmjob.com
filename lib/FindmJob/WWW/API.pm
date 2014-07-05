@@ -32,6 +32,10 @@ sub __post {
     return __raise($c, "App is not verified.") unless $app->is_verified;
     return __raise($c, "App is disabled, please contact us.") if $app->is_disabled;
 
+    my $app_secret = $c->param('app_secret');
+    return __raise($c, "Param app_secret is required.") unless $app_secret;
+    return __raise($c, "App secret is not matched.") unless $app->secret eq $app_secret;
+
     my $source_url = $c->param('url');
     return __raise($c, "Param url is required.") unless $source_url;
 
@@ -144,6 +148,10 @@ sub DELETE_job {
     return __raise($c, "App is not found.") unless $app;
     return __raise($c, "App is not verified.") unless $app->is_verified;
     return __raise($c, "App is disabled, please contact us.") if $app->is_disabled;
+
+    my $app_secret = $c->param('app_secret');
+    return __raise($c, "Param app_secret is required.") unless $app_secret;
+    return __raise($c, "App secret is not matched.") unless $app->secret eq $app_secret;
 
     my $job_id = $c->param('id');
     return __raise($c, "Param id is required.") unless $job_id;

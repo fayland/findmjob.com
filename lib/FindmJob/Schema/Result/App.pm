@@ -29,6 +29,12 @@ __PACKAGE__->table("app");
   is_nullable: 0
   size: 22
 
+=head2 secret
+
+  data_type: 'char'
+  is_nullable: 0
+  size: 6
+
 =head2 website
 
   data_type: 'varchar'
@@ -64,6 +70,8 @@ __PACKAGE__->table("app");
 __PACKAGE__->add_columns(
   "id",
   { data_type => "char", is_nullable => 0, size => 22 },
+  "secret",
+  { data_type => "char", is_nullable => 0, size => 6 },
   "website",
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "user_id",
@@ -89,8 +97,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-06-15 13:32:53
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:N5+M6Pp4G6D9EGiy8YQBXA
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 13:42:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D56aARd5iEwWfTst3bQnoQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

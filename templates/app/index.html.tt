@@ -4,11 +4,12 @@
 <div class="clearfix"><p/></div>
 <div class="col-lg-8">
     <table class='table'>
-        <tr><th>App</th><th>API Key</th><th>Status</th><th>Action</th></tr>
+        <tr><th>App</th><th>API Key</th><th>API Secret</th><th>Status</th><th>Action</th></tr>
         [% FOREACH app IN apps %]
         <tr>
             <td>[% app.name %] - [% app.website %]</td>
             <td>[% app.id %]</td>
+            <td>[% app.secret %]</td>
             <td>[% IF NOT app.is_verified %]
                 NOT VERIFIED
                 [% ELSIF app.is_disabled %]
