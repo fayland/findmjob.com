@@ -43,6 +43,8 @@ sub run {
         $schema->resultset('People')->do_people($people);
 
         $update_sth->execute(time(), $url);
+
+        sleep 2; # add some sleep
     }
 }
 
