@@ -23,32 +23,30 @@ __PACKAGE__->table("people_identity");
 
 =head1 ACCESSORS
 
-=head2 people_id
-
-  data_type: 'char'
-  is_nullable: 0
-  size: 22
-
 =head2 identity
 
   data_type: 'varchar'
   is_nullable: 0
   size: 128
 
+=head2 people_id
+
+  data_type: 'char'
+  is_nullable: 0
+  size: 22
+
 =cut
 
 __PACKAGE__->add_columns(
-  "people_id",
-  { data_type => "char", is_nullable => 0, size => 22 },
   "identity",
   { data_type => "varchar", is_nullable => 0, size => 128 },
+  "people_id",
+  { data_type => "char", is_nullable => 0, size => 22 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
-
-=item * L</people_id>
 
 =item * L</identity>
 
@@ -56,11 +54,11 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->set_primary_key("people_id", "identity");
+__PACKAGE__->set_primary_key("identity");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 20:05:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hm6FAl1Pj4VElyflnlEUCA
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 21:42:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0k5pj5ay7JTWYjEon4mCGw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

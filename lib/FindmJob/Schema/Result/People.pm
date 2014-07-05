@@ -70,6 +70,18 @@ __PACKAGE__->table("people");
   extra: {unsigned => 1}
   is_nullable: 0
 
+=head2 location
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 64
+
+=head2 location_id
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 22
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -94,6 +106,10 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 0,
   },
+  "location",
+  { data_type => "varchar", is_nullable => 1, size => 64 },
+  "location_id",
+  { data_type => "char", is_nullable => 1, size => 22 },
 );
 
 =head1 PRIMARY KEY
@@ -109,8 +125,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("people_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 20:05:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cR8i8LlCn1mv+6Sra03WvA
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 21:42:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3K8UpAiMCb8HATCbygRzVQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
