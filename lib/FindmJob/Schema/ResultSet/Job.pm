@@ -21,7 +21,13 @@ sub create_job {
     $row->{inserted_at} = time();
 
     $row->{location_id} = $schema->resultset('Location')->get_location_id_from_text($row->{location}) if $row->{location};
+
+    $row->{type} ||= '';
+    $row->{contact} ||= '';
+    $row->{location} ||= '';
     $row->{location_id} ||= '';
+    $row->{company_id} ||= '';
+    $row->{extra} ||= '';
 
     $self->create($row);
 }

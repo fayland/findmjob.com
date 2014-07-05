@@ -8,7 +8,7 @@
         [% FOREACH app IN apps %]
         <tr>
             <td>[% app.name %] - [% app.website %]</td>
-            <td>[% app.key %]</td>
+            <td>[% app.id %]</td>
             <td>[% IF NOT app.is_verified %]
                 NOT VERIFIED
                 [% ELSIF app.is_disabled %]

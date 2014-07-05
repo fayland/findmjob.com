@@ -213,7 +213,7 @@ sub startup {
     $r->get('/trends')->to(controller => 'Trends', action => 'index');
 
     ## API
-    $r->post('/api/v1/job')->to('api#POST_job');
+    $r->post('/api/v1/job')->to(controller => 'API', action => 'POST_job');
 
     $r->any('/help/contact')->to(controller => 'Help', action => 'contact');
     $r->get('/help/:html.html')->to(controller => 'Help', action => 'html');

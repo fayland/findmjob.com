@@ -5,6 +5,7 @@ use JSON::XS 'encode_json';
 use URI;
 use Mojo::UserAgent;
 use Mojo::Util qw/xml_escape/;
+use FindmJob::Basic;
 
 sub __raise {
     my ($c, $err) = @_;
@@ -29,7 +30,7 @@ sub __post {
     my $app = $schema->resultset('App')->find($app_id);
     return __raise($c, "App is not found.") unless $app;
     return __raise($c, "App is not verified.") unless $app->is_verified;
-    return __raise($c, "App is disabled, please contact us.") unless $app->is_disabled;
+    return __raise($c, "App is disabled, please contact us.") if $app->is_disabled;
 
     my $source_url = $c->param('url');
     return __raise($c, "Param url is required.") unless $source_url;
@@ -94,15 +95,16 @@ sub __post {
 
     my $job_row;
     my $rs = $schema->resultset($table);
-    my $is_inserted = $rs->is_inserted_by_url($row->{source_url});
+    my $is_inserted = $rs->is_inserted_by_url($source_url);
     if ( $is_inserted ) {
         $rs->update_job($row);
-        $job_row = $rs->search({ source_url => $row->{source_url} })->first;
+        $job_row = $rs->search({ source_url => $source_url })->first;
     } else {
         $job_row = $rs->create_job($row);
     }
 
-    $c->render(json => { status => 1, id => $job_row->id });
+    my $config = FindmJob::Basic->config;
+    $c->render(json => { status => 1, id => $job_row->id, url => $config->{sites}->{main} . $job_row->url });
 }
 
 use HTML::TreeBuilder;
@@ -112,7 +114,7 @@ sub __format_text {
 
     my $formatter = FindmJob::HTML::FormatText->new(leftmargin => 0, rightmargin => 999);
     my $tree = HTML::TreeBuilder->new_from_content($text);
-    my $txt = $self->formatter->format($ele);
+    my $txt = $formatter->format($tree);
 
     my $x100 = '-' x 100;
     $txt =~ s/\-{80,}/$x100/sg;
