@@ -24,7 +24,7 @@ sub run {
     my @keywords = ('Perl', 'Python', 'PHP', 'Ruby-on-Rails', 'Java', 'Javascript', 'Scraping', 'MySQL');
     foreach my $keyword (@keywords) {
         $self->log_debug("# [Freelancer] working on $keyword");
-        my $url = "https://api.freelancer.com/Project/Search.json?jobs[]=" . $keyword . '&nonpublic=0';
+        my $url = "https://api.freelancer.com/Project/Search.json?jobs[]=" . $keyword . '&nonpublic=0&order=submitdate';
         my $res = $self->get($url);
         my $data = $json->decode( $res->decoded_content );
         foreach my $item ( @{$data->{projects}->{items}} ) {
@@ -41,6 +41,8 @@ sub run {
             delete $item->{jobsDetails}; delete $item->{short_descr_html}; delete $item->{closeDate};
             delete $item->{end_date}; delete $item->{files}; delete $item->{start_date};
             delete $item->{closeDate};
+
+            my $id = $item->{id};
 
             $item->{currency} = $item->{currencyDetails}->{code};
             delete $item->{currencyDetails};
@@ -69,6 +71,20 @@ sub run {
             } else {
                 $job_rs->create_job($row);
             }
+
+            ## get bidder
+            # try {
+            #     my $res = $self->ua->get("https://www.freelancer.com/ajax/project/getBids.php?project_id=$id", [
+            #         Accept => "application/json, text/javascript, */*; q=0.01",
+            #         "X-Requested-With" => "XMLHttpRequest",
+            #     ]);
+            #     my $data = decode_json($res->decoded_content);
+            #     my @bids = @{$data->{bids}};
+            #     my @x = map { $_->{user}->{url} } @bids;
+            #     $schema->resultset('PeopleUrl')->insert_urls(@x);
+            # } catch {
+            #     warn "$_\n";
+            # };
         }
 
         sleep 5;
