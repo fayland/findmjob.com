@@ -67,6 +67,7 @@ sub __parse_elance {
         $locality = $locality->as_trimmed_text if $locality;
         $country  = $country->as_trimmed_text  if $country;
         $people->{location} = join(', ', $locality || '', $country || '') if $country or $locality;
+        $people->{location} =~ s/(^\,\s*)|(\,\s*$)//g if $people->{location};
         $people->{bio} = $self->format_tree_text($tree->look_down(_tag => 'p', class => qr/p-about-txt/));
 
         my @tags = $self->get_extra_tags_from_desc($people->{bio});
