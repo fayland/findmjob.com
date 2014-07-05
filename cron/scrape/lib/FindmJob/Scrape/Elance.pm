@@ -78,6 +78,12 @@ sub on_single_page {
         tags  => \@tags
     };
 
+    ## for people
+    my @x = $tree->look_down(_tag => 'a', class => 'bidCard-title');
+    @x = map { $_->attr('href') } @x;
+    my $schema = $self->schema;
+    $schema->resultset('PeopleUrl')->insert_urls(@x);
+
     $tree = $tree->delete;
     return $row;
 }
