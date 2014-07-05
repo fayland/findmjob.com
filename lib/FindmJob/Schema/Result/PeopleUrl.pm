@@ -36,12 +36,26 @@ __PACKAGE__->table("people_url");
   extra: {unsigned => 1}
   is_nullable: 0
 
+=head2 inserted_at
+
+  data_type: 'integer'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
   "url",
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "scraped_at",
+  {
+    data_type => "integer",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
+  "inserted_at",
   {
     data_type => "integer",
     default_value => 0,
@@ -63,8 +77,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("url");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 20:05:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BU3UL7F6vO7aj2cgut2acQ
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-07-05 20:24:14
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FDRGi0O5qLfFzS1K/XmO2g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

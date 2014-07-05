@@ -9,7 +9,7 @@ sub insert_urls {
     my $schema = $self->result_source->schema;
     my $dbh = $schema->storage->dbh;
 
-    my $sth = $dbh->prepare("INSERT INTO people_url (url, scraped_at) VALUES (?, ?) ON DUPLICATE KEY UPDATE scraped_at=values(scraped_at);");
+    my $sth = $dbh->prepare("INSERT INTO people_url (url, inserted_at) VALUES (?, ?) ON DUPLICATE KEY UPDATE inserted_at=values(inserted_at);");
     foreach my $url (@urls) {
         $sth->execute($url, time());
     }
