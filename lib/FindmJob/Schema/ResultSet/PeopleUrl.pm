@@ -9,9 +9,9 @@ sub insert_urls {
     my $schema = $self->result_source->schema;
     my $dbh = $schema->storage->dbh;
 
-    my $sth = $dbh->prepare("INSERT IGNORE INTO people_url (url) VALUES (?);");
+    my $sth = $dbh->prepare("INSERT INTO people_url (url, scraped_at) VALUES (?, ?) ON DUPLICATE KEY UPDATE scraped_at=values(scraped_at);");
     foreach my $url (@urls) {
-        $sth->execute($url);
+        $sth->execute($url, time());
     }
 }
 
