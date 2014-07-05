@@ -154,8 +154,8 @@ sub startup {
         }
 
         # TEST ONLY
-        my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
-        $c->stash(user => $user);
+        # my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
+        # $c->stash(user => $user);
     });
     $self->hook(around_action => sub {
         my ($next, $c, $action, $last) = @_;
