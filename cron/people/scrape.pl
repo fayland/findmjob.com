@@ -39,7 +39,6 @@ sub run {
         if ($url =~ m{/(www\.)odesk.com/}i) {
             $people = $self->__parse_odesk($url);
         } else {
-            next;
             my $res = $self->get($url);
             unless ($res->is_success) {
                 print "# Failed to fetch $url: " . $res->status_line . "\n";
