@@ -11,6 +11,8 @@ use HTML::TreeBuilder;
 use Try::Tiny;
 use Data::Dumper;
 use JSON::XS qw/decode_json/;
+use FindmJob::Utils qw/file_get_contents/;
+use LWP::Authen::OAuth;
 
 with 'FindmJob::Scrape::Role';
 
@@ -32,22 +34,29 @@ sub run {
     $sth->execute() or die $dbh->errstr;
     while (my ($url) = $sth->fetchrow_array) {
         $self->log_debug("# [People] working on $url");
-        my $res = $self->get($url);
-        unless ($res->is_success) {
-            print "# Failed to fetch $url: " . $res->status_line . "\n";
+
+        my $people;
+        if ($url =~ m{/(www\.)odesk.com/}i) {
+            $people = $self->__parse_odesk($url);
+        } else {
             next;
+            my $res = $self->get($url);
+            unless ($res->is_success) {
+                print "# Failed to fetch $url: " . $res->status_line . "\n";
+                next;
+            }
+            $people = $self->parse($url, $res->decoded_content);
         }
 
-        my $people = $self->parse($url, $res->decoded_content);
+        $update_sth->execute(time(), $url);
+        sleep 2; # add some sleep
+
         next unless $people;
+        next if $people->{error};
 
         # insert or update people
         $people->{identity} = $url;
         $schema->resultset('People')->do_people($people);
-
-        $update_sth->execute(time(), $url);
-
-        sleep 2; # add some sleep
     }
 }
 
@@ -107,6 +116,50 @@ sub __parse_elance {
     return $people;
 }
 
+sub __parse_odesk {
+    my ($self, $url) = @_;
+
+    my $config = $self->config;
+    $config = $config->{api}->{odesk};
+
+    my $token_content = file_get_contents("/findmjob.com/script/oneoff/odesk.token.txt");
+    my ($access_token, $access_secret) = split(':', $token_content);
+    die unless $access_token and $access_secret;
+
+    my $ua = LWP::Authen::OAuth->new(
+        oauth_consumer_key => $config->{key},
+        oauth_consumer_secret => $config->{secret},
+        oauth_token => $access_token,
+        oauth_token_secret => $access_secret,
+    );
+
+    # https://www.odesk.com/o/profiles/users/_~0178f755b675827b47
+    my $people;
+    try {
+        my ($id) = ($url =~ /_(~\w+)/);
+        my $res = $ua->get("https://www.odesk.com/api/profiles/v1/providers/$id.json");
+        my $data = decode_json($res->decoded_content);
+        # print Dumper(\$data);
+        my $profile = $data->{profile};
+        $people->{name} = $profile->{dev_short_name};
+        $people->{title} = $profile->{dev_profile_title};
+        $people->{bio} = $profile->{dev_blurb};
+
+        my @tags = $self->get_extra_tags_from_desc($people->{bio});
+        push @tags, $self->get_extra_tags_from_desc($people->{title});
+        $people->{tags} = \@tags;
+
+        $people->{location} = join(', ', $profile->{dev_city} || '', $profile->{dev_country} || '');
+        $people->{location} =~ s/(^\,\s*)|(\,\s*$)//g;
+
+        $people->{data}{odesk} = $profile;
+    } catch {
+        warn "$_\n";
+    };
+
+    return $people;
+}
+
 sub __parse_freelancer {
     my ($self, $url, $content) = @_;
 
@@ -135,7 +188,7 @@ sub __parse_freelancer {
         print "## get u: $user_id\n";
         my $res = $self->get("https://api.freelancer.com/User/Properties.json?id=$user_id");
         my $data = decode_json($res->decoded_content);
-        print Dumper(\$data);
+        # print Dumper(\$data);
         push @{$people->{tags}}, @{delete $data->{profile}->{jobs}};
 
         my $address = delete $data->{profile}->{address};

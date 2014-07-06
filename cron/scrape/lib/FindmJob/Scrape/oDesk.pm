@@ -58,6 +58,21 @@ sub run {
             if (length($title) > 128) {
                 $title = substr($title, 0, 125) . '...';
             }
+
+            try {
+                $res = $ua->get("https://www.odesk.com/api/profiles/v1/jobs/" . $item->{id} . ".json");
+                sleep 2;
+                my $data2 = $json->decode( decode('utf8', $res->content) );
+                if (exists $data2->{profile} and exists $data2->{profile}->{candidates} and ref($data2->{profile}->{candidates}->{candidate}) eq 'ARRAY') {
+                    my @x = @{$data2->{profile}->{candidates}->{candidate}};
+                    @x = map { "https://www.odesk.com/o/profiles/users/_" . $_->{ciphertext} } @x;
+                    $schema->resultset('PeopleUrl')->insert_urls(@x);
+                }
+                $item->{data} = $data2->{profile} if exists $data2->{profile};
+            } catch {
+                warn "$_\n";
+            };
+
             my $row = {
                 source_url => $link,
                 title => $title,
