@@ -72,19 +72,19 @@ sub run {
                 $job_rs->create_job($row);
             }
 
-            ## get bidder
-            # try {
-            #     my $res = $self->ua->get("https://www.freelancer.com/ajax/project/getBids.php?project_id=$id", [
-            #         Accept => "application/json, text/javascript, */*; q=0.01",
-            #         "X-Requested-With" => "XMLHttpRequest",
-            #     ]);
-            #     my $data = decode_json($res->decoded_content);
-            #     my @bids = @{$data->{bids}};
-            #     my @x = map { $_->{user}->{url} } @bids;
-            #     $schema->resultset('PeopleUrl')->insert_urls(@x);
-            # } catch {
-            #     warn "$_\n";
-            # };
+            # get bidder
+            try {
+                my $res = $self->ua->get("https://www.freelancer.com/ajax/project/getBids.php?project_id=$id", [
+                    Accept => "application/json, text/javascript, */*; q=0.01",
+                    "X-Requested-With" => "XMLHttpRequest",
+                ]);
+                my $data = decode_json($res->decoded_content);
+                my @bids = @{$data->{bids}};
+                my @x = map { $_->{user}->{url} } @bids;
+                $schema->resultset('PeopleUrl')->insert_urls(@x);
+            } catch {
+                warn "$_\n";
+            };
         }
 
         sleep 5;
