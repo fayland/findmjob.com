@@ -162,6 +162,8 @@ sub __parse_odesk {
 sub __parse_freelancer {
     my ($self, $url, $content) = @_;
 
+    return { error => 'denied' } if $content =~ /Account Unavailable/;
+
     my $people;
     my $tree = HTML::TreeBuilder->new_from_content($content);
     try {
