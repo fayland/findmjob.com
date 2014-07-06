@@ -117,7 +117,8 @@ sub __parse_freelancer {
         $people->{title} = $tree->look_down(_tag => 'span', id => 'title_id')->as_trimmed_text;
 
         my $desc = $tree->look_down(itemprop => 'description');
-        $desc->look_down(_tag => 'a', class => qr/Toggle/)->detach();
+        my $xxx = $desc->look_down(_tag => 'a', class => qr/Toggle/);
+        $xxx->detach() if $xxx;
         $people->{bio} = $self->format_tree_text($desc);
 
         my @tags = $self->get_extra_tags_from_desc($people->{bio});
