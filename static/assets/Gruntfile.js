@@ -7,11 +7,11 @@ module.exports = function(grunt) {
     bowercopy: {
       options: {
           srcPrefix: 'bower_components',
-          destPrefix: 'static'
+          destPrefix: '.'
       },
       fonts: {
           files: {
-              'fonts': 'fontawesome/fonts'
+              'fonts': ['fontawesome/fonts', 'bootstrap/fonts']
           }
       }
     },
@@ -22,10 +22,10 @@ module.exports = function(grunt) {
           keepSpecialComments: 0
         },
         files: {
-          'static/assets/findmjob.min.css': [
+          'css/findmjob.min.css': [
             'bower_components/bootstrap/dist/css/bootstrap.min.css',
             'bower_components/fontawesome/css/font-awesome.min.css',
-            'static/assets/src/css/findmjob.css'
+            'src/css/findmjob.css'
           ]
         }
       }
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           join: true
         },
         files: {
-          'static/assets/src/js/findmjob.js': 'static/assets/src/js/coffee/*.coffee'
+          'src/js/findmjob.js': 'src/js/coffee/*.coffee'
         }
       }
     },
@@ -46,10 +46,10 @@ module.exports = function(grunt) {
           'bower_components/jquery/dist/jquery.js',
           'bower_components/bootstrap/dist/js/bootstrap.js',
           'bower_components/jquery-timeago/jquery.timeago.js',
-          'static/assets/src/js/findmjob.js',
-          'static/assets/src/js/ga.js'
+          'src/js/findmjob.js',
+          'src/js/ga.js'
         ],
-        dest: 'static/assets/findmjob.min.js'
+        dest: 'js/findmjob.min.js'
       }
     }
   });
