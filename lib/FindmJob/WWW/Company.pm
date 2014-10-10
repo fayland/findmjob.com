@@ -5,17 +5,17 @@ use JSON;
 use FindmJob::Email 'sendmail';
 
 sub index {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('id');
 
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
+    $c->stash(company => $company);
 
     unless ($company) {
-        $self->res->code(410); # Gone
-        return $self->render(template => 'gone', object => 'company');
+        $c->res->code(410); # Gone
+        return $c->render(template => 'gone', object => 'company');
     }
 
     my $job_rs = $schema->resultset('Job')->search( {
@@ -25,7 +25,7 @@ sub index {
         rows => 12,
         page => 1
     });
-    $self->stash(jobs => [ $job_rs->all ]);
+    $c->stash(jobs => [ $job_rs->all ]);
 
     my $review_rs = $schema->resultset('CompanyReview')->search( {
         company_id => $companyid
@@ -34,19 +34,19 @@ sub index {
         rows => 12,
         page => 1
     });
-    $self->stash(reviews => [ $review_rs->all ]);
+    $c->stash(reviews => [ $review_rs->all ]);
 }
 
 sub jobs {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('id');
 
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
+    $c->stash(company => $company);
 
-    my $p = $self->stash('page');
+    my $p = $c->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $job_rs = $schema->resultset('Job')->search( {
         company_id => $companyid
@@ -55,28 +55,28 @@ sub jobs {
         rows => 12,
         page => $p
     });
-    $self->stash(pager => $job_rs->pager);
-    $self->stash(jobs  => [ $job_rs->all ]);
+    $c->stash(pager => $job_rs->pager);
+    $c->stash(jobs  => [ $job_rs->all ]);
 }
 
 sub correct {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('id');
 
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
+    $c->stash(company => $company);
 
-    if ($self->req->method eq 'POST') {
-        my $params = $self->req->body_params->to_hash;
+    if ($c->req->method eq 'POST') {
+        my $params = $c->req->body_params->to_hash;
 
         my @errors;
-        $self->recaptcha;
-        push @errors, $self->stash('recaptcha_error') if $self->stash('recaptcha_error');
+        $c->recaptcha;
+        push @errors, $c->stash('recaptcha_error') if $c->stash('recaptcha_error');
 
         if (@errors) {
-            $self->stash('errors' => \@errors);
+            $c->stash('errors' => \@errors);
             return;
         }
 
@@ -92,13 +92,13 @@ sub correct {
         # sendmail
         use Data::Dumper;
         sendmail( {
-            to => $self->sconfig->{email}->{default_to},
+            to => $c->sconfig->{email}->{default_to},
             subject => 'Correction for ' . $company->name,
             body => Dumper(\$params), # FIXME
         } );
 
-        $self->flash('message' => "Correction sent, we'll review it asap, Thanks for your contribution.");
-        return $self->redirect_to('/company/' . $companyid);
+        $c->flash('message' => "Correction sent, we'll review it asap, Thanks for your contribution.");
+        return $c->redirect_to('/company/' . $companyid);
     }
 }
 

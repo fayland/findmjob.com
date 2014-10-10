@@ -3,9 +3,9 @@ package FindmJob::WWW::Trends;
 use Mojo::Base 'Mojolicious::Controller';
 
 sub index {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
+    my $schema = $c->schema;
     my $dbh = $schema->storage->dbh;
 
     my (%languages, %skills, %softwares, %total_count);
@@ -31,7 +31,7 @@ SQL
     my @skills = sort { $total_count{skill}{$b} <=> $total_count{skill}{$a} } keys %{ $total_count{skill} };
     my @softwares = sort { $total_count{software}{$b} <=> $total_count{software}{$a} } keys %{ $total_count{software} };
 
-    $self->stash(
+    $c->stash(
         languages => \%languages,
         skills => \%skills,
         softwares => \%softwares,

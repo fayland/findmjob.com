@@ -5,12 +5,12 @@ use FindmJob::Basic;
 use FindmJob::Email 'sendmail';
 
 sub contact {
-    my $self = shift;
+    my $c = shift;
 
-    if ($self->req->method eq 'POST') {
-        my $email = $self->param('email');
-        my $subject = $self->param('subject');
-        my $body = $self->param('body');
+    if ($c->req->method eq 'POST') {
+        my $email = $c->param('email');
+        my $subject = $c->param('subject');
+        my $body = $c->param('body');
 
         my @errors;
         if (not length($email)) {
@@ -25,33 +25,33 @@ sub contact {
             push @errors, "Body is required.";
         }
 
-        $self->recaptcha;
-        push @errors, $self->stash('recaptcha_error') if $self->stash('recaptcha_error');
+        $c->recaptcha;
+        push @errors, $c->stash('recaptcha_error') if $c->stash('recaptcha_error');
 
         if (@errors) {
-            $self->stash('errors' => \@errors);
+            $c->stash('errors' => \@errors);
             return;
         }
 
         # sendmail
         sendmail( {
-            to => $self->sconfig->{email}->{default_to},
+            to => $c->sconfig->{email}->{default_to},
             subject => $subject,
             body => $body,
             ($email) ? (extra_headers => "Reply-To: $email") : ()
         } );
 
-        $self->flash('message' => "Request sent, we'll get back to you asap.");
-        return $self->redirect_to('/');
+        $c->flash('message' => "Request sent, we'll get back to you asap.");
+        return $c->redirect_to('/');
     }
 
 }
 
 sub html {
-    my $self = shift;
-    my $html = $self->stash('html');
+    my $c = shift;
+    my $html = $c->stash('html');
     if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
-        $self->render(template => 'help/' . $html);
+        $c->render(template => 'help/' . $html);
     }
 }
 

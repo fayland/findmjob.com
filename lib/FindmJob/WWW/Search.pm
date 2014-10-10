@@ -5,31 +5,31 @@ use FindmJob::Search;
 use Data::Page;
 
 sub search {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
+    my $schema = $c->schema;
 
-    my $p = $self->stash('page');
+    my $p = $c->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $rows = 12;
 
-    my $q = $self->param('q');
-    my $loc = $self->param('loc') || '';
-    my $by  = $self->param('by') || 'relevance';
-    my $rest_url = $self->stash('rest') || '';
+    my $q = $c->param('q');
+    my $loc = $c->param('loc') || '';
+    my $by  = $c->param('by') || 'relevance';
+    my $rest_url = $c->stash('rest') || '';
     my ($filename) = ($rest_url =~ m{([^/]+)\.html$});
     if ($filename) {
         $filename =~ s/\_by\_(date|relevance)$// and $by = $1;
         $filename =~ s/(^|\_)in\_(\w+)$// and $loc = $2;
         $q = $filename;
     }
-    $self->stash('q'    => $q);
-    $self->stash('loc'  => $loc);
-    $self->stash('sort' => $by);
+    $c->stash('q'    => $q);
+    $c->stash('loc'  => $loc);
+    $c->stash('sort' => $by);
 
-    my ($view_tab) = ($self->req->url->path =~ m{/\+(freelance|job)/});
+    my ($view_tab) = ($c->req->url->path =~ m{/\+(freelance|job)/});
     $view_tab ||= '';
-    $self->stash(view_tab => $view_tab);
+    $c->stash(view_tab => $view_tab);
 
     my $search = FindmJob::Search->new;
     my $ret = $search->search_job( {
@@ -68,17 +68,17 @@ sub search {
         }
 
         my @jobs = map { $ids{$_} } @ids;
-        $self->stash(jobs => \@jobs);
+        $c->stash(jobs => \@jobs);
 
         # pager
         my $pager = Data::Page->new();
         $pager->total_entries($ret->{total});
         $pager->entries_per_page($rows);
         $pager->current_page($p);
-        $self->stash(pager => $pager);
+        $c->stash(pager => $pager);
     }
 
-    $self->render(template => 'search');
+    $c->render(template => 'search');
 }
 
 1;

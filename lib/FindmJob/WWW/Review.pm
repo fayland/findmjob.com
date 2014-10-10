@@ -3,30 +3,30 @@ package FindmJob::WWW::Review;
 use Mojo::Base 'Mojolicious::Controller';
 
 sub review {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('cid');
-    my $reviewid = $self->stash('rid');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('cid');
+    my $reviewid = $c->stash('rid');
 
     my $review = $schema->resultset('CompanyReview')->find($reviewid);
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
-    $self->stash(review  => $review);
+    $c->stash(company => $company);
+    $c->stash(review  => $review);
 
-    $self->render(template => 'review');
+    $c->render(template => 'review');
 }
 
 sub company_reviews {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('id');
 
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
+    $c->stash(company => $company);
 
-    my $p = $self->stash('page');
+    my $p = $c->stash('page');
     $p = 1 unless $p and $p =~ /^\d+$/;
     my $review_rs = $schema->resultset('CompanyReview')->search( {
         company_id => $companyid
@@ -35,27 +35,27 @@ sub company_reviews {
         rows => 12,
         page => $p
     });
-    $self->stash(pager => $review_rs->pager);
-    $self->stash(reviews => [ $review_rs->all ]);
+    $c->stash(pager => $review_rs->pager);
+    $c->stash(reviews => [ $review_rs->all ]);
 
-    $self->render(template => 'company_reviews');
+    $c->render(template => 'company_reviews');
 }
 
 sub company_review_new {
-    my $self = shift;
+    my $c = shift;
 
-    my $schema = $self->schema;
-    my $companyid = $self->stash('id');
+    my $schema = $c->schema;
+    my $companyid = $c->stash('id');
 
     my $company = $schema->resultset('Company')->find($companyid);
-    $self->stash(company => $company);
+    $c->stash(company => $company);
 
-    if ($self->req->method eq 'POST') {
-        my $role  = $self->param('role');
-        my $title = $self->param('title');
-        my $pros  = $self->param('pros');
-        my $cons  = $self->param('cons');
-        my $score = $self->param('score');
+    if ($c->req->method eq 'POST') {
+        my $role  = $c->param('role');
+        my $title = $c->param('title');
+        my $pros  = $c->param('pros');
+        my $cons  = $c->param('cons');
+        my $score = $c->param('score');
 
         my @errors;
         if (not length($title)) {
@@ -68,12 +68,12 @@ sub company_review_new {
             push @errors, "Cons is required.";
         }
 
-        $self->recaptcha;
-        push @errors, $self->stash('recaptcha_error') if $self->stash('recaptcha_error');
+        $c->recaptcha;
+        push @errors, $c->stash('recaptcha_error') if $c->stash('recaptcha_error');
 
         if (@errors) {
-            $self->stash('errors' => \@errors);
-            return $self->render(template => 'company_review_new');
+            $c->stash('errors' => \@errors);
+            return $c->render(template => 'company_review_new');
         }
 
         # create
@@ -87,10 +87,10 @@ sub company_review_new {
             company_id => $company->id,
         } );
 
-        return $self->redirect_to('/company/' . $companyid);
+        return $c->redirect_to('/company/' . $companyid);
     }
 
-    $self->render(template => 'company_review_new');
+    $c->render(template => 'company_review_new');
 }
 
 
