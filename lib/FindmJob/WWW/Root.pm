@@ -111,7 +111,8 @@ sub job {
 
     my $schema = $self->schema;
     my $jobid = $self->stash('id');
-    my $job = $schema->resultset('Job')->find($jobid);
+    my $job_rs = $schema->resultset('Job');
+    my $job = $job_rs->find($jobid);
 
     unless ($job) {
         $self->res->code(410); # Gone
@@ -123,6 +124,16 @@ sub job {
         $job->description( decode_utf8($job->description) );
     }
     $self->stash(job => $job);
+
+    $self->stash(company_jobs => [ $job_rs->jobs_by_company($job->company_id, $job->id) ]);
+    $self->stash(location_jobs => [ $job_rs->jobs_by_location($job->location_id, $job->id) ])
+        if $job->location_id;
+    foreach my $tag (@{ $job->tags }) {
+        my @tag_jobs = $job_rs->jobs_by_tag($tag->{id}, $job->id);
+        next unless @tag_jobs;
+        $self->stash(tag_jobs_text => $tag->{text});
+        $self->stash(tag_jobs => \@tag_jobs);
+    }
 
     $self->render(template => 'job');
 }

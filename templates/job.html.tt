@@ -18,6 +18,9 @@
 <div class='pull-right company_logo'><a href='[% job.company.url %]'><img src='[% page_image %]' /></a></div>
 [% END %]
 
+<div class="row">
+    <div class="col-md-9">
+
 <ul class="list-unstyled">
 <li><p><b>Posted</b>: <span class="timeago" title="[% job.posted_at %]">[% job.posted_at %]</span></p></li>
 
@@ -32,11 +35,11 @@
 </p></li>
 [% END %]
 
-<li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name %]</a> (<a href="/company/[% job.company.id %]/reviews/new"><i class='fa fa-comment-o'></i> write anonymous review</a>)</p></li>
+<li><p><b>Company</b>: <a href='[% job.company.url %]'>[% job.company.name | html %]</a> (<a href="/company/[% job.company.id %]/reviews/new"><i class='fa fa-comment-o'></i> write anonymous review</a>)</p></li>
 [% IF job.location %]
 <li><p><b>Location</b>: <i class='fa fa-flag'></i>
     [% IF job.location_id %]
-    <a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location %]</a>
+    <a href='/location/[% job.location_id %]/[% job.location | seo_title %].html'>[% job.location | html %]</a>
     [% ELSE %]
     [% job.location %]
     [% END %]
@@ -162,3 +165,49 @@
 <li><p><b>Source URL</b>: <a href='[% out_url %]' target="_blank"><i class='fa fa-external-link'></i> [% job.source_url %]</a></p></li>
 
 </ul>
+    </div>
+    <div class="col-md-3">
+        [% IF tag_jobs.size %]
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">More [% tag_jobs_text %] Jobs</h3>
+            </div>
+            <div class="panel-body">
+                <ul style="padding-left: 20px">
+                    [% FOREACH job IN tag_jobs %]
+                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% END %]
+                </ul>
+            </div>
+        </div>
+        [% END %]
+        [% IF company_jobs.size %]
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">More [% job.company.name | html %] Jobs</h3>
+            </div>
+            <div class="panel-body">
+                <ul style="padding-left: 20px">
+                    [% FOREACH job IN company_jobs %]
+                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% END %]
+                </ul>
+            </div>
+        </div>
+        [% END %]
+        [% IF location_jobs.size %]
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">More [% job.location | html %] Jobs</h3>
+            </div>
+            <div class="panel-body">
+                <ul style="padding-left: 20px">
+                    [% FOREACH job IN location_jobs %]
+                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% END %]
+                </ul>
+            </div>
+        </div>
+        [% END %]
+    </div>
+</div>

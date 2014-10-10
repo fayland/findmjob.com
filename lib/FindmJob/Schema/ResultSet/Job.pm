@@ -58,4 +58,55 @@ sub delete_job {
     $schema->resultset('ObjecTag')->search({ object => $id })->delete;
 }
 
+## shortcuts
+sub jobs_by_company {
+    my ($self, $company_id, $exclude_job_id) = @_;
+
+    return $self->search( {
+        company_id => $company_id,
+        $exclude_job_id ? (id => { '<>', $exclude_job_id }) : ()
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 5, page => 1
+    })->all;
+}
+
+sub jobs_by_location {
+    my ($self, $location_id, $exclude_job_id) = @_;
+
+    return $self->search( {
+        location_id => $location_id,
+        $exclude_job_id ? (id => { '<>', $exclude_job_id }) : ()
+    }, {
+        order_by => 'inserted_at DESC',
+        rows => 5, page => 1
+    })->all;
+}
+
+sub jobs_by_tag {
+    my ($self, $tag_id, $exclude_job_id) = @_;
+
+    my $schema = $self->result_source->schema;
+    my $rs = $schema->resultset('ObjectTag')->search( {
+        tag => $tag_id,
+        tbl => 'job',
+    }, {
+        order_by => 'me.time DESC',
+        prefetch => ['object'],
+        '+select' => ['object.tbl', 'object.id'],
+        '+as'     => ['tbl', 'object_id'],
+        rows => 10, page => 1
+    });
+
+    my @jobs;
+    while (my $row = $rs->next) {
+        my $tbl = $row->get_column('tbl');
+        my $id  = $row->get_column('object_id');
+        next if $id eq $exclude_job_id;
+        push @jobs, $schema->resultset(ucfirst $tbl)->find($id);
+    }
+
+    return @jobs;
+}
+
 1;
