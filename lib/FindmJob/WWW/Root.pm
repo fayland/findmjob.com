@@ -2,6 +2,7 @@ package FindmJob::WWW::Root;
 
 use Mojo::Base 'Mojolicious::Controller';
 use Encode;
+use List::Util 'shuffle';
 
 sub index {
     my $c = shift;
@@ -128,7 +129,7 @@ sub job {
     $self->stash(company_jobs => [ $job_rs->jobs_by_company($job->company_id, $job->id) ]);
     $self->stash(location_jobs => [ $job_rs->jobs_by_location($job->location_id, $job->id) ])
         if $job->location_id;
-    foreach my $tag (@{ $job->tags }) {
+    foreach my $tag (shuffle @{ $job->tags }) {
         my @tag_jobs = $job_rs->jobs_by_tag($tag->{id}, $job->id);
         next unless @tag_jobs;
         $self->stash(tag_jobs_text => $tag->{text});
