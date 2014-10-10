@@ -27,7 +27,8 @@ sub index {
         rows => 10, page => 1
     })->all ];
 
-    my $is_chrome = $c->req->headers->user_agent =~ /Chrome/ ? 1 : 0;
+    my $user_agent = $c->req->headers->user_agent;
+    my $is_chrome = ($user_agent and $user_agent =~ /Chrome/) ? 1 : 0;
     $c->stash(is_chrome => $is_chrome);
 
     $c->render(template => 'index');
