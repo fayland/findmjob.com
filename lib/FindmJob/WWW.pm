@@ -236,7 +236,8 @@ sub __render_feed {
         next unless $obj->{tbl} eq 'job' or $obj->{tbl} eq 'freelance';
         return unless $obj->can('url');
         my $link = $config->{sites}->{main} . $obj->url;
-        my $author = ($obj->{tbl} eq 'job') ? $obj->company->name : 'FindmJob.com';
+        my $author = 'FindmJob.com';
+        $author = $obj->company->name if $obj->{tbl} eq 'job' and $obj->company;
         my $issued  = DateTime->from_epoch( epoch => $obj->inserted_at );
         push @entries, {
             id => $link,
@@ -255,7 +256,7 @@ sub __render_feed {
     my $feed = XML::Feed->new($format);
 
     my %feed_properties = (
-        title   => $c->stash('title') . " Jobs - FindmJob.com",
+        title   => $c->stash('title') ? $c->stash('title') . " Jobs - FindmJob.com" : 'Jobs - FindmJob.com',
         description => 'Push Jobs To You',
         id      => $config->{sites}->{main},
         modified => DateTime->now,
