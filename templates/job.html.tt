@@ -174,8 +174,8 @@
             </div>
             <div class="panel-body">
                 <ul style="padding-left: 20px">
-                    [% FOREACH job IN tag_jobs %]
-                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% FOREACH xjob IN tag_jobs %]
+                    <li><a href='[% job.url %]'>[% xjob.title %]</a></li>
                     [% END %]
                 </ul>
             </div>
@@ -188,8 +188,8 @@
             </div>
             <div class="panel-body">
                 <ul style="padding-left: 20px">
-                    [% FOREACH job IN company_jobs %]
-                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% FOREACH xjob IN company_jobs %]
+                    <li><a href='[% job.url %]'>[% xjob.title %]</a></li>
                     [% END %]
                 </ul>
             </div>
@@ -202,8 +202,8 @@
             </div>
             <div class="panel-body">
                 <ul style="padding-left: 20px">
-                    [% FOREACH job IN location_jobs %]
-                    <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                    [% FOREACH xjob IN location_jobs %]
+                    <li><a href='[% job.url %]'>[% xjob.title %]</a></li>
                     [% END %]
                 </ul>
             </div>
