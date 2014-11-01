@@ -1,3 +1,10 @@
+[% title = 'My Updates' %]
+
+<hr class='soften' />
+
+<div class='row'>
+    <div class="col-md-9">
+
 [% IF updates.size %]
 
 <ul>
@@ -11,3 +18,23 @@
 <p>Nothing to do.</p>
 
 [% END %]
+
+    </div>
+[% IF followed_tags %]
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Followed Tags</h3>
+        </div>
+        <div class="panel-body">
+            <ul class='list-unstyled'>
+                [% FOREACH tag IN followed_tags %]
+                <li><i class="fa fa-tag"></i> <a href='/tag/[% tag.text | uri %]'>[% tag.text %]</a> <a href="/user/unfollow?tag_id=[% tag.id %]" fj-action="unfollow" data-tag-id="[% tag.id %]"><span class="fa fa-remove"></span></a></li>
+                [% END %]
+            </ul>
+        </div>
+      </div>
+    </div>
+[% END %]
+
+</div>

@@ -44,10 +44,6 @@ sub updates {
         return $c->redirect_to('/user/login');
     }
 
-    # my @follow_ids;
-    # my $rs = $c->schema->resultset('UserFollow')->search({ user_id => $user_id });
-    # while (my $r = $rs->next) { push @follow_ids, $r->follow_id; }
-
     my $rows = ($is_json) ? 10 : 20;
 
     my $schema = $c->schema;
@@ -94,6 +90,11 @@ sub updates {
         }
         $c->render(json => { 'updates' => \@jdata, max_pushed_at => $max_pushed_at });
     } else {
+
+        my $sth = $dbh->prepare("SELECT tag.* FROM tag JOIN user_follow uf ON tag.id=uf.follow_id WHERE uf.user_id = ?");
+        $sth->execute($user_id);
+        $c->stash(followed_tags => $sth->fetchall_arrayref({}));
+
         $c->stash(updates => \@updates);
     }
 }
@@ -113,7 +114,26 @@ sub follow {
     if ($c->req->is_xhr) {
         $c->render(json => {'success' => 1});
     } else {
-        $c->redirect_to('/'); # FIXME, to /user/followed
+        $c->redirect_to('/user/updates');
+    }
+}
+
+sub unfollow {
+    my $c = shift;
+
+    my $follow_id = $c->param('follow_id');
+    if ($follow_id) {
+        my $user = $c->stash('user');
+        $c->schema->resultset('UserFollow')->search( {
+            user_id => $user->id,
+            follow_id => $follow_id
+        } )->delete;
+    }
+
+    if ($c->req->is_xhr) {
+        $c->render(json => {'success' => 1});
+    } else {
+        $c->redirect_to('/user/updates');
     }
 }
 

@@ -24,4 +24,19 @@
     });
   });
 
+  $(document).ready(function() {
+    return $('a[fj-action="unfollow"]').click(function(e) {
+      var me, tag_id;
+      e.preventDefault();
+      e.stopPropagation();
+      me = $(this);
+      tag_id = me.attr('data-tag-id');
+      return $.getJSON('/user/unfollow', {
+        'follow_id': tag_id
+      }, function(data) {
+        return me.parent('li').remove();
+      });
+    });
+  });
+
 }).call(this);
