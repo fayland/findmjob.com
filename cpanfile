@@ -23,6 +23,7 @@ requires 'Date::Manip';
 requires 'Net::Delicious';
 requires 'Facebook::Graph';
 requires 'MIME::Lite';
+requires 'Email::Sender::Transport::SMTPS';
 requires 'Locale::Codes::Country', '3.25';
 requires 'Proc::PID::File';
 

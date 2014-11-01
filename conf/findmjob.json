@@ -20,6 +20,12 @@
     "default_from": "noreply@findmjob.com",
     "default_to": "findmjob.com@gmail.com"
   },
+  "email_settings": {
+    "host": "smtp.mandrillapp.com",
+    "port": 587,
+    "username": "findmjob.com@gmail.com",
+    "password": "secret"
+  },
   "secret_hash": "secret",
   "scrape": {
     "proxy": "socks://127.0.0.1:9050"

@@ -14,10 +14,21 @@ use FindmJob::Basic;
 use MIME::Lite;
 use HTML::FormatText;
 use HTML::TreeBuilder;
+use Email::Sender::Simple qw(sendmail);
+use Email::Sender::Transport::SMTPS;
+use Try::Tiny;
 
 my $config = FindmJob::Basic->config;
 my $schema = FindmJob::Basic->schema;
 my $dbh = $schema->storage->dbh;
+
+my $email_settings = $config->{email_settings};
+my $transport = Email::Sender::Transport::SMTPS->new(
+    host => $email_settings->{host},
+    ssl  => 'starttls',
+    sasl_username => $email_settings->{username},
+    sasl_password => $email_settings->{password}
+);
 
 my $formatter = HTML::FormatText->new(leftmargin => 0, rightmargin => 520);
 
@@ -68,8 +79,11 @@ while (my $e = $sth->fetchrow_hashref) {
         }
     }
 
-    # MIME::Lite->send("sendmail", "/usr/sbin/sendmail");
-	$msg->send() or die "[ERROR][Email] Error sending email: $!\n";
+    try {
+        sendmail($msg->as_string, { transport => $transport });
+    } catch {
+        die "[ERROR][Email] Error sending email: $_";
+    };
 
 	$dbh->do("INSERT IGNORE INTO emails_sent SELECT * FROM emails WHERE id = ?", undef, $e->{id});
 	$dbh->do("DELETE FROM emails WHERE id = ?", undef, $e->{id});
