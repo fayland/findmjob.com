@@ -49,7 +49,7 @@ sub contact {
 
 sub html {
     my $c = shift;
-    my $html = $c->stash('html');
+    my $html = $c->stash('html') || $c->stash('html.html');
     if ($html !~ /\./ and -e FindmJob::Basic->root . "/templates/help/" . $html . ".html.tt") {
         $c->render(template => 'help/' . $html);
     }
