@@ -59,6 +59,7 @@ sub updates {
         $min_pushed_at ? (pushed_at => {'>', $min_pushed_at}) : (),
     }, {
         rows => $rows,
+        group_by => ['object_id'],
         $is_notification ? (order_by => 'pushed_at') : (order_by => \'pushed_at DESC'), #'
     });
     while (my $r = $rs->next) {
