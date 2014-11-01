@@ -1,4 +1,13 @@
 
+<h3>Token <small>For <a href='https://chrome.google.com/webstore/detail/findmjob-push-jobs-to-you/ogknnjoiljfafebechhnjgjommbolhoa' target='_blank'>Chrome Extension</a></small></h3>
+<hr />
 <p>Your Token is <b>[% user.id %]-[% user.token %]</b></p>
 
 <input value='[% user.id %]-[% user.token %]' class='col-md-4' /> <a class='btn' href='/user/token?revoke=1'>Revoke</a>
+
+<h3>RSS/Atom Links</h3>
+<hr />
+<p><i class='fa fa-rss-square fa-lg'></i> <a href='[% config.sites.main %]/user/updates/[% user.id %]-[% user.token %]/feed.rss'>RSS</a> | <a href='[% config.sites.main %]/user/updates/[% user.id %]-[% user.token %]/feed.atom'>Atom</a></p>
+
+<link rel="alternate" type="application/rss+xml" href="[% config.sites.main %]/user/updates/[% user.id %]-[% user.token %]/feed.rss" title="RSS 2.0">
+<link rel="alternate" type="application/atom+xml" href="[% config.sites.main %]/user/updates/[% user.id %]-[% user.token %]/feed.atom" title="Atom 1.0">

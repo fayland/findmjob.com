@@ -155,7 +155,7 @@ sub startup {
         }
 
         # TEST ONLY
-        if ($c->is_test_server) {
+        if ($c->is_test_server and not $c->req->param('off')) {
             my $user = $c->schema->resultset('User')->find('CqyQR3Np4xGL_MdeFIgsfg');
             $c->stash(user => $user);
         }
@@ -208,6 +208,7 @@ sub startup {
     $auth_r->get('/user/token')->to('user#token');
     $auth_r->any('/user/follow')->to('user#follow');
     $auth_r->any('/user/unfollow')->to('user#unfollow');
+    $r->get('/user/updates/:token')->to('user#updates');
     $r->get('/user/updates')->to('user#updates'); # can use Chrome token to fetch
 
     $auth_r->get('/app')->to('app#index');

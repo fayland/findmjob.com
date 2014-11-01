@@ -27,6 +27,7 @@ sub updates {
     my $ref = $c->param('ref') || ''; # Chrome extension ref=chrome
     my $is_json = ($ref =~ /chrome/) ? 1 : 0;
     my $is_notification = ($ref =~ /chrome/) ? 1 : 0;
+    my $is_feed = $c->stash('is_feed');
 
     my $user_id = 0;
     my $token = $c->param('token');
@@ -45,6 +46,7 @@ sub updates {
     }
 
     my $rows = ($is_json) ? 10 : 100;
+    $rows = 20 if $is_feed;
 
     my $schema = $c->schema;
     my $dbh = $schema->storage->dbh;
@@ -68,6 +70,7 @@ sub updates {
 
         $obj->{follow_id} = $r->follow_id;
         $obj->{pushed_at} = $r->pushed_at;
+        $obj->{tbl}       = $r->tbl if $is_feed;
         if ($is_notification) {
             unshift @updates, $obj;
         } else {
@@ -89,6 +92,9 @@ sub updates {
             $max_pushed_at = $data->{pushed_at} if $data->{pushed_at} > $max_pushed_at;
         }
         $c->render(json => { 'updates' => \@jdata, max_pushed_at => $max_pushed_at });
+    } elsif ($is_feed) {
+        $c->stash(title => "User Updates");
+        return $c->stash('feeds' => \@updates);
     } else {
 
         my $sth = $dbh->prepare("SELECT tag.* FROM tag JOIN user_follow uf ON tag.id=uf.follow_id WHERE uf.user_id = ?");
