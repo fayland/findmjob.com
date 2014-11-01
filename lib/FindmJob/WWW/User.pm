@@ -44,7 +44,7 @@ sub updates {
         return $c->redirect_to('/user/login');
     }
 
-    my $rows = ($is_json) ? 10 : 20;
+    my $rows = ($is_json) ? 10 : 100;
 
     my $schema = $c->schema;
     my $dbh = $schema->storage->dbh;
