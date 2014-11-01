@@ -29,7 +29,7 @@ sub index {
     })->all ];
 
     my $sth = $dbh->prepare(<<SQL);
-SELECT tag.* FROM tag JOIN stats_trends tr ON tr.tag_id=tag.id WHERE tr.dt > DATE_SUB(NOW(), INTERVAL 2 DAY) group by tr.tag_id;
+SELECT tag.* FROM tag JOIN stats_trends tr ON tr.tag_id=tag.id WHERE tr.dt > DATE_SUB(NOW(), INTERVAL 2 DAY) group by tr.tag_id order by tr.num desc;
 SQL
     $sth->execute();
     $c->stash->{popular_tags} = $sth->fetchall_arrayref({});

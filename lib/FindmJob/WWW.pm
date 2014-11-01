@@ -16,7 +16,8 @@ sub startup {
 
     my $config = FindmJob::Basic->config;
     $self->secrets([$config->{secret_hash}]);
-    $self->helper(sconfig => sub { return $config });
+    $self->helper(sconfig => sub { $config });
+    $self->helper(is_test_server => sub { $config->{is_test_server} });
     $self->helper(schema => sub { FindmJob::Basic->schema });
     unshift @{$self->static->paths}, catdir( FindmJob::Basic->root, 'static' );
 
@@ -154,8 +155,10 @@ sub startup {
         }
 
         # TEST ONLY
-        # my $user = $c->schema->resultset('User')->find('NMeu925p4xGE2g_xA58vkA');
-        # $c->stash(user => $user);
+        if ($c->is_test_server) {
+            my $user = $c->schema->resultset('User')->find('CqyQR3Np4xGL_MdeFIgsfg');
+            $c->stash(user => $user);
+        }
     });
     $self->hook(around_action => sub {
         my ($next, $c, $action, $last) = @_;

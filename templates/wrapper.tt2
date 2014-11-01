@@ -62,6 +62,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         [% IF user %]
+        <li><a href='/user/updates'><i class='fa fa-user'></i> Updates</a></li>
         <li><a href='/user/logout'><i class='fa fa-sign-out'></i> Logout</a></li>
         [% ELSE %]
         <li class="dropdown">
