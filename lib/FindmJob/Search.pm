@@ -1,7 +1,6 @@
 package FindmJob::Search;
 
 use Moo;
-use Sphinx::Search;
 use FindmJob::Basic;
 
 has 'es' => (is => 'lazy');
@@ -51,6 +50,8 @@ sub search_job {
 }
 
 =pod
+
+use Sphinx::Search;
 
 has 'sphinx' => (is => 'lazy');
 sub _build_sphinx {

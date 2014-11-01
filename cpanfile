@@ -1,7 +1,7 @@
 requires 'DBI';
 requires 'DBD::mysql';
 requires 'Plack';
-requires 'Template::Toolkit', '2.24';
+requires 'Template', '2.24';
 requires 'Template::Plugin::FillInForm';
 requires 'DBIx::Class', '0.08210';
 requires 'DBIx::Class::Schema::Loader', '0.07035';
@@ -20,7 +20,6 @@ requires 'WWW::Sitemap::XML';
 requires 'JSON::XS';
 requires 'XML::Feed';
 requires 'Date::Manip';
-requires 'Sphinx::Search';
 requires 'Net::Delicious';
 requires 'Facebook::Graph';
 requires 'MIME::Lite';
