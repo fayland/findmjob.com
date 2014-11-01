@@ -89,14 +89,19 @@
   </div>
 </div>
 
-
 [% IF NOT message; message = c.flash('message'); END; %]
 [% IF message %]
-<div class="col-md-8 col-md-offset-2 alert alert-success">[% message %]</div><div class="clearfix"></div>
+<div class="col-md-8 col-md-offset-2 alert alert-success" style="margin-top: 10px">
+  [% message %]
+</div>
+<div class="clearfix"></div>
 [% END %]
 [% IF NOT error; error = c.flash('error'); END; %]
 [% IF error %]
-<div class="col-md-8 col-md-offset-2 alert alert-danger">[% error %]</div><div class="clearfix"></div>
+<div class="col-md-8 col-md-offset-2 alert alert-danger" style="margin-top: 10px">
+  [% error %]
+</div>
+<div class="clearfix"></div>
 [% END %]
 
 [% content %]

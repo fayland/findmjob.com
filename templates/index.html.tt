@@ -11,24 +11,21 @@
 
 <div class='row'>
 
-  <div class="col-md-6">
+  <div class="col-md-9">
      <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Popular Tags</h3>
         </div>
         <div class="panel-body">
             <ul class='list-inline'>
-                [%# hardcode for now %]
-                [%# SELECT t.text, COUNT(*) cnt FROM object_tag ot join `tag` t on ot.tag=t.id group by ot.tag order by cnt desc limit 20  %]
-                [% tags = ['Perl', 'Python', 'Ruby', 'PHP', 'Java', 'ruby-on-rails', 'Javascript', 'MySQL', 'jQuery', 'AWS', 'iOS', 'Django', 'WordPress', 'Joomla', 'ASP.Net', 'iPhone', 'Android', 'HTML5'] %]
-                [% FOREACH tag IN tags %]
-                <li><i class="fa fa-tag"></i> <a href='/tag/[% tag %]'>[% tag %]</a></li>
+                [% FOREACH tag IN popular_tags %]
+                <li><i class="fa fa-tag"></i> <a href='/tag/[% tag.text | uri %]'>[% tag.text %]</a></li>
                 [% END %]
             </ul>
         </div>
     </div>
   </div>
-  <div class='col-md-6'>
+  <div class='col-md-3'>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Popular Locations</h3>
@@ -46,50 +43,40 @@
 
 <hr class="soften">
 
-[% FOREACH i IN [0..5] %]
 <div class="row">
-    [% IF loop.first %]
-    <div class="col-md-6"><h3>Jobs</h3></div>
-    <div class="col-md-6"><h3>Freelances</h3></div>
-    [% END %]
-
-    [% job = jobs.shift %]
     <div class='col-md-6'>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
+                <h3 class="panel-title"><a href='/jobs'>Recent Jobs</a></h3>
             </div>
             <div class="panel-body">
-                <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <ul>
+                [% FOREACH job IN jobs %]
+                <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                [% END %]
+                </ul>
             </div>
             <div class="panel-footer text-right">
-                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa fa-arrow-circle-right'></i></a>
+                <p class="btn btn-default"><a href='/jobs'>More Jobs <i class='fa fa-arrow-circle-right'></i></a></p>
             </div>
         </div>
     </div>
 
-    [% job = freelances.shift %]
     <div class='col-md-6'>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><a href='[% job.url %]'>[% job.title %]</a></h3>
+                <h3 class="panel-title"><a href='/freelances'>Recent Freelances</a></h3>
             </div>
             <div class="panel-body">
-                <p>[% String.new(job.description).replace('<[^\>]+>', '').truncate(255, '...').text %]</p>
+                <ul>
+                [% FOREACH job IN freelances %]
+                <li><a href='[% job.url %]'>[% job.title %]</a></li>
+                [% END %]
+                </ul>
             </div>
             <div class="panel-footer text-right">
-                <a href='[% job.url %]' class='btn btn-default'>View More <i class='fa fa-arrow-circle-right'></i></a>
+                <p class="btn btn-default"><a href='/freelances'>More Freelances <i class='fa fa-arrow-circle-right'></i></a></p>
             </div>
         </div>
-    </div>
-</div>
-[% END %]
-
-<div class="row">
-    <div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/jobs'>More Jobs <i class='fa fa-arrow-circle-right'></i></a></p>
-    </div>
-    <div class="col-md-6">
-        <p class="btn btn-default pull-right"><a href='/freelances'>More Freelances <i class='fa fa-arrow-circle-right'></i></a></p>
     </div>
 </div>

@@ -8,15 +8,16 @@ sub index {
     my $c = shift;
 
     my $schema = $c->schema;
+    my $dbh = $schema->storage->dbh;
     my $job_rs = $schema->resultset('Job')->search( undef, {
         order_by => 'inserted_at DESC',
-        rows => 6,
+        rows => 10,
         page => 1,
     });
     $c->stash->{jobs} = [$job_rs->all];
     my $freelance_rs = $schema->resultset('Freelance')->search( undef, {
         order_by => 'inserted_at DESC',
-        rows => 6,
+        rows => 10,
         page => 1,
     });
     $c->stash->{freelances} = [$freelance_rs->all];
@@ -26,6 +27,12 @@ sub index {
         order_by => 'job_num DESC',
         rows => 10, page => 1
     })->all ];
+
+    my $sth = $dbh->prepare(<<SQL);
+SELECT tag.* FROM tag JOIN stats_trends tr ON tr.tag_id=tag.id WHERE tr.dt > DATE_SUB(NOW(), INTERVAL 2 DAY) group by tr.tag_id;
+SQL
+    $sth->execute();
+    $c->stash->{popular_tags} = $sth->fetchall_arrayref({});
 
     my $user_agent = $c->req->headers->user_agent;
     my $is_chrome = ($user_agent and $user_agent =~ /Chrome/) ? 1 : 0;
