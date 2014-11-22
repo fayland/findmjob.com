@@ -10,4 +10,4 @@ before_install:
     - "cpanm Test::More"
     - "cpanm Devel::Cover::Report::Coveralls"
 script:
-  - prove -l t/
+  - prove -l t/*
