@@ -4,7 +4,7 @@
 
 [% USE String %]
 
-<h2>[% title %]</h2>
+<h2>[% title | html %]</h2>
 <hr class="soften">
 
 [% tab_base_url = base_url.replace('/p.(\d+)/', '/').replace('/p.(\d+)$', '').replace('/\+(job|freelance)/', '/').replace('/$', '') %]
