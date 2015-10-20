@@ -5,7 +5,6 @@ use FindmJob::Basic;
 use FindmJob::Utils 'seo_title';
 use File::Spec::Functions 'catdir';
 use JSON qw//;
-use Mojo::JSON;
 
 sub startup {
     my $self = shift;
@@ -47,9 +46,6 @@ sub startup {
         my ($c, $access_token, $data) = @_;
 
         my $schema = $c->schema;
-
-        ## dirty hack, JSON is not working with Mojo::JSON::_Bool
-        $data = JSON::from_json( Mojo::JSON->new->encode($data) ); # stupid WOKR
 
         my $email = $data->{email};
         my $name  = $data->{name};
